@@ -1,7 +1,7 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ShopItem.dart';
+import 'package:dellyshop/screens/ItemDetails/ItemDetails.dart';
 import 'package:dellyshop/screens/ShopItems/bloc/shopitems_bloc.dart';
-import 'package:dellyshop/widgets/shimmer_widger.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +37,7 @@ class _ShopItemsState extends State<ShopItems> {
       fontSize: kSubTitleFontSize);
 
   /// Create Modal BottomSheet (SortBy)
-  void _modalBottomSheetSort() {
+  void modalBottomSheetSort() {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
@@ -96,7 +96,7 @@ class _ShopItemsState extends State<ShopItems> {
   }
 
   /// Create Modal BottomSheet (RefineBy)
-  void _modalBottomSheetRefine() {
+  void modalBottomSheetRefine() {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
@@ -161,11 +161,11 @@ class _ShopItemsState extends State<ShopItems> {
     final hero = Hero(
       tag: 'hero-tag-${widget.shopid}',
       child: Material(
-        child: new DecoratedBox(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
               fit: BoxFit.cover,
-              image: new NetworkImage(
+              image: NetworkImage(
                   "https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg"),
             ),
             shape: BoxShape.rectangle,
@@ -213,7 +213,7 @@ class _ShopItemsState extends State<ShopItems> {
                 backgroundColor:
                     Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
                 iconTheme: IconThemeData(color: kAppColor),
-                expandedHeight: 380.0,
+                expandedHeight: h(300),
                 elevation: 0.1,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -242,7 +242,7 @@ class _ShopItemsState extends State<ShopItems> {
                           padding: EdgeInsets.only(
                               top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
                           child: Container(
-                            height: h(100),
+                            height: h(79),
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4.0)),
@@ -253,9 +253,10 @@ class _ShopItemsState extends State<ShopItems> {
                                   padding: const EdgeInsets.only(
                                       top: 30.0, left: 20.0, right: 20.0),
                                   child: Text(
-                                    "text here",
+                                    "shop1 provide  the best goods for you ...",
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
+                                        color: Colors.orange[900],
+                                        fontSize: 18),
                                     // ApplicationLocalizations.of(context)
                                     //     .translate("lorem"),
                                     // style: TextStyle(
@@ -281,13 +282,58 @@ class _ShopItemsState extends State<ShopItems> {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     return InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: h(100),
-                          width: w(200),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [Image.network("${items[index].images}")],
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ItemDetails(
+                              datum: items[index],
+                            ),
+                          ));
+                        },
+                        child: Card(
+                          child: Container(
+                            color: Colors.white,
+                            height: h(150),
+                            width: w(200),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                    height: h(200),
+                                    width: w(200),
+                                    child: Image.network(
+                                      "${items[index].images}",
+                                      fit: BoxFit.cover,
+                                    )),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Name :${items[index].titleEn}",
+                                      style: TextStyle(
+                                          color: Colors.orange[900],
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    Text(
+                                      "Price  :${items[index].price}",
+                                      style: TextStyle(
+                                          color: Colors.orange[900],
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    // Text(
+                                    //   items[index].discount.toString(),
+                                    //   style: TextStyle(
+                                    //       color: Colors.orange[900],
+                                    //       fontSize: 16,
+                                    //       fontWeight: FontWeight.w800),
+                                    // ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ));
                   },
@@ -299,7 +345,7 @@ class _ShopItemsState extends State<ShopItems> {
                   maxCrossAxisExtent: 250.0,
                   mainAxisSpacing: 7.0,
                   crossAxisSpacing: 7.0,
-                  childAspectRatio: 0.605,
+                  childAspectRatio: 3 / 3.5,
                 ),
               ),
             ],
