@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import '../../app_localizations.dart';
 import '../../util.dart';
 
+// ignore: must_be_immutable
 class ProductDetailScreen extends StatelessWidget {
   static const routeName = "/product_detail_screen";
-  ProductItemModel productItemModel;
+  final ProductItemModel productItemModel;
   ProductDetailScreen(this.productItemModel);
 
   AnimationController controller;

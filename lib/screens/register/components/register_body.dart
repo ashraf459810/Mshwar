@@ -1,7 +1,6 @@
 import 'package:dellyshop/app_localizations.dart';
 
 import 'package:dellyshop/models/CitiesModel/cities.dart';
-import 'package:dellyshop/screens/home/home_screen.dart';
 
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart';
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toast/toast.dart';
-
 
 class RegisterBody extends StatefulWidget {
   @override
@@ -52,10 +50,11 @@ class _RegisterBodyState extends State<RegisterBody> {
             child: BlocConsumer<RegisterBloc, RegisterState>(
               listener: (context, state) {
                 if (state is RegisterS) {
-                                               Toast.show("Registered Successfully", context,
-                                          duration: Toast.LENGTH_SHORT,backgroundColor: Colors.orange,
-                                          gravity: Toast.TOP);
-                 
+                  Toast.show("Registered Successfully", context,
+                      duration: Toast.LENGTH_SHORT,
+                      backgroundColor: Colors.orange,
+                      gravity: Toast.TOP);
+
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => CustomBottomNavigationBar(),
                   ));
@@ -170,9 +169,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                         InkWell(
                             onTap: () {
                               if (formKey.currentState.validate()) {
-                              
                                 if (mobilec.text != null && cityid != null) {
-                            
                                   context.read<RegisterBloc>().add(RegisterE(
                                       namec.text,
                                       passwordc.text,
@@ -180,10 +177,10 @@ class _RegisterBodyState extends State<RegisterBody> {
                                       emailc.text,
                                       int.parse(mobilec.text)));
                                 } else {
-                                           Toast.show("Please fill the fields", context,
-                                          duration: Toast.LENGTH_SHORT,backgroundColor: Colors.orange,
-                                          gravity: Toast.TOP);
-                                 
+                                  Toast.show("Please fill the fields", context,
+                                      duration: Toast.LENGTH_SHORT,
+                                      backgroundColor: Colors.orange,
+                                      gravity: Toast.TOP);
                                 }
                               }
                             },

@@ -2,16 +2,18 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ShopItem.dart';
 import 'package:dellyshop/models/my_comment_model.dart';
+import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
+import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 import 'package:dellyshop/screens/home/components/header_title.dart';
 import 'package:dellyshop/util.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/carousel_pro.dart';
 
-import 'package:dellyshop/widgets/custom_radio_button.dart';
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:dellyshop/widgets/star_display.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 
 class ItemDetailsBody extends StatefulWidget {
@@ -23,6 +25,8 @@ class ItemDetailsBody extends StatefulWidget {
 }
 
 class _ItemDetailsBodyState extends State<ItemDetailsBody> {
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -46,60 +50,26 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
             children: [
               rating(),
               SizedBox(
-                height: 10,
+                height: h(10),
               ),
               header(context),
               SizedBox(
-                height: 2.0,
+                height: h(2),
               ),
               NormalTextWidget(
                   widget.datum.title,
                   Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
                   kTitleFontSize),
               SizedBox(
-                height: 10,
+                height: h(10),
               ),
               colorAndAmount(size),
               SizedBox(
-                height: 10,
-              ),
-              Visibility(
-                visible: true,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Size",
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Padding(padding: EdgeInsets.only(right: 5.0)),
-                        RadioButtonCustom(
-                          txt: "S",
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5.0)),
-                        RadioButtonCustom(
-                          txt: "M",
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5.0)),
-                        RadioButtonCustom(
-                          txt: "L",
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5.0)),
-                        RadioButtonCustom(
-                          txt: "XL",
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
+                height: h(10),
               ),
               description(size),
               SizedBox(
-                height: 10,
+                height: h(40),
               ),
               addToCart(size),
               HeaderTitle(
@@ -109,7 +79,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                 _commentBottomSheet();
               }),
               SizedBox(
-                height: 10,
+                height: h(10),
               ),
               SizedBox(
                 height: myCommentList.take(2).length * 160.0,
@@ -119,7 +89,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CardWidget(
-                        height: 140,
+                        height: h(140),
                         childWidget: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -145,7 +115,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                             //   ],
                             // ),
                             SizedBox(
-                              height: 10,
+                              height: h(10),
                             ),
                             Text(
                               myCommentList[i].userComment,
@@ -173,15 +143,22 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   }
 
   Center addToCart(Size size) {
-    return Center(
-      child: ButtonCustom(
-        txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
-        witdh: size.width,
-        ontap: () {},
-        bacgroudColor: kAppColor,
-        textColor: kWhiteColor,
-      ),
-    );
+    return Center(child: Builder(
+      builder: (context) {
+        return ButtonCustom(
+          txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
+          witdh: size.width,
+          ontap: () {
+            context.read<CartBloc>().add(AddItemToCartEvent(
+                  count,
+                  widget.datum.id,
+                ));
+          },
+          bacgroudColor: kAppColor,
+          textColor: kWhiteColor,
+        );
+      },
+    ));
   }
 
   Container description(Size size) {
@@ -198,10 +175,10 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                 fontSize: kTitleFontSize),
           ),
           SizedBox(
-            height: 10,
+            height: h(10),
           ),
           SizedBox(
-            height: 10,
+            height: h(30),
           ),
           Center(
             child: InkWell(
@@ -227,14 +204,19 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     return Row(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             /// Decrease of value item
             InkWell(
-              onTap: () {},
+              onTap: () {
+                if (count != 1) {
+                  count--;
+                  setState(() {});
+                }
+              },
               child: Container(
-                height: 40.0,
-                width: 40.0,
+                height: h(40),
+                width: h(40),
                 decoration: BoxDecoration(
                   color: kAppColor.withOpacity(0.7),
                   border: Border(
@@ -256,10 +238,13 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
             /// Increasing value of items
             InkWell(
-              onTap: () {},
+              onTap: () {
+                count++;
+                setState(() {});
+              },
               child: Container(
-                height: 40.0,
-                width: 40.0,
+                height: h(40),
+                width: h(40.0),
                 decoration: BoxDecoration(
                     color: kAppColor.withOpacity(0.7),
                     border: Border(
@@ -294,16 +279,17 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.datum.price,
+              "Price  : ${widget.datum.price}",
               style: TextStyle(
-                  decoration: TextDecoration.lineThrough,
                   color: Utils.isDarkMode
                       ? kDarkBlackTextColor
-                      : kLightBlackTextColor,
-                  fontSize: kSubTitleFontSize),
+                      : Colors.orange[900],
+                  fontSize: 18),
             ),
-            NormalTextWidget(
-                widget.datum.discount.toString(), kAppColor, kLargeFontSize),
+            SizedBox(
+              height: h(20),
+            ),
+            NormalTextWidget("Count : ${count.toString()}", kAppColor, 18),
           ],
         ),
       ],
@@ -319,8 +305,8 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           Row(
             children: <Widget>[
               Container(
-                height: 30.0,
-                width: 75.0,
+                height: h(30),
+                width: w(75.0),
                 decoration: BoxDecoration(
                   color: kAppColor,
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -358,7 +344,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
   Container productImages() {
     return Container(
-      height: 300.0,
+      height: h(300),
       child: Hero(
         tag: "hero-Item-${widget.datum.id}",
         child: new Carousel(
@@ -414,8 +400,8 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                       Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Container(
-                          height: 205.0,
-                          width: 650.0,
+                          height: h(205),
+                          width: w(650.0),
                           child: Padding(
                             padding: EdgeInsets.only(top: 20.0),
                             child: Column(
@@ -482,7 +468,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CardWidget(
-                            height: 140,
+                            height: h(140),
                             childWidget: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -509,7 +495,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 10,
+                                  height: h(10),
                                 ),
                                 Text(
                                   myCommentList[i].userComment,

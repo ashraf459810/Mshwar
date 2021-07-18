@@ -555,6 +555,8 @@ class _DarkModeBottomSheetState extends State<DarkModeBottomSheet> {
 // ignore: must_be_immutable
 // ignore: camel_case_types
 // ignore: must_be_immutable
+// ignore: camel_case_types
+// ignore: must_be_immutable
 class setting extends StatelessWidget {
   static var _txtCustomHead = TextStyle(
     color: kAppColor,

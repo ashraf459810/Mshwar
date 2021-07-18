@@ -6,7 +6,6 @@ import 'package:dellyshop/screens/CategoryShops/CategoryShops.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 
 import 'package:dellyshop/screens/home/components/product_item_builder.dart';
-import 'package:dellyshop/screens/product_detail/product_detail_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +18,6 @@ class BrandDetailScreen extends StatefulWidget {
   BrandDetailScreen(this.category);
 
   final List<int> list = [1, 2, 3, 4, 5];
-
 
   @override
   _BrandDetailScreenState createState() => _BrandDetailScreenState();
@@ -45,8 +43,8 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
         context: context,
         builder: (builder) {
           return BlocProvider(
-            create: (context) =>
-                HomeBloc()..add(GetCategoryShopsEvent(widget.category.id.toString())),
+            create: (context) => HomeBloc()
+              ..add(GetCategoryShopsEvent(widget.category.id.toString())),
             child: SingleChildScrollView(
               child: new Container(
                 height: 340.0,
@@ -180,29 +178,35 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
           );
         }
         if (state is Error) {
-          return Center(child: Text(state.error,style: TextStyle(color: Colors.black,)));
+          return Center(
+              child: Text(state.error,
+                  style: TextStyle(
+                    color: Colors.black,
+                  )));
         }
-        if (state is GetCategoryShopsState){
+        if (state is GetCategoryShopsState) {
           categoryShopsModel = state.categoryShopsModel;
         }
-        return categoryShopsModel!=null? Hero(
-          tag: 'hero-tag-${widget.category.id}',
-          child: Material(
-            child: new DecoratedBox(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  fit: BoxFit.cover,
-                  image: new AssetImage(widget.category.image),
+        return categoryShopsModel != null
+            ? Hero(
+                tag: 'hero-tag-${widget.category.id}',
+                child: Material(
+                  child: new DecoratedBox(
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        fit: BoxFit.cover,
+                        image: new AssetImage(widget.category.image),
+                      ),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.only(top: 130.0),
+                      decoration: BoxDecoration(),
+                    ),
+                  ),
                 ),
-                shape: BoxShape.rectangle,
-              ),
-              child: Container(
-                margin: EdgeInsets.only(top: 130.0),
-                decoration: BoxDecoration(),
-              ),
-            ),
-          ),
-          ):Container();
+              )
+            : Container();
       },
     );
     return Scaffold(
@@ -280,7 +284,6 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
           /// Create Grid Item
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
-
               (BuildContext context, int index) {
                 return InkWell(
                     onTap: () {
@@ -292,7 +295,8 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
                     },
                     child: FittedBox(
                       child: ProductItemBuilder(
-                          isDiscount: false,  ),
+                        isDiscount: false,
+                      ),
                     ));
               },
               childCount: 5,

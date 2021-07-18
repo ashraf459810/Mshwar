@@ -13,19 +13,14 @@ class AppColor {
   static const Color hintcolor = Color(0xFF142737);
   static const Color homecard = Color(0xFF142737);
   static const Color profilehine = Color(0xFF667780);
-
-
 }
- class S {
-     static const String savedcontactsforsupport = "false";
-      static const String savedcontactsforemergency = "false";
-      static const String islogin = "false";
-      static const String token = "false";
 
-  
- }
+class S {
+  static const String islogin = "islogin";
+  static const String token = "token";
+}
 
- const MaterialColor black = const MaterialColor(
+const MaterialColor black = const MaterialColor(
   0xFFFFFFFF,
   const <int, Color>{
     50: const Color(0x142737),

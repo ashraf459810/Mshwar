@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/injection.dart';
@@ -29,8 +28,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (loginModel.apiToken == null) {
           yield Error("wrong email or password");
         } else {
-          repo.iprefsHelper.setislogin(true);
-          repo.iprefsHelper.settoken(loginModel.apiToken);
+          await repo.iprefsHelper.setislogin(true);
+          await repo.iprefsHelper.settoken(loginModel.apiToken);
+
           print(loginModel.apiToken);
           yield LoginS();
         }

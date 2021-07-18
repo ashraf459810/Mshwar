@@ -1,14 +1,14 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CategoyShopsModel/CategoryShopsModel.dart';
-import 'package:dellyshop/models/product_item_model.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../app_localizations.dart';
 import '../../../util.dart';
 
 class ProductItemBuilder extends StatefulWidget {
-  bool isDiscount;
-  Shop shop;
+  final bool isDiscount;
+  final Shop shop;
   ProductItemBuilder({this.isDiscount, this.shop});
 
   @override
@@ -127,7 +127,7 @@ class _ProductItemBuilderState extends State<ProductItemBuilder> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                  "",
+                                    "",
                                     style: TextStyle(
                                         color: Utils.isDarkMode
                                             ? kDarkBlackTextColor
@@ -162,6 +162,5 @@ class _ProductItemBuilderState extends State<ProductItemBuilder> {
         ],
       ),
     );
-    
   }
 }

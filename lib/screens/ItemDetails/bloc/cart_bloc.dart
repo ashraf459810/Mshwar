@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/cart/AddOrDelete.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
+import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:dellyshop/injection.dart';
 part 'cart_event.dart';
@@ -15,7 +16,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   AddOrDelete addOrDelete;
   CartModel cartModel;
   var repo = sl.get<IRepository>();
-  String token;
+
   @override
   Stream<CartState> mapEventToState(
     CartEvent event,
@@ -26,8 +27,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       print("here after yield in bloc");
     }
     if (event is AddItemToCartEvent) {
+      print("${repo.iprefsHelper.gettoken()}");
       try {
-        token = await repo.iprefsHelper.gettoken();
+        String token = await repo.iprefsHelper.gettoken();
         print("$token ${event.itemid}  ${event.itemid} ");
         var response = await repo.iHttpHlper.getrequest(
             "/Cart/Add?api_token=$token&items_id=${event.itemid}&quantity=${event.count}&notes=");
@@ -41,7 +43,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
     if (event is GetCartItemsEvent) {
+      yield Loading();
       try {
+        String token = await repo.iprefsHelper.gettoken();
+
         var response = await repo.iHttpHlper
             .getrequest("/Cart/GetFinancials?api_token=$token");
         cartModel = cartModelFromJson(response);

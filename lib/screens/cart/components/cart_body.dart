@@ -1,7 +1,10 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/address_model.dart';
+import 'package:dellyshop/models/cart/CartModel.dart';
+import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
 import 'package:dellyshop/screens/add_adress/add_address_screen.dart';
+import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/custom_drop_down_button.dart';
@@ -9,6 +12,7 @@ import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../util.dart';
 
@@ -19,7 +23,7 @@ class CartBody extends StatefulWidget {
 
 class _CartBodyState extends State<CartBody> {
   var selectedUser;
-
+  CartModel cartModel;
   double totalListHeight;
   double itemHeight = 120;
   int index = 1;
@@ -31,140 +35,188 @@ class _CartBodyState extends State<CartBody> {
     totalpay = pay * value;
     totalListHeight = ((index * itemHeight)).toDouble();
 
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      child: ListView(
-        children: [
-          //Product List
-          SizedBox(
-            height: totalListHeight,
-            child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: itemHeight,
-                  child: cartProductItem(index),
-                );
-              },
-              itemCount: index,
-            ),
-          ),
+    return BlocProvider(
+      create: (context) => CartBloc()..add(GetCartItemsEvent()),
+      child: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          if (state is Loading) {
+            print("here loading");
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
+            );
+          }
+          if (state is GetCartItemsState) {
+            cartModel = state.cartModel;
+            print("here the lenht");
+            print(cartModel.carts.length);
+          }
+          if (state is Error) {
+            return Text(
+              state.error,
+              style: TextStyle(color: Colors.black),
+            );
+          }
+          return cartModel != null
+              ? Container(
+                  margin: EdgeInsets.all(10.0),
+                  child: cartModel.carts.isNotEmpty
+                      ? ListView(
+                          children: [
+                            //Product List
+                            SizedBox(
+                              height: h(400),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: itemHeight,
+                                    child: cartProductItem(index),
+                                  );
+                                },
+                                itemCount: cartModel.carts.length,
+                              ),
+                            ),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Container(
-              height: 1.0,
-              color: kLightBlackTextColor.withOpacity(0.3),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          CardWidget(
-            childWidget: FractionalTranslation(
-              translation: Offset(0.0, -0.1),
-              child: ListTile(
-                title: Text(
-                  ApplicationLocalizations.of(context)
-                      .translate("shipping_cost"),
-                  style: TextStyle(
-                      color: Utils.isDarkMode
-                          ? kDarkBlackTextColor
-                          : kLightBlackTextColor),
-                ),
-                subtitle: Text(
-                  ApplicationLocalizations.of(context)
-                      .translate("ship_company"),
-                  style: TextStyle(
-                      color:
-                          Utils.isDarkMode ? kDarkTextColorColor : kGrayColor),
-                ),
-                trailing: Text(
-                  "12\$",
-                  style: TextStyle(color: kAppColor, fontSize: kPriceFontSize),
-                ),
-                leading: Container(
-                  child: Icon(
-                    Icons.local_shipping,
-                    size: 35,
-                    color: kAppColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          CardWidget(
-            childWidget: ListTile(
-              title: Text(
-                ApplicationLocalizations.of(context).translate("total_price"),
-                style: TextStyle(
-                    color: Utils.isDarkMode
-                        ? kDarkBlackTextColor
-                        : kLightBlackTextColor),
-              ),
-              trailing: Text(
-                "${totalpay + 12}\$",
-                style: TextStyle(color: kAppColor, fontSize: kPriceFontSize),
-              ),
-            ),
-          ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Container(
+                                height: 1.0,
+                                color: kLightBlackTextColor.withOpacity(0.3),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CardWidget(
+                              childWidget: FractionalTranslation(
+                                translation: Offset(0.0, -0.1),
+                                child: ListTile(
+                                  title: Text(
+                                    ApplicationLocalizations.of(context)
+                                        .translate("shipping_cost"),
+                                    style: TextStyle(
+                                        color: Utils.isDarkMode
+                                            ? kDarkBlackTextColor
+                                            : kLightBlackTextColor),
+                                  ),
+                                  subtitle: Text(
+                                    ApplicationLocalizations.of(context)
+                                        .translate("ship_company"),
+                                    style: TextStyle(
+                                        color: Utils.isDarkMode
+                                            ? kDarkTextColorColor
+                                            : kGrayColor),
+                                  ),
+                                  trailing: Text(
+                                    "12\$",
+                                    style: TextStyle(
+                                        color: kAppColor,
+                                        fontSize: kPriceFontSize),
+                                  ),
+                                  leading: Container(
+                                    child: Icon(
+                                      Icons.local_shipping,
+                                      size: 35,
+                                      color: kAppColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            CardWidget(
+                              childWidget: ListTile(
+                                title: Text(
+                                  ApplicationLocalizations.of(context)
+                                      .translate("total_price"),
+                                  style: TextStyle(
+                                      color: Utils.isDarkMode
+                                          ? kDarkBlackTextColor
+                                          : kLightBlackTextColor),
+                                ),
+                                trailing: Text(
+                                  "${totalpay + 12}\$",
+                                  style: TextStyle(
+                                      color: kAppColor,
+                                      fontSize: kPriceFontSize),
+                                ),
+                              ),
+                            ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
-            child: TextWidget(
-                ApplicationLocalizations.of(context)
-                    .translate("select_address"),
-                kAppColor),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomDropDownButton(
-                dropDownButtonItems:
-                    addressList.map((e) => e.addressName).toList(),
-                placeHolder: ApplicationLocalizations.of(context)
-                    .translate("select_address"),
-              ),
-              CardWidget(
-                  childWidget: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(AddAddressScreen.routeName);
-                },
-                child: Row(
-                  children: [
-                    TextWidget(
-                        ApplicationLocalizations.of(context)
-                            .translate("add_address"),
-                        Utils.isDarkMode
-                            ? kDarkTextColorColor
-                            : kLightBlackTextColor),
-                    Icon(
-                      Icons.add,
-                      color: kAppColor,
-                      size: 20,
-                    )
-                  ],
-                ),
-              )),
-            ],
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          ButtonCustom(
-            txt: ApplicationLocalizations.of(context)
-                .translate("select_credit_card"),
-            ontap: () {
-              Navigator.of(context).pushNamed(SelectCreditCartScreen.routeName);
-            },
-            bacgroudColor: kAppColor,
-            textColor: kWhiteColor,
-          )
-        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                              child: TextWidget(
+                                  ApplicationLocalizations.of(context)
+                                      .translate("select_address"),
+                                  kAppColor),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomDropDownButton(
+                                  dropDownButtonItems: addressList
+                                      .map((e) => e.addressName)
+                                      .toList(),
+                                  placeHolder:
+                                      ApplicationLocalizations.of(context)
+                                          .translate("select_address"),
+                                ),
+                                CardWidget(
+                                    childWidget: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(AddAddressScreen.routeName);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      TextWidget(
+                                          ApplicationLocalizations.of(context)
+                                              .translate("add_address"),
+                                          Utils.isDarkMode
+                                              ? kDarkTextColorColor
+                                              : kLightBlackTextColor),
+                                      Icon(
+                                        Icons.add,
+                                        color: kAppColor,
+                                        size: 20,
+                                      )
+                                    ],
+                                  ),
+                                )),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            ButtonCustom(
+                              txt: ApplicationLocalizations.of(context)
+                                  .translate("select_credit_card"),
+                              ontap: () {
+                                Navigator.of(context).pushNamed(
+                                    SelectCreditCartScreen.routeName);
+                              },
+                              bacgroudColor: kAppColor,
+                              textColor: kWhiteColor,
+                            )
+                          ],
+                        )
+                      : Container(
+                          child: Center(
+                            child: Text(
+                              "No Items In your cart",
+                              style: TextStyle(
+                                  color: Colors.orange[900], fontSize: 18),
+                            ),
+                          ),
+                        ),
+                )
+              : Container();
+        },
       ),
     );
   }
