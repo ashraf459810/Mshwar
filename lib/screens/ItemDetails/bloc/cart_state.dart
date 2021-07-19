@@ -15,11 +15,6 @@ class GetCartItemsState extends CartState {
   GetCartItemsState(this.cartModel);
 }
 
-class GetCartCountState extends CartState {
-  final int count;
-  GetCartCountState(this.count);
-}
-
 class AddItemToCartState extends CartState {
   final AddOrDelete addOrDelete;
 
@@ -32,3 +27,8 @@ class Error extends CartState {
 }
 
 class Loading extends CartState {}
+
+class RemoveFromCartState extends CartState {
+  final AddOrDelete addOrDelete;
+  RemoveFromCartState(this.addOrDelete);
+}

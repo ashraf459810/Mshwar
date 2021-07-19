@@ -110,7 +110,7 @@ class _CartBodyState extends State<CartBody> {
                                             : kGrayColor),
                                   ),
                                   trailing: Text(
-                                    "12\$",
+                                    "${cartModel.deliveryFees}",
                                     style: TextStyle(
                                         color: kAppColor,
                                         fontSize: kPriceFontSize),
@@ -139,7 +139,7 @@ class _CartBodyState extends State<CartBody> {
                                           : kLightBlackTextColor),
                                 ),
                                 trailing: Text(
-                                  "${totalpay + 12}\$",
+                                  "${cartModel.cartsTotal}",
                                   style: TextStyle(
                                       color: kAppColor,
                                       fontSize: kPriceFontSize),
@@ -248,14 +248,14 @@ class _CartBodyState extends State<CartBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("iphone 11 Pro 64 GB",
+                  Text("${cartModel.carts[index].items.titleEn}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Utils.isDarkMode
                               ? kDarkBlackTextColor
                               : kLightBlackTextColor,
                           fontSize: kTitleFontSize)),
-                  Text("Apple",
+                  Text("${cartModel.carts[index].items.descriptionEn}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           color: Utils.isDarkMode
@@ -269,7 +269,7 @@ class _CartBodyState extends State<CartBody> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "200\$",
+                        "${cartModel.carts[index].items.price}",
                         style: TextStyle(
                             color: kAppColor, fontSize: kPriceFontSize),
                       ),
@@ -298,13 +298,14 @@ class _CartBodyState extends State<CartBody> {
                                   setState(() {
                                     if (value != 1) {
                                       value = value - 1;
-                                      totalpay = pay * value;
+
+                                      //  context.read<CartBloc>().add(event)
                                     }
                                   });
                                 },
                                 child: Container(
-                                  height: 30.0,
-                                  width: 30.0,
+                                  height: h(30),
+                                  width: w(30),
                                   decoration: BoxDecoration(
                                     color: kAppColor.withOpacity(0.7),
                                     border: Border(

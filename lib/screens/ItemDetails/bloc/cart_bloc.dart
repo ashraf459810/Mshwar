@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/cart/AddOrDelete.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
-import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
+
 import 'package:meta/meta.dart';
 import 'package:dellyshop/injection.dart';
 part 'cart_event.dart';
@@ -22,21 +22,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     CartEvent event,
   ) async* {
     if (event is CartCountEvent) {
-      cartcount++;
+      print("here from event");
+      cartcount = await repo.iprefsHelper.getcartcount();
       yield CartCountState(cartcount);
-      print("here after yield in bloc");
+      print("here after state");
     }
     if (event is AddItemToCartEvent) {
       print("${repo.iprefsHelper.gettoken()}");
       try {
         String token = await repo.iprefsHelper.gettoken();
-        print("$token ${event.itemid}  ${event.itemid} ");
+
         var response = await repo.iHttpHlper.getrequest(
             "/Cart/Add?api_token=$token&items_id=${event.itemid}&quantity=${event.count}&notes=");
-        print(response.toString());
+
         AddOrDelete addOrDelete = addOrDeleteFromJson(response);
+        await repo.iprefsHelper.increasecartcount();
 
         yield AddItemToCartState(addOrDelete);
+        add(CartCountEvent());
       } catch (error) {
         print(error);
         yield Error(error.toString());
@@ -53,6 +56,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         yield GetCartItemsState(cartModel);
       } catch (error) {
         yield Error(error.toString());
+      }
+    }
+    if (event is RemoveItemFromCartEvent) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+
+        var response = await repo.iHttpHlper
+            .getrequest("/Cart/Remove/{carts_id}?api_token=$token");
+
+        AddOrDelete addOrDelete = addOrDeleteFromJson(response);
+        await repo.iprefsHelper.increasecartcount();
+
+        yield AddItemToCartState(addOrDelete);
+        add(CartCountEvent());
+      } catch (error) {
+        yield Error(error);
       }
     }
   }
