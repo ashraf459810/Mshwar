@@ -28,4 +28,25 @@ class IprefsHelper implements PrefsHelper {
   Future<void> settoken(String token) async {
     return (await getPrefs()).setString(S.token, token);
   }
+
+  @override
+  Future<int> getcartcount() async {
+    return (await getPrefs()).getInt(S.cartcount) ?? 0;
+  }
+
+  @override
+  Future<void> increasecartcount() async {
+    int count = await getcartcount();
+    print("here the count $count");
+    count++;
+
+    return (await getPrefs()).setInt(S.cartcount, count);
+  }
+
+  @override
+  Future<void> decreasecartcount() async {
+    int count = await getcartcount();
+    count--;
+    return (await getPrefs()).setInt(S.cartcount, count);
+  }
 }

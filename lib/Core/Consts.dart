@@ -18,6 +18,7 @@ class AppColor {
 class S {
   static const String islogin = "islogin";
   static const String token = "token";
+  static const cartcount = "0";
 }
 
 const MaterialColor black = const MaterialColor(

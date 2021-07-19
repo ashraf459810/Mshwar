@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
+import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/cart/AddOrDelete.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
 
@@ -16,6 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   AddOrDelete addOrDelete;
   CartModel cartModel;
   var repo = sl.get<IRepository>();
+  AddressModel addressModel;
 
   @override
   Stream<CartState> mapEventToState(
@@ -54,6 +56,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             .getrequest("/Cart/GetFinancials?api_token=$token");
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
+        // add(GetAddressEvent());
       } catch (error) {
         yield Error(error.toString());
       }
@@ -71,6 +74,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         yield AddItemToCartState(addOrDelete);
         add(CartCountEvent());
+      } catch (error) {
+        yield Error(error);
+      }
+    }
+    if (event is GetAddressEvent) {
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response =
+            await repo.iHttpHlper.getrequest("/Addresses?api_token=$token");
+        addressModel = addressModelFromJson(response);
+        yield GetAddressState(addressModel);
       } catch (error) {
         yield Error(error);
       }

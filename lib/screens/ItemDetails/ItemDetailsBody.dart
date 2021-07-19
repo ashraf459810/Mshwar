@@ -153,6 +153,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                   count,
                   widget.datum.id,
                 ));
+            setState(() {});
           },
           bacgroudColor: kAppColor,
           textColor: kWhiteColor,

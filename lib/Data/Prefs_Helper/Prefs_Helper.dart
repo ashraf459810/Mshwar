@@ -6,4 +6,7 @@ abstract class PrefsHelper {
   Future<void> setislogin(bool islogin);
   Future<String> gettoken();
   Future<bool> getislogin();
+  Future<void> increasecartcount();
+  Future<void> decreasecartcount();
+  Future<int> getcartcount();
 }

@@ -32,3 +32,9 @@ class RemoveFromCartState extends CartState {
   final AddOrDelete addOrDelete;
   RemoveFromCartState(this.addOrDelete);
 }
+
+class GetAddressState extends CartState {
+  final AddressModel addressModel;
+
+  GetAddressState(this.addressModel);
+}

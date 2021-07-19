@@ -30,6 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         } else {
           await repo.iprefsHelper.setislogin(true);
           await repo.iprefsHelper.settoken(loginModel.apiToken);
+          print(loginModel.apiToken);
 
           print(loginModel.apiToken);
           yield LoginS();

@@ -30,7 +30,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => CartBloc(),
+        create: (context) => CartBloc()..add(CartCountEvent()),
         child: Scaffold(
             backgroundColor:
                 Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
@@ -62,6 +62,13 @@ class _ItemDetailsState extends State<ItemDetails> {
                           )),
                       BlocConsumer<CartBloc, CartState>(
                           listener: (context, state) {
+                        if (state is CartInitial) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.orange,
+                            ),
+                          );
+                        }
                         if (state is AddItemToCartState) {
                           Toast.show("Added to cart Successfully", context,
                               duration: Toast.LENGTH_SHORT,
@@ -69,15 +76,22 @@ class _ItemDetailsState extends State<ItemDetails> {
                               backgroundColor: Colors.orange[900]);
                         }
                       }, builder: (context, state) {
-                        return CircleAvatar(
-                          radius: 10.0,
-                          backgroundColor: Colors.red,
-                          child: Text(
-                            cartcount.toString(),
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 13.0),
-                          ),
-                        );
+                        if (state is GetCartItemsState) {}
+                        if (state is CartCountState) {
+                          print("here from state of vcount");
+                          cartcount = state.count;
+                        }
+                        return cartcount != null
+                            ? CircleAvatar(
+                                radius: 10.0,
+                                backgroundColor: Colors.red,
+                                child: Text(
+                                  cartcount.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13.0),
+                                ),
+                              )
+                            : Container();
                       }),
                     ],
                   ),

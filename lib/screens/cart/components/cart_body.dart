@@ -1,6 +1,6 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/models/address_model.dart';
+import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
 import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
 import 'package:dellyshop/screens/add_adress/add_address_screen.dart';
@@ -9,6 +9,7 @@ import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.d
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/custom_drop_down_button.dart';
 import 'package:dellyshop/widgets/default_buton.dart';
+import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:dellyshop/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _CartBodyState extends State<CartBody> {
   int value = 2;
   int pay = 200;
   int totalpay;
+  List<Address> address = [];
   @override
   Widget build(BuildContext context) {
     totalpay = pay * value;
@@ -39,6 +41,9 @@ class _CartBodyState extends State<CartBody> {
       create: (context) => CartBloc()..add(GetCartItemsEvent()),
       child: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
+          if (state is GetAddressState) {
+            address = state.addressModel.addresses;
+          }
           if (state is Loading) {
             print("here loading");
             return Center(
@@ -49,8 +54,7 @@ class _CartBodyState extends State<CartBody> {
           }
           if (state is GetCartItemsState) {
             cartModel = state.cartModel;
-            print("here the lenht");
-            print(cartModel.carts.length);
+            context.read<CartBloc>().add(GetAddressEvent());
           }
           if (state is Error) {
             return Text(
@@ -155,41 +159,57 @@ class _CartBodyState extends State<CartBody> {
                                       .translate("select_address"),
                                   kAppColor),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomDropDownButton(
-                                  dropDownButtonItems: addressList
-                                      .map((e) => e.addressName)
-                                      .toList(),
-                                  placeHolder:
-                                      ApplicationLocalizations.of(context)
-                                          .translate("select_address"),
-                                ),
-                                CardWidget(
-                                    childWidget: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .pushNamed(AddAddressScreen.routeName);
-                                  },
-                                  child: Row(
+
+                            address.isNotEmpty
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      TextWidget(
-                                          ApplicationLocalizations.of(context)
-                                              .translate("add_address"),
-                                          Utils.isDarkMode
-                                              ? kDarkTextColorColor
-                                              : kLightBlackTextColor),
-                                      Icon(
-                                        Icons.add,
-                                        color: kAppColor,
-                                        size: 20,
-                                      )
+                                      CustomDropDownButton(
+                                        dropDownButtonItems:
+                                            address.map((e) => e.name).toList(),
+                                        placeHolder:
+                                            ApplicationLocalizations.of(context)
+                                                .translate("select_address"),
+                                      ),
+                                      CardWidget(
+                                          childWidget: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              AddAddressScreen.routeName);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            TextWidget(
+                                                ApplicationLocalizations.of(
+                                                        context)
+                                                    .translate("add_address"),
+                                                Utils.isDarkMode
+                                                    ? kDarkTextColorColor
+                                                    : kLightBlackTextColor),
+                                            Icon(
+                                              Icons.add,
+                                              color: kAppColor,
+                                              size: 20,
+                                            )
+                                          ],
+                                        ),
+                                      )),
                                     ],
+                                  )
+                                : ShimmerWidget(
+                                    child: Container(
+                                      height: h(50),
+                                      width: w(50),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30)),
+                                        color: Colors.grey[300],
+                                      ),
+                                    ),
                                   ),
-                                )),
-                              ],
-                            ),
+
                             SizedBox(
                               height: 20.0,
                             ),
