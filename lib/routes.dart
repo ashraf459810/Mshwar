@@ -1,4 +1,3 @@
-import 'package:dellyshop/screens/add_adress/add_address_screen.dart';
 import 'package:dellyshop/screens/add_credit_card/add_credit_cart_screen.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 import 'package:dellyshop/screens/app_intro/app_intro_screen.dart';
@@ -27,7 +26,6 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   RegisterScreen.routeName: (context) => RegisterScreen(),
   CustomBottomNavigationBar.routeName: (context) => CustomBottomNavigationBar(),
-  AddAddressScreen.routeName: (context) => AddAddressScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),

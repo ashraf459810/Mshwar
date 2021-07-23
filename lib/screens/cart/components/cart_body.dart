@@ -3,7 +3,7 @@ import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
 import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
-import 'package:dellyshop/screens/add_adress/add_address_screen.dart';
+import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
@@ -175,8 +175,10 @@ class _CartBodyState extends State<CartBody> {
                                       CardWidget(
                                           childWidget: InkWell(
                                         onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                              AddAddressScreen.routeName);
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DelieverLocation()));
                                         },
                                         child: Row(
                                           children: [

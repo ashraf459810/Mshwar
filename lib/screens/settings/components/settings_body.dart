@@ -2,7 +2,7 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/address_model.dart';
 import 'package:dellyshop/models/language.dart';
-import 'package:dellyshop/screens/add_adress/add_address_screen.dart';
+import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/edit_address/edit_address_screen.dart';
 
 import 'package:dellyshop/screens/splash/splash_screen.dart';
@@ -278,7 +278,9 @@ class _SettingsBodyState extends State<SettingsBody> {
                   txt: ApplicationLocalizations.of(context)
                       .translate("add_address"),
                   ontap: () {
-                    Navigator.of(context).pushNamed(AddAddressScreen.routeName);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DelieverLocation(),
+                    ));
                   },
                   witdh: 100,
                   height: 40,
