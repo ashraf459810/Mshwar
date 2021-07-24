@@ -289,51 +289,56 @@ class _ShopItemsState extends State<ShopItems> {
                             ),
                           ));
                         },
-                        child: Card(
-                          child: Container(
-                            color: Colors.white,
-                            height: h(150),
-                            width: w(200),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                    height: h(200),
-                                    width: w(200),
-                                    child: Image.network(
-                                      "${items[index].images}",
-                                      fit: BoxFit.cover,
-                                    )),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Name :${items[index].titleEn}",
-                                      style: TextStyle(
-                                          color: Colors.orange[900],
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                    Text(
-                                      "Price  :${items[index].price}",
-                                      style: TextStyle(
-                                          color: Colors.orange[900],
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                    // Text(
-                                    //   items[index].discount.toString(),
-                                    //   style: TextStyle(
-                                    //       color: Colors.orange[900],
-                                    //       fontSize: 16,
-                                    //       fontWeight: FontWeight.w800),
-                                    // ),
-                                  ],
-                                )
-                              ],
-                            ),
+                        child: Container(
+                          color: Colors.white,
+                          height: h(150),
+                          width: w(200),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  height: h(200),
+                                  width: w(200),
+                                  child: Image.network(
+                                    "${items[index].images}",
+                                    fit: BoxFit.cover,
+                                  )),
+                              SizedBox(
+                                height: h(10),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "${items[index].titleEn}",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  SizedBox(
+                                    height: h(10),
+                                  ),
+                                  Text(
+                                    "Price  :${items[index].price}",
+                                    style: TextStyle(
+                                        color: Colors.orange[900],
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  // Text(
+                                  //   items[index].discount.toString(),
+                                  //   style: TextStyle(
+                                  //       color: Colors.orange[900],
+                                  //       fontSize: 16,
+                                  //       fontWeight: FontWeight.w800),
+                                  // ),
+                                ],
+                              )
+                            ],
                           ),
                         ));
                   },
@@ -343,8 +348,8 @@ class _ShopItemsState extends State<ShopItems> {
                 /// Setting Size for Grid Item
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 250.0,
-                  mainAxisSpacing: 7.0,
-                  crossAxisSpacing: 7.0,
+                  mainAxisSpacing: 9.0,
+                  crossAxisSpacing: 9.0,
                   childAspectRatio: 3 / 3.5,
                 ),
               ),
