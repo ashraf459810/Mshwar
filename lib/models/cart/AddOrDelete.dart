@@ -4,13 +4,13 @@
 
 import 'dart:convert';
 
-AddOrDelete addOrDeleteFromJson(String str) =>
-    AddOrDelete.fromJson(json.decode(str));
+AddResponse addOrDeleteFromJson(String str) =>
+    AddResponse.fromJson(json.decode(str));
 
-String addOrDeleteToJson(AddOrDelete data) => json.encode(data.toJson());
+String addOrDeleteToJson(AddResponse data) => json.encode(data.toJson());
 
-class AddOrDelete {
-  AddOrDelete({
+class AddResponse {
+  AddResponse({
     this.azsvr,
     this.newCartId,
   });
@@ -18,7 +18,7 @@ class AddOrDelete {
   String azsvr;
   int newCartId;
 
-  factory AddOrDelete.fromJson(Map<String, dynamic> json) => AddOrDelete(
+  factory AddResponse.fromJson(Map<String, dynamic> json) => AddResponse(
         azsvr: json["AZSVR"],
         newCartId: json["NewCartID"],
       );

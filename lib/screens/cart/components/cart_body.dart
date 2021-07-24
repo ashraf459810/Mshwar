@@ -54,6 +54,8 @@ class _CartBodyState extends State<CartBody> {
           }
           if (state is GetCartItemsState) {
             cartModel = state.cartModel;
+            print(state.cartModel.carts.length);
+            print("here the cart${state.cartModel.carts[0].id}");
             context.read<CartBloc>().add(GetAddressEvent());
           }
           if (state is Error) {
@@ -130,7 +132,7 @@ class _CartBodyState extends State<CartBody> {
                               ),
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: h(10),
                             ),
                             CardWidget(
                               childWidget: ListTile(
@@ -213,7 +215,7 @@ class _CartBodyState extends State<CartBody> {
                                   ),
 
                             SizedBox(
-                              height: 20.0,
+                              height: h(20),
                             ),
                             ButtonCustom(
                               txt: ApplicationLocalizations.of(context)
@@ -244,155 +246,164 @@ class _CartBodyState extends State<CartBody> {
   }
 
   cartProductItem(int index) {
-    return Dismissible(
-      onDismissed: (val) {
-        setState(() {
-          index--;
-          totalListHeight = ((index * itemHeight)).toDouble();
-        });
-      },
-      background: slideRightBackground(),
-      secondaryBackground: slideLeftBackground(),
-      key: UniqueKey(),
-      child: CardWidget(
-        height: itemHeight,
-        childWidget: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.asset(
-                "assets/images/iphone11.jpeg",
-                fit: BoxFit.cover,
+    return Builder(
+      builder: (context) => Dismissible(
+        onDismissed: (val) {
+          context
+              .read<CartBloc>()
+              .add(RemoveItemFromCartEvent(cartModel.carts[index].id));
+        },
+        background: slideRightBackground(),
+        secondaryBackground: slideLeftBackground(),
+        key: UniqueKey(),
+        child: CardWidget(
+          height: itemHeight,
+          childWidget: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  "assets/images/iphone11.jpeg",
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("${cartModel.carts[index].items.titleEn}",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Utils.isDarkMode
-                              ? kDarkBlackTextColor
-                              : kLightBlackTextColor,
-                          fontSize: kTitleFontSize)),
-                  Text("${cartModel.carts[index].items.descriptionEn}",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Utils.isDarkMode
-                              ? kDarkTextColorColor
-                              : kGrayColor,
-                          fontSize: kSmallFontSize)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${cartModel.carts[index].items.price}",
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("${cartModel.carts[index].items.titleEn}",
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            color: kAppColor, fontSize: kPriceFontSize),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0, right: 10.0),
-                        child: Container(
-                          width: 112.0,
-                          decoration: BoxDecoration(
-                            color:
-                                Utils.isDarkMode ? kDarkGrayColor : kWhiteColor,
-                            border: Border(
-                              top: BorderSide(
-                                color: Colors.black12.withOpacity(0.1),
-                              ),
-                              bottom: BorderSide(
-                                color: Colors.black12.withOpacity(0.1),
+                            color: Utils.isDarkMode
+                                ? kDarkBlackTextColor
+                                : kLightBlackTextColor,
+                            fontSize: kTitleFontSize)),
+                    Text("${cartModel.carts[index].items.descriptionEn}",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: Utils.isDarkMode
+                                ? kDarkTextColorColor
+                                : kGrayColor,
+                            fontSize: kSmallFontSize)),
+                    SizedBox(
+                      height: h(10),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${cartModel.carts[index].items.price}",
+                          style: TextStyle(
+                              color: kAppColor, fontSize: kPriceFontSize),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 0, right: 10.0),
+                          child: Container(
+                            width: w(112),
+                            decoration: BoxDecoration(
+                              color: Utils.isDarkMode
+                                  ? kDarkGrayColor
+                                  : kWhiteColor,
+                              border: Border(
+                                top: BorderSide(
+                                  color: Colors.black12.withOpacity(0.1),
+                                ),
+                                bottom: BorderSide(
+                                  color: Colors.black12.withOpacity(0.1),
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              /// Decrease of value item
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (value != 1) {
-                                      value = value - 1;
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                /// Decrease of value item
 
-                                      //  context.read<CartBloc>().add(event)
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: h(30),
-                                  width: w(30),
-                                  decoration: BoxDecoration(
-                                    color: kAppColor.withOpacity(0.7),
-                                    border: Border(
-                                        right: BorderSide(
-                                          color:
-                                              Colors.black12.withOpacity(0.1),
-                                        ),
-                                        left: BorderSide(
-                                          color:
-                                              Colors.black12.withOpacity(0.1),
-                                        )),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    "-",
-                                    style: TextStyle(color: kWhiteColor),
-                                  )),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 18.0),
-                                child: Text(
-                                  value.toString(),
-                                  style: TextStyle(
-                                      color: Utils.isDarkMode
-                                          ? kDarkTextColorColor
-                                          : kTextColorColor),
-                                ),
-                              ),
-
-                              /// Increasing value of item
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    value = value + 1;
-                                    totalpay = pay * value;
-                                  });
-                                },
-                                child: Container(
-                                  height: 30.0,
-                                  width: 28.0,
-                                  decoration: BoxDecoration(
-                                      color: kAppColor.withOpacity(0.7),
-                                      border: Border(
-                                          left: BorderSide(
+                                Builder(
+                                  builder: (context) => InkWell(
+                                    onTap: () {
+                                      context.read<CartBloc>().add(
+                                          RemoveItemFromCartEvent(
+                                              cartModel.carts[index].id));
+                                      context
+                                          .read<CartBloc>()
+                                          .add(GetCartItemsEvent());
+                                    },
+                                    child: Container(
+                                      height: h(30),
+                                      width: w(30),
+                                      decoration: BoxDecoration(
+                                        color: kAppColor.withOpacity(0.7),
+                                        border: Border(
+                                            right: BorderSide(
                                               color: Colors.black12
-                                                  .withOpacity(0.1)))),
-                                  child: Center(
-                                      child: Text(
-                                    "+",
-                                    style: TextStyle(color: kWhiteColor),
-                                  )),
+                                                  .withOpacity(0.1),
+                                            ),
+                                            left: BorderSide(
+                                              color: Colors.black12
+                                                  .withOpacity(0.1),
+                                            )),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        "-",
+                                        style: TextStyle(color: kWhiteColor),
+                                      )),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18.0),
+                                  child: Text(
+                                    "${cartModel.carts[index].items.quantity.toString().substring(12)}",
+                                    style: TextStyle(
+                                        color: Utils.isDarkMode
+                                            ? kDarkTextColorColor
+                                            : kTextColorColor),
+                                  ),
+                                ),
+
+                                /// Increasing value of item
+                                Builder(
+                                  builder: (context) => InkWell(
+                                    onTap: () {
+                                      context.read<CartBloc>().add(
+                                          AddItemToCartEvent(1,
+                                              cartModel.carts[index].items.id));
+                                      context
+                                          .read<CartBloc>()
+                                          .add(GetCartItemsEvent());
+                                    },
+                                    child: Container(
+                                      height: h(30),
+                                      width: w(28.0),
+                                      decoration: BoxDecoration(
+                                          color: kAppColor.withOpacity(0.7),
+                                          border: Border(
+                                              left: BorderSide(
+                                                  color: Colors.black12
+                                                      .withOpacity(0.1)))),
+                                      child: Center(
+                                          child: Text(
+                                        "+",
+                                        style: TextStyle(color: kWhiteColor),
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -409,7 +420,7 @@ class _CartBodyState extends State<CartBody> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              width: 20,
+              width: w(20),
             ),
             Icon(
               Icons.delete,

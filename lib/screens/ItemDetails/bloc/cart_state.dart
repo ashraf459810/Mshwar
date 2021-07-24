@@ -16,7 +16,7 @@ class GetCartItemsState extends CartState {
 }
 
 class AddItemToCartState extends CartState {
-  final AddOrDelete addOrDelete;
+  final AddResponse addOrDelete;
 
   AddItemToCartState(this.addOrDelete);
 }
@@ -29,7 +29,7 @@ class Error extends CartState {
 class Loading extends CartState {}
 
 class RemoveFromCartState extends CartState {
-  final AddOrDelete addOrDelete;
+  final RemoveResponse addOrDelete;
   RemoveFromCartState(this.addOrDelete);
 }
 

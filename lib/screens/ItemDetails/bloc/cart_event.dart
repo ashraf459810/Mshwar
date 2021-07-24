@@ -17,7 +17,7 @@ class AddItemToCartEvent extends CartEvent {
 class GetCartItemsEvent extends CartEvent {}
 
 class RemoveItemFromCartEvent extends CartEvent {
-  final itemid;
+  final int itemid;
   RemoveItemFromCartEvent(this.itemid);
 }
 

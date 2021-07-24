@@ -20,14 +20,14 @@ class CartModel {
   String azsvr;
   List<Cart> carts;
   String membershipDiscount;
-  int cartsTotal;
+  double cartsTotal;
   int deliveryFees;
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         azsvr: json["AZSVR"],
         carts: List<Cart>.from(json["Carts"].map((x) => Cart.fromJson(x))),
         membershipDiscount: json["MembershipDiscount"],
-        cartsTotal: json["CartsTotal"],
+        cartsTotal: json["CartsTotal"].toDouble(),
         deliveryFees: json["DeliveryFees"],
       );
 
@@ -59,13 +59,13 @@ class Cart {
   int id;
   int usersId;
   int itemsId;
-  dynamic quantity;
+  int quantity;
   dynamic notes;
   DateTime createdAt;
   DateTime updatedAt;
   int subTotal;
-  int membershipDiscount;
-  int total;
+  double membershipDiscount;
+  double total;
   List<dynamic> customAttributesValues;
   Items items;
 
@@ -73,13 +73,13 @@ class Cart {
         id: json["id"],
         usersId: json["users_id"],
         itemsId: json["items_id"],
-        quantity: json["quantity"],
+        quantity: json["quantity"] == null ? null : json["quantity"],
         notes: json["notes"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         subTotal: json["sub_total"],
-        membershipDiscount: json["MembershipDiscount"],
-        total: json["total"],
+        membershipDiscount: json["MembershipDiscount"].toDouble(),
+        total: json["total"].toDouble(),
         customAttributesValues:
             List<dynamic>.from(json["custom_attributes_values"].map((x) => x)),
         items: Items.fromJson(json["items"]),
@@ -89,7 +89,7 @@ class Cart {
         "id": id,
         "users_id": usersId,
         "items_id": itemsId,
-        "quantity": quantity,
+        "quantity": quantity == null ? null : quantity,
         "notes": notes,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
@@ -126,10 +126,10 @@ class Items {
   });
 
   int id;
-  String title;
-  String titleEn;
-  String description;
-  String descriptionEn;
+  Title title;
+  TitleEn titleEn;
+  Description description;
+  DescriptionEn descriptionEn;
   dynamic internalNotes;
   String images;
   int quantity;
@@ -147,10 +147,10 @@ class Items {
 
   factory Items.fromJson(Map<String, dynamic> json) => Items(
         id: json["id"],
-        title: json["title"],
-        titleEn: json["title_en"],
-        description: json["description"],
-        descriptionEn: json["description_en"],
+        title: titleValues.map[json["title"]],
+        titleEn: titleEnValues.map[json["title_en"]],
+        description: descriptionValues.map[json["description"]],
+        descriptionEn: descriptionEnValues.map[json["description_en"]],
         internalNotes: json["internal_notes"],
         images: json["images"],
         quantity: json["quantity"],
@@ -169,10 +169,10 @@ class Items {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
-        "title_en": titleEn,
-        "description": description,
-        "description_en": descriptionEn,
+        "title": titleValues.reverse[title],
+        "title_en": titleEnValues.reverse[titleEn],
+        "description": descriptionValues.reverse[description],
+        "description_en": descriptionEnValues.reverse[descriptionEn],
         "internal_notes": internalNotes,
         "images": images,
         "quantity": quantity,
@@ -188,4 +188,60 @@ class Items {
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
       };
+}
+
+enum Description { KMASDKMASKDM, EMPTY, DESCRIPTION, PURPLE }
+
+final descriptionValues = EnumValues({
+  "سشنيشسنيسنش": Description.DESCRIPTION,
+  "شسيسشيشسي": Description.EMPTY,
+  "kmasdkmaskdm": Description.KMASDKMASKDM,
+  "سشنيةشسنيةشسنية": Description.PURPLE
+});
+
+enum DescriptionEn {
+  SAKMDASKMD,
+  AS_DSAKDK,
+  ASMKDASMKDKMA,
+  TERSDKSDKSMK_DSMKDMSKDMSK_MSKDMSKDMKSD
+}
+
+final descriptionEnValues = EnumValues({
+  "asmkdasmkdkma": DescriptionEn.ASMKDASMKDKMA,
+  "as,dsakdk": DescriptionEn.AS_DSAKDK,
+  "sakmdaskmd": DescriptionEn.SAKMDASKMD,
+  "tersdksdksmk dsmkdmskdmsk mskdmskdmksd":
+      DescriptionEn.TERSDKSDKSMK_DSMKDMSKDMSK_MSKDMSKDMKSD
+});
+
+enum Title { SAKDMKSAMKDSA, EMPTY, TITLE, PURPLE }
+
+final titleValues = EnumValues({
+  "تجربة": Title.EMPTY,
+  "تجربة تجربة": Title.PURPLE,
+  "sakdmksamkdsa": Title.SAKDMKSAMKDSA,
+  "شسينةسشني": Title.TITLE
+});
+
+enum TitleEn { KASDMASKDKASM, TEST, KDAMSKDAKMASD, TEST_TEST }
+
+final titleEnValues = EnumValues({
+  "kasdmaskdkasm": TitleEn.KASDMASKDKASM,
+  "kdamskdakmasd": TitleEn.KDAMSKDAKMASD,
+  "test": TitleEn.TEST,
+  "test test": TitleEn.TEST_TEST
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }
