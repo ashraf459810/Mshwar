@@ -5,6 +5,7 @@ import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/cart/AddOrDelete.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
+import 'package:dellyshop/models/removeResponse/RemoveResponse.dart';
 
 import 'package:meta/meta.dart';
 import 'package:dellyshop/injection.dart';
@@ -14,7 +15,7 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial());
   int cartcount = 0;
-  AddOrDelete addOrDelete;
+  AddResponse addOrDelete;
   CartModel cartModel;
   var repo = sl.get<IRepository>();
   AddressModel addressModel;
@@ -37,7 +38,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         var response = await repo.iHttpHlper.getrequest(
             "/Cart/Add?api_token=$token&items_id=${event.itemid}&quantity=${event.count}&notes=");
 
-        AddOrDelete addOrDelete = addOrDeleteFromJson(response);
+        AddResponse addOrDelete = addOrDeleteFromJson(response);
         await repo.iprefsHelper.increasecartcount();
 
         yield AddItemToCartState(addOrDelete);
@@ -54,10 +55,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         var response = await repo.iHttpHlper
             .getrequest("/Cart/GetFinancials?api_token=$token");
+
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
         // add(GetAddressEvent());
       } catch (error) {
+        print(" $error");
         yield Error(error.toString());
       }
     }
@@ -67,13 +70,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         String token = await repo.iprefsHelper.gettoken();
 
         var response = await repo.iHttpHlper
-            .getrequest("/Cart/Remove/{carts_id}?api_token=$token");
+            .getrequest("/Cart/Remove/${event.itemid}?api_token=$token");
 
-        AddOrDelete addOrDelete = addOrDeleteFromJson(response);
+        RemoveResponse addOrDelete = removeResponseFromJson(response);
         await repo.iprefsHelper.increasecartcount();
 
-        yield AddItemToCartState(addOrDelete);
+        yield RemoveFromCartState(addOrDelete);
         add(CartCountEvent());
+        add(GetCartItemsEvent());
       } catch (error) {
         yield Error(error);
       }
