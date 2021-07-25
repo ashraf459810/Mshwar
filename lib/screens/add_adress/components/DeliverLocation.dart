@@ -49,7 +49,8 @@ class _DelieverLocationState extends State<DelieverLocation> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => GetlocationBloc()..add(LocationEvent()),
+      create: (context) => GetlocationBloc(),
+      // ..add(LocationEvent()),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(

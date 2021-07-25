@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/screens/edit_profile/components/RemoveAddress.dart';
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/default_texfromfield.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../app_localizations.dart';
@@ -108,6 +110,17 @@ class _EditProfileBodyState extends State<EditProfileBody> {
               height: 10.0,
             ),
             ButtonCustom(
+              txt: "Remove Addresss",
+              ontap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => RemoveAddress(),
+                ));
+              },
+              bacgroudColor: kAppColor,
+              textColor: kWhiteColor,
+            ),
+            SizedBox(height: h(10)),
+            ButtonCustom(
               txt: ApplicationLocalizations.of(context).translate("save"),
               ontap: () {
                 Navigator.of(context).pop();
@@ -174,4 +187,12 @@ class _EditProfileBodyState extends State<EditProfileBody> {
           );
         });
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }

@@ -25,14 +25,15 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
   Stream<GetlocationState> mapEventToState(
     GetlocationEvent event,
   ) async* {
-    if (event is GetlocationEvent) {
+    if (event is LocationEvent) {
+      print("here the event is triggered");
       yield Loading();
       await Permission.location.isGranted;
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
       // position = await functions.determinePosition();
-      print("here the postion $position");
+      print("here stuck the postion $position");
       if (position == null) {
         yield Error("There is a problem with gettin your location");
       } else {
@@ -60,12 +61,25 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         yield Error(error);
       }
     }
+    if (event is RemoveAddressEvent) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response = await repo.iHttpHlper.getrequest(
+            "/Addresses/Remove/${event.addressid}?api_token=$token");
+        if (response != null) {
+          yield RemoveAddressState(true);
+        }
+      } catch (error) {
+        yield Error(error);
+      }
+    }
   }
+}
 
-  Future<List<Placemark>> getLocationAddress(
-      double latitude, double longitude) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(latitude, longitude);
-    return placemarks;
-  }
+Future<List<Placemark>> getLocationAddress(
+    double latitude, double longitude) async {
+  List<Placemark> placemarks =
+      await placemarkFromCoordinates(latitude, longitude);
+  return placemarks;
 }

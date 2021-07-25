@@ -25,3 +25,8 @@ class AddAddressState extends GetlocationState {
   final AddAddressResponse addAddressResponse;
   AddAddressState(this.addAddressResponse);
 }
+
+class RemoveAddressState extends GetlocationState {
+  final bool seccess;
+  RemoveAddressState(this.seccess);
+}

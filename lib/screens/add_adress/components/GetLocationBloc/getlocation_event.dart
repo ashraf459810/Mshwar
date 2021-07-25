@@ -14,3 +14,8 @@ class AddAddressEvent extends GetlocationEvent {
   AddAddressEvent(
       this.address1, this.addressname, this.cityid, this.lat, this.lng);
 }
+
+class RemoveAddressEvent extends GetlocationEvent {
+  final int addressid;
+  RemoveAddressEvent(this.addressid);
+}

@@ -5,7 +5,7 @@ import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/cart/AddOrDelete.dart';
 import 'package:dellyshop/models/cart/CartModel.dart';
-import 'package:dellyshop/models/removeResponse/RemoveResponse.dart';
+import 'package:dellyshop/models/removeItemResponse/RemoveResponse.dart';
 
 import 'package:meta/meta.dart';
 import 'package:dellyshop/injection.dart';
