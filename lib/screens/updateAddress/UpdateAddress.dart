@@ -1,26 +1,30 @@
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/models/AddressModel/AddressModel.dart' as a;
 import 'package:dellyshop/models/CitiesModel/cities.dart';
+import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart' as cart;
+
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
-import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
-    as c;
+import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
+
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
+    as c;
 import 'package:geocoding/geocoding.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toast/toast.dart';
 
-class DelieverLocation extends StatefulWidget {
-  DelieverLocation({Key key}) : super(key: key);
+class UpdateAddress extends StatefulWidget {
+  UpdateAddress({Key key}) : super(key: key);
 
   @override
-  _DelieverLocationState createState() => _DelieverLocationState();
+  _UpdateAddressState createState() => _UpdateAddressState();
 }
 
-class _DelieverLocationState extends State<DelieverLocation> {
+class _UpdateAddressState extends State<UpdateAddress> {
   TextEditingController controller = TextEditingController();
   String street;
   String country;
@@ -32,16 +36,22 @@ class _DelieverLocationState extends State<DelieverLocation> {
   List<City> cities = [];
   City chosencity;
   int chosencityid;
-
+  List<a.Address> address = [];
+  String selectaddress = "select address";
   c.RegisterBloc registerBloc = c.RegisterBloc();
   Set<Marker> markers = {};
   String selectcity = "select city";
   LatLng currentPostion;
   LatLng markerlocation;
   String addressname;
+  cart.CartBloc cartBloc = cart.CartBloc();
+  String selectedaddress;
+  int chosenaddressid;
+  var chosenaddress;
   @override
   void initState() {
     registerBloc.add(c.CitiesEvent());
+    cartBloc.add(cart.GetAddressEvent());
     super.initState();
   }
 
@@ -83,18 +93,20 @@ class _DelieverLocationState extends State<DelieverLocation> {
                 Container(
                   child: BlocConsumer<GetlocationBloc, GetlocationState>(
                     listener: (context, state) {
-                      if (state is AddAddressState) {
-                        Toast.show(
-                            "Added Successfiully to your Addresses", context,
-                            duration: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.orange,
-                            gravity: Toast.TOP);
-                      }
                       if (state is Error) {
                         Toast.show(state.error, context,
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange,
                             gravity: Toast.TOP);
+                      }
+                      if (state is UpdateAddressState) {
+                        Toast.show("Address Updated Successfully", context,
+                            duration: Toast.LENGTH_SHORT,
+                            backgroundColor: Colors.orange,
+                            gravity: Toast.TOP);
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CustomBottomNavigationBar(),
+                        ));
                       }
                     },
                     builder: (context, state) {
@@ -276,31 +288,88 @@ class _DelieverLocationState extends State<DelieverLocation> {
                     );
                   },
                 ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
+                BlocBuilder(
+                  bloc: cartBloc,
+                  builder: (context, state) {
+                    if (state is cart.Loading) {
+                      return CircularProgressIndicator();
+                    }
+                    if (state is cart.GetAddressState) {
+                      address = state.addressModel.addresses;
+                    }
+                    if (state is cart.Error) {
+                      return Center(
+                        child: Text(
+                          state.error,
+                          style: TextStyle(color: kAppColor),
+                        ),
+                      );
+                    }
+                    return Container(
+                      color: Colors.white,
+                      child: DropdownButton<a.Address>(
+                        hint: Center(child: Text(selectaddress)),
+
+                        value: chosenaddress,
+                        isExpanded: true,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+
+                        // style: const TextStyle(color: Colors.deepPurple),
+
+                        underline: SizedBox(),
+                        onChanged: (a.Address newValue) {
+                          selectaddress = newValue.name;
+                          chosenaddressid = newValue.id;
+
+                          setState(() {});
+                        },
+
+                        items: address.map<DropdownMenuItem<a.Address>>(
+                            (a.Address value) {
+                          return DropdownMenuItem<a.Address>(
+                            value: value,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(value.name),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  },
+                ),
                 SizedBox(height: size.height * 0.03),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   height: size.height * 0.04,
-                  width: size.width * 0.7,
-                  child: TextFormField(
-                    controller: controller,
-                    autofocus: false,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        isDense: true,
-                        hintStyle: TextStyle(color: Colors.grey),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-                        // contentPadding: EdgeInsets.only(left: size.width *0.33),
-                        hintText: "Type your Address name"),
-                    onChanged: (value) {
-                      addressname = value;
-                    },
-                    onSaved: (newValue) {
-                      addressname = newValue;
-                    },
+                  width: size.width,
+                  child: Center(
+                    child: TextFormField(
+                      controller: controller,
+                      autofocus: false,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          isDense: true,
+                          hintStyle: TextStyle(color: Colors.grey),
+                          contentPadding: EdgeInsets.only(right: 20),
+                          hintText: "Type new Address name"),
+                      onChanged: (value) {
+                        addressname = value;
+                      },
+                      onSaved: (newValue) {
+                        addressname = newValue;
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -308,49 +377,49 @@ class _DelieverLocationState extends State<DelieverLocation> {
                 ),
                 Builder(
                   builder: (context) => GestureDetector(
-                    onTap: () {
-                      print(chosencity);
-                      print(currentPostion.latitude);
-                      print(addressname);
-                      if (selectcity != "select city" &&
-                          currentPostion != null &&
-                          addressname != null) {
-                        context.read<GetlocationBloc>().add(AddAddressEvent(
-                            addressname,
-                            addressname,
-                            chosencityid,
-                            currentPostion.latitude,
-                            currentPostion.longitude));
-                      } else {
-                        Toast.show("please fill all the fields", context,
-                            duration: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.orange,
-                            gravity: Toast.TOP);
-                      }
-                    },
-                    child: Container(
-                      height: size.height * 0.06,
-                      width: size.width * 0.35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: kAppColor,
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Add Address",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                      onTap: () {
+                        if (selectcity != "select city" &&
+                            currentPostion != null &&
+                            addressname != null &&
+                            selectaddress != null &&
+                            chosenaddressid != null) {
+                          context.read<GetlocationBloc>().add(
+                              UpdateAddressEvent(
+                                  address1: addressname,
+                                  addressid: chosenaddressid,
+                                  cityid: chosencityid,
+                                  lat: currentPostion.latitude,
+                                  name: addressname,
+                                  long: currentPostion.longitude));
+                        } else {
+                          Toast.show("please fill all the fields", context,
+                              duration: Toast.LENGTH_SHORT,
+                              backgroundColor: Colors.orange,
+                              gravity: Toast.TOP);
+                        }
+                      },
+                      child: Container(
+                        height: size.height * 0.06,
+                        width: size.width * 0.35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: kAppColor,
                         ),
-                      ),
-                    ),
-                  ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Update Address",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
                 ),
               ],
             ),

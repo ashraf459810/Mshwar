@@ -74,6 +74,18 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         yield Error(error);
       }
     }
+    if (event is UpdateAddressEvent) {
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response = await repo.iHttpHlper.getrequest(
+            "/Addresses/Update/${event.addressid}?name=${event.name}&location_lat=${event.lat}&location_lng=${event.long}&cities_id=${event.cityid}&address_1=${event.address1}&api_token=$token");
+        if (response != null) {
+          yield UpdateAddressState();
+        }
+      } catch (error) {
+        yield Error(error);
+      }
+    }
   }
 }
 

@@ -162,58 +162,57 @@ class _CartBodyState extends State<CartBody> {
                                   kAppColor),
                             ),
 
-                            address.isNotEmpty
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CustomDropDownButton(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                address.isNotEmpty
+                                    ? CustomDropDownButton(
                                         dropDownButtonItems:
                                             address.map((e) => e.name).toList(),
                                         placeHolder:
                                             ApplicationLocalizations.of(context)
                                                 .translate("select_address"),
-                                      ),
-                                      CardWidget(
-                                          childWidget: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DelieverLocation()));
-                                        },
-                                        child: Row(
-                                          children: [
-                                            TextWidget(
-                                                ApplicationLocalizations.of(
-                                                        context)
-                                                    .translate("add_address"),
-                                                Utils.isDarkMode
-                                                    ? kDarkTextColorColor
-                                                    : kLightBlackTextColor),
-                                            Icon(
-                                              Icons.add,
-                                              color: kAppColor,
-                                              size: 20,
-                                            )
-                                          ],
-                                        ),
-                                      )),
+                                      )
+                                    : Container(),
+                                CardWidget(
+                                    childWidget: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DelieverLocation()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      TextWidget(
+                                          ApplicationLocalizations.of(context)
+                                              .translate("add_address"),
+                                          Utils.isDarkMode
+                                              ? kDarkTextColorColor
+                                              : kLightBlackTextColor),
+                                      Icon(
+                                        Icons.add,
+                                        color: kAppColor,
+                                        size: 20,
+                                      )
                                     ],
-                                  )
-                                : ShimmerWidget(
-                                    child: Container(
-                                      height: h(50),
-                                      width: w(50),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(30)),
-                                        color: Colors.grey[300],
-                                      ),
-                                    ),
                                   ),
-
+                                )),
+                              ],
+                            )
+                            // : ShimmerWidget(
+                            //     child: Container(
+                            //       height: h(50),
+                            //       width: w(50),
+                            //       decoration: BoxDecoration(
+                            //         shape: BoxShape.rectangle,
+                            //         borderRadius: BorderRadius.all(
+                            //             Radius.circular(30)),
+                            //         color: Colors.grey[300],
+                            //       ),
+                            //     ),
+                            //   ),
+                            ,
                             SizedBox(
                               height: h(20),
                             ),

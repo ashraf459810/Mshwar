@@ -109,16 +109,16 @@ class _EditProfileBodyState extends State<EditProfileBody> {
             SizedBox(
               height: 10.0,
             ),
-            ButtonCustom(
-              txt: "Remove Addresss",
-              ontap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => RemoveAddress(),
-                ));
-              },
-              bacgroudColor: kAppColor,
-              textColor: kWhiteColor,
-            ),
+            // ButtonCustom(
+            //   txt: "Remove Addresss",
+            //   ontap: () {
+            //     Navigator.of(context).push(MaterialPageRoute(
+            //       builder: (context) => RemoveAddress(),
+            //     ));
+            //   },
+            //   bacgroudColor: kAppColor,
+            //   textColor: kWhiteColor,
+            // ),
             SizedBox(height: h(10)),
             ButtonCustom(
               txt: ApplicationLocalizations.of(context).translate("save"),

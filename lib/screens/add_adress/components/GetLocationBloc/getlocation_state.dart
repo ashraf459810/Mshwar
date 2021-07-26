@@ -30,3 +30,5 @@ class RemoveAddressState extends GetlocationState {
   final bool seccess;
   RemoveAddressState(this.seccess);
 }
+
+class UpdateAddressState extends GetlocationState {}

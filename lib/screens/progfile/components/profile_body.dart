@@ -1,13 +1,15 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
+import 'package:dellyshop/screens/edit_profile/components/RemoveAddress.dart';
 import 'package:dellyshop/screens/edit_profile/edit_profile_screen.dart';
-import 'package:dellyshop/screens/last_view/last_view_screen.dart';
+
 import 'package:dellyshop/screens/my_comments/my_comments_screen.dart';
-import 'package:dellyshop/screens/my_favorites/my_favorites_screen.dart';
+
 import 'package:dellyshop/screens/my_orders/my_orders_screen.dart';
 import 'package:dellyshop/screens/notifications/notification_screen.dart';
 import 'package:dellyshop/screens/settings/settings_screen.dart';
+import 'package:dellyshop/screens/updateAddress/UpdateAddress.dart';
 import 'package:dellyshop/util.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
@@ -24,7 +26,7 @@ class ProfileBody extends StatefulWidget {
 
 class _ProfileBodyState extends State<ProfileBody> {
   ProfileModel profileModel = ProfileModel();
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -123,19 +125,18 @@ class _ProfileBodyState extends State<ProfileBody> {
                 SizedBox(
                   height: 10.0,
                 ),
-                buildCard(
-                    ApplicationLocalizations.of(context).translate("last_view"),
-                    Icons.access_time, () {
-                  Navigator.of(context).pushNamed(LastViewScreen.routeName);
+                buildCard(("Remove Address"), Icons.delete, () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RemoveAddress(),
+                  ));
                 }),
                 SizedBox(
                   height: 10.0,
                 ),
-                buildCard(
-                    ApplicationLocalizations.of(context)
-                        .translate("my_favorite"),
-                    Icons.favorite, () {
-                  Navigator.of(context).pushNamed(MyFavoriteScreen.routeName);
+                buildCard(("Update Address"), Icons.update, () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => UpdateAddress(),
+                  ));
                 }),
                 SizedBox(
                   height: 10.0,
