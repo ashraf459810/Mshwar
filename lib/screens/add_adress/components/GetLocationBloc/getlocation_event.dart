@@ -37,3 +37,5 @@ class UpdateAddressEvent extends GetlocationEvent {
       this.name,
       this.token});
 }
+
+class GetAddressEvent extends GetlocationEvent {}

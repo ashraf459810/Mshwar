@@ -41,7 +41,11 @@ class _HomeBodyState extends State<HomeBody> {
             );
           }
           if (state is Error) {
-            return Center(child: Text(state.error));
+            return Center(
+                child: Text(
+              state.error,
+              style: TextStyle(color: Colors.black),
+            ));
           }
 
           if (state is GetCategoriesState) {

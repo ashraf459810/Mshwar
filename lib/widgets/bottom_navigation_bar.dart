@@ -1,11 +1,10 @@
 import 'package:dellyshop/constant.dart';
 
-import 'package:dellyshop/screens/cart/cart_screen.dart';
+import 'package:dellyshop/screens/cart/components/cart_screen.dart';
 import 'package:dellyshop/screens/home/home_screen.dart';
 import 'package:dellyshop/screens/progfile/porile_screen.dart';
 
 import 'package:flutter/material.dart';
-
 
 import '../app_localizations.dart';
 import '../util.dart';

@@ -1,15 +1,16 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
-import 'package:dellyshop/models/cart/CartModel.dart';
-import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
+import 'package:dellyshop/models/CartModel.dart';
+
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
+import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/custom_drop_down_button.dart';
 import 'package:dellyshop/widgets/default_buton.dart';
-import 'package:dellyshop/widgets/shimmer_widger.dart';
+
 import 'package:dellyshop/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +55,11 @@ class _CartBodyState extends State<CartBody> {
           }
           if (state is GetCartItemsState) {
             cartModel = state.cartModel;
-            print(state.cartModel.carts.length);
-            print("here the cart${state.cartModel.carts[0].id}");
+
             context.read<CartBloc>().add(GetAddressEvent());
+          }
+          if (state is RemoveFromCartState) {
+            cartModel = state.cartModel;
           }
           if (state is Error) {
             return Text(
@@ -324,9 +327,6 @@ class _CartBodyState extends State<CartBody> {
                                       context.read<CartBloc>().add(
                                           RemoveItemFromCartEvent(
                                               cartModel.carts[index].id));
-                                      context
-                                          .read<CartBloc>()
-                                          .add(GetCartItemsEvent());
                                     },
                                     child: Container(
                                       height: h(30),

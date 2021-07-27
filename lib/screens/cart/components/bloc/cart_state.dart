@@ -29,8 +29,8 @@ class Error extends CartState {
 class Loading extends CartState {}
 
 class RemoveFromCartState extends CartState {
-  final RemoveResponse addOrDelete;
-  RemoveFromCartState(this.addOrDelete);
+  final CartModel cartModel;
+  RemoveFromCartState(this.cartModel);
 }
 
 class GetAddressState extends CartState {

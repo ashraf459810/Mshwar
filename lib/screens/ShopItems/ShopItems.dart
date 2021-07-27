@@ -298,7 +298,7 @@ class _ShopItemsState extends State<ShopItems> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                  height: h(200),
+                                  height: h(150),
                                   width: w(200),
                                   child: Image.network(
                                     "${items[index].images}",

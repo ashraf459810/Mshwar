@@ -1,7 +1,6 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart' as a;
 import 'package:dellyshop/models/CitiesModel/cities.dart';
-import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart' as cart;
 
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
@@ -44,14 +43,14 @@ class _UpdateAddressState extends State<UpdateAddress> {
   LatLng currentPostion;
   LatLng markerlocation;
   String addressname;
-  cart.CartBloc cartBloc = cart.CartBloc();
+
   String selectedaddress;
   int chosenaddressid;
   var chosenaddress;
   @override
   void initState() {
     registerBloc.add(c.CitiesEvent());
-    cartBloc.add(cart.GetAddressEvent());
+
     super.initState();
   }
 
@@ -59,7 +58,8 @@ class _UpdateAddressState extends State<UpdateAddress> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => GetlocationBloc()..add(LocationEvent()),
+      create: (context) =>
+          GetlocationBloc()..add(LocationEvent())..add(GetAddressEvent()),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -93,6 +93,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
                 Container(
                   child: BlocConsumer<GetlocationBloc, GetlocationState>(
                     listener: (context, state) {
+                      if (state is GetAddressState) {
+                        address = state.addressModel.addresses;
+                      }
                       if (state is Error) {
                         Toast.show(state.error, context,
                             duration: Toast.LENGTH_SHORT,
@@ -291,59 +294,41 @@ class _UpdateAddressState extends State<UpdateAddress> {
                 SizedBox(
                   height: size.height * 0.03,
                 ),
-                BlocBuilder(
-                  bloc: cartBloc,
-                  builder: (context, state) {
-                    if (state is cart.Loading) {
-                      return CircularProgressIndicator();
-                    }
-                    if (state is cart.GetAddressState) {
-                      address = state.addressModel.addresses;
-                    }
-                    if (state is cart.Error) {
-                      return Center(
-                        child: Text(
-                          state.error,
-                          style: TextStyle(color: kAppColor),
+                Container(
+                  color: Colors.white,
+                  child: DropdownButton<a.Address>(
+                    hint: Center(child: Text(selectaddress)),
+
+                    value: chosenaddress,
+                    isExpanded: true,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+
+                    // style: const TextStyle(color: Colors.deepPurple),
+
+                    underline: SizedBox(),
+                    onChanged: (a.Address newValue) {
+                      selectaddress = newValue.name;
+                      chosenaddressid = newValue.id;
+                      print(chosenaddressid);
+
+                      setState(() {});
+                    },
+
+                    items: address
+                        .map<DropdownMenuItem<a.Address>>((a.Address value) {
+                      return DropdownMenuItem<a.Address>(
+                        value: value,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(value.name),
+                          ],
                         ),
                       );
-                    }
-                    return Container(
-                      color: Colors.white,
-                      child: DropdownButton<a.Address>(
-                        hint: Center(child: Text(selectaddress)),
-
-                        value: chosenaddress,
-                        isExpanded: true,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-
-                        // style: const TextStyle(color: Colors.deepPurple),
-
-                        underline: SizedBox(),
-                        onChanged: (a.Address newValue) {
-                          selectaddress = newValue.name;
-                          chosenaddressid = newValue.id;
-
-                          setState(() {});
-                        },
-
-                        items: address.map<DropdownMenuItem<a.Address>>(
-                            (a.Address value) {
-                          return DropdownMenuItem<a.Address>(
-                            value: value,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(value.name),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  },
+                    }).toList(),
+                  ),
                 ),
                 SizedBox(height: size.height * 0.03),
                 Container(
@@ -412,7 +397,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                               Text(
                                 "Update Address",
                                 style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
                               ),

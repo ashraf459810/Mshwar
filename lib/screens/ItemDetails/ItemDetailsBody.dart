@@ -2,7 +2,8 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ShopItem.dart';
 import 'package:dellyshop/models/my_comment_model.dart';
-import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
+import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
+
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 import 'package:dellyshop/screens/home/components/header_title.dart';
 import 'package:dellyshop/util.dart';

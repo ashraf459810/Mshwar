@@ -1,8 +1,7 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
-import 'package:dellyshop/screens/ItemDetails/bloc/cart_bloc.dart';
-import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart'
-    as loc;
+
+import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,6 @@ class RemoveAddress extends StatefulWidget {
 }
 
 class _RemoveAddressState extends State<RemoveAddress> {
-  loc.GetlocationBloc getlocationBlocc = loc.GetlocationBloc();
   String selectedaddreddname;
   int selectedAddress;
   List<Address> address = [];
@@ -25,19 +23,24 @@ class _RemoveAddressState extends State<RemoveAddress> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
-        create: (context) => CartBloc()..add(GetAddressEvent()),
-        child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+        create: (context) => GetlocationBloc()..add(GetAddressEvent()),
+        child: BlocBuilder<GetlocationBloc, GetlocationState>(
+            builder: (context, state) {
+          if (state is RemoveAddressState) {
+            address = state.removeAddressRespnose.addresses;
+          }
+
           if (state is GetAddressState) {
             address = state.addressModel.addresses;
           }
-          if (state is Loading) {
-            print("here loading");
-            return Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            );
-          }
+          // if (state is Loading) {
+          //   print("here loading");
+          //   return Center(
+          //     child: CircularProgressIndicator(
+          //       color: Colors.orange,
+          //     ),
+          //   );
+          // }
 
           if (state is Error) {
             return Text(
@@ -45,6 +48,7 @@ class _RemoveAddressState extends State<RemoveAddress> {
               style: TextStyle(color: Colors.black),
             );
           }
+
           return Scaffold(
               body: address.isNotEmpty
                   ? Container(
@@ -91,29 +95,18 @@ class _RemoveAddressState extends State<RemoveAddress> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              getlocationBlocc
-                                  .add(loc.RemoveAddressEvent(selectedAddress));
-                              context.read<CartBloc>().add(GetAddressEvent());
+                              context
+                                  .read<GetlocationBloc>()
+                                  .add(RemoveAddressEvent(selectedAddress));
                             },
-                            child: BlocListener(
-                              bloc: getlocationBlocc,
-                              listener: (context, state) {
-                                if (state is loc.RemoveAddressState) {
-                                  Toast.show("Removed Successfully", context,
-                                      duration: Toast.LENGTH_SHORT,
-                                      gravity: Toast.TOP,
-                                      backgroundColor: Colors.orange[900]);
-                                }
-                              },
-                              child: Container(
-                                height: h(50),
-                                width: w(300),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.orange),
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: kAppColor),
-                                child: Center(child: Text("Remove")),
-                              ),
+                            child: Container(
+                              height: h(50),
+                              width: w(300),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: kAppColor),
+                              child: Center(child: Text("Remove")),
                             ),
                           )
                         ],

@@ -27,8 +27,14 @@ class AddAddressState extends GetlocationState {
 }
 
 class RemoveAddressState extends GetlocationState {
-  final bool seccess;
-  RemoveAddressState(this.seccess);
+  final AddressModel removeAddressRespnose;
+  RemoveAddressState(this.removeAddressRespnose);
 }
 
 class UpdateAddressState extends GetlocationState {}
+
+class GetAddressState extends GetlocationState {
+  final AddressModel addressModel;
+
+  GetAddressState(this.addressModel);
+}

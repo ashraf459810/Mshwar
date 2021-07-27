@@ -1,7 +1,7 @@
 import 'package:dellyshop/screens/add_credit_card/add_credit_cart_screen.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 import 'package:dellyshop/screens/app_intro/app_intro_screen.dart';
-import 'package:dellyshop/screens/cart/cart_screen.dart';
+import 'package:dellyshop/screens/cart/components/cart_screen.dart';
 import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
 import 'package:dellyshop/screens/edit_profile/edit_profile_screen.dart';
 import 'package:dellyshop/screens/home/home_screen.dart';

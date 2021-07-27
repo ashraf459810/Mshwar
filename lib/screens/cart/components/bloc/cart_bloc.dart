@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
-import 'package:dellyshop/models/cart/AddOrDelete.dart';
-import 'package:dellyshop/models/cart/CartModel.dart';
+import 'package:dellyshop/models/AddOrDelete.dart';
+import 'package:dellyshop/models/CartModel.dart';
 import 'package:dellyshop/models/removeItemResponse/RemoveResponse.dart';
 
 import 'package:meta/meta.dart';
@@ -58,7 +58,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
-        // add(GetAddressEvent());
+        // add(CartCountEvent());
       } catch (error) {
         print(" $error");
         yield Error(error.toString());
@@ -72,12 +72,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         var response = await repo.iHttpHlper
             .getrequest("/Cart/Remove/${event.itemid}?api_token=$token");
 
-        RemoveResponse addOrDelete = removeResponseFromJson(response);
+        cartModel = cartModelFromJson(response);
         await repo.iprefsHelper.increasecartcount();
 
-        yield RemoveFromCartState(addOrDelete);
+        yield RemoveFromCartState(cartModel);
         add(CartCountEvent());
-        add(GetCartItemsEvent());
       } catch (error) {
         yield Error(error);
       }

@@ -3,8 +3,8 @@ import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/widgets/page_title.dart';
 import 'package:flutter/material.dart';
 
-import '../../util.dart';
-import 'components/cart_body.dart';
+import '../../../util.dart';
+import 'cart_body.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = "/cart_screen";

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/AddAddressResponse/AddAddressResponse.dart';
+import 'package:dellyshop/models/AddressModel/AddressModel.dart';
+
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:geocoding/geocoding.dart';
 import 'package:meta/meta.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,9 +18,11 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
   GetlocationBloc() : super(GetlocationInitial());
   Position position;
   var repo = sl.get<IRepository>();
+
   String city;
   String street;
   String country;
+  AddressModel addressModel;
   var info;
   AddAddressResponse addAddressResponse;
   @override
@@ -67,9 +71,8 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         String token = await repo.iprefsHelper.gettoken();
         var response = await repo.iHttpHlper.getrequest(
             "/Addresses/Remove/${event.addressid}?api_token=$token");
-        if (response != null) {
-          yield RemoveAddressState(true);
-        }
+        addressModel = addressModelFromJson(response);
+        yield RemoveAddressState(addressModel);
       } catch (error) {
         yield Error(error);
       }
@@ -82,6 +85,17 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         if (response != null) {
           yield UpdateAddressState();
         }
+      } catch (error) {
+        yield Error(error);
+      }
+    }
+    if (event is GetAddressEvent) {
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response =
+            await repo.iHttpHlper.getrequest("/Addresses?api_token=$token");
+        addressModel = addressModelFromJson(response);
+        yield GetAddressState(addressModel);
       } catch (error) {
         yield Error(error);
       }

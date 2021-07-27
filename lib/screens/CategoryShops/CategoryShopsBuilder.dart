@@ -34,7 +34,7 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
           // mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: h(100),
+              height: h(90),
               width: w(150),
               child: (Image.network(
                 'https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg',
