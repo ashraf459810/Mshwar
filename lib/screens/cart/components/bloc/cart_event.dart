@@ -22,3 +22,9 @@ class RemoveItemFromCartEvent extends CartEvent {
 }
 
 class GetAddressEvent extends CartEvent {}
+
+class PlaceOrderEvent extends CartEvent {
+  final int addressid;
+  final bool iscash;
+  PlaceOrderEvent(this.addressid, this.iscash);
+}

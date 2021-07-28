@@ -6,9 +6,11 @@ import 'package:dellyshop/models/CartModel.dart';
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
-import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.dart';
+import 'package:dellyshop/screens/payment/components/payment_body.dart';
+import 'package:dellyshop/screens/payment/payment_screen.dart';
+
 import 'package:dellyshop/widgets/card_widget.dart';
-import 'package:dellyshop/widgets/custom_drop_down_button.dart';
+
 import 'package:dellyshop/widgets/default_buton.dart';
 
 import 'package:dellyshop/widgets/text_widget.dart';
@@ -24,6 +26,9 @@ class CartBody extends StatefulWidget {
 }
 
 class _CartBodyState extends State<CartBody> {
+  String selectaddress = 'select address';
+  Address chosenaddress;
+  int addressid;
   var selectedUser;
   CartModel cartModel;
   double totalListHeight;
@@ -44,6 +49,7 @@ class _CartBodyState extends State<CartBody> {
         builder: (context, state) {
           if (state is GetAddressState) {
             address = state.addressModel.addresses;
+            print(address.length);
           }
           if (state is Loading) {
             print("here loading");
@@ -169,12 +175,51 @@ class _CartBodyState extends State<CartBody> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 address.isNotEmpty
-                                    ? CustomDropDownButton(
-                                        dropDownButtonItems:
-                                            address.map((e) => e.name).toList(),
-                                        placeHolder:
-                                            ApplicationLocalizations.of(context)
-                                                .translate("select_address"),
+                                    ? Container(
+                                        height: h(47),
+                                        width: w(150),
+                                        child: CardWidget(
+                                          childWidget: DropdownButton<Address>(
+                                            hint: Center(
+                                                child: Text(
+                                              selectaddress,
+                                              style: TextStyle(
+                                                  color: kTextColorColor,
+                                                  fontWeight: FontWeight.w400),
+                                            )),
+
+                                            value: chosenaddress,
+                                            isExpanded: true,
+
+                                            iconSize: 24,
+                                            elevation: 16,
+
+                                            // style: const TextStyle(color: Colors.deepPurple),
+
+                                            underline: SizedBox(),
+                                            onChanged: (Address newValue) {
+                                              selectaddress = newValue.name;
+                                              addressid = newValue.id;
+
+                                              setState(() {});
+                                            },
+
+                                            items: address
+                                                .map<DropdownMenuItem<Address>>(
+                                                    (Address value) {
+                                              return DropdownMenuItem<Address>(
+                                                value: value,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(value.name),
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
                                       )
                                     : Container(),
                                 CardWidget(
@@ -220,11 +265,11 @@ class _CartBodyState extends State<CartBody> {
                               height: h(20),
                             ),
                             ButtonCustom(
-                              txt: ApplicationLocalizations.of(context)
-                                  .translate("select_credit_card"),
+                              txt: 'select payment method',
                               ontap: () {
-                                Navigator.of(context).pushNamed(
-                                    SelectCreditCartScreen.routeName);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        PaymentBody(addressid)));
                               },
                               bacgroudColor: kAppColor,
                               textColor: kWhiteColor,

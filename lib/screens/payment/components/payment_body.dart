@@ -1,15 +1,17 @@
-
-
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 import 'package:dellyshop/util.dart';
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_localizations.dart';
 
 class PaymentBody extends StatefulWidget {
+  final int addreddid;
+  PaymentBody([this.addreddid]);
   @override
   _PaymentBodyState createState() => _PaymentBodyState();
 }
@@ -17,8 +19,6 @@ class PaymentBody extends StatefulWidget {
 class _PaymentBodyState extends State<PaymentBody> {
   var select1 = true;
   var select2 = false;
-  var select3 = false;
-  var select4 = false;
 
   /// Custom Text
   var _customStyle = TextStyle(
@@ -28,212 +28,133 @@ class _PaymentBodyState extends State<PaymentBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                ApplicationLocalizations.of(context)
-                    .translate("choose_your_payment"),
-                style: TextStyle(
-                  letterSpacing: 0.1,
-                  fontWeight: FontWeight.w600,
-                  fontSize: kLargeFontSize,
-                  color: Utils.isDarkMode
-                      ? kDarkTextColorColor
-                      : kLightBlackTextColor,
+    return BlocProvider(
+      create: (context) => CartBloc(),
+      child: SingleChildScrollView(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  ApplicationLocalizations.of(context)
+                      .translate("choose_your_payment"),
+                  style: TextStyle(
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.w600,
+                    fontSize: kLargeFontSize,
+                    color: Utils.isDarkMode
+                        ? kDarkTextColorColor
+                        : kLightBlackTextColor,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              Padding(padding: EdgeInsets.only(top: 60.0)),
+                Padding(padding: EdgeInsets.only(top: 60.0)),
 
-              /// For RadioButton if selected or not selected
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    select1 = true;
-                    select2 = false;
-                    select3 = false;
-                    select4 = false;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: Utils.isDarkMode
-                          ? kDarkLightCardColorColor
-                          : kCardColorColor,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5.0,
-                            color: select1 ? kAppColor : Colors.white)
-                      ]),
-                  child: CardWidget(
-                    childWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                            ApplicationLocalizations.of(context)
-                                .translate("cash"),
-                            style: _customStyle),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Image.asset(
-                            "assets/images/cash.png",
-                            height: 25.0,
+                /// For RadioButton if selected or not selected
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      select1 = true;
+                      select2 = false;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14.0),
+                        color: Utils.isDarkMode
+                            ? kDarkLightCardColorColor
+                            : kCardColorColor,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 5.0,
+                              color: select1 ? kAppColor : Colors.white)
+                        ]),
+                    child: CardWidget(
+                      childWidget: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                              ApplicationLocalizations.of(context)
+                                  .translate("cash"),
+                              style: _customStyle),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Image.asset(
+                              "assets/images/cash.png",
+                              height: 25.0,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 15.0)),
+                Padding(padding: EdgeInsets.only(top: 15.0)),
 
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    select1 = false;
-                    select2 = true;
-                    select3 = false;
-                    select4 = false;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: Utils.isDarkMode
-                          ? kDarkLightCardColorColor
-                          : kCardColorColor,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5.0,
-                            color: select2 ? kAppColor : Colors.white)
-                      ]),
-                  child: CardWidget(
-                    childWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                            ApplicationLocalizations.of(context)
-                                .translate("credit_card"),
-                            style: _customStyle),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Image.asset(
-                            "assets/images/creditCart.png",
-                            height: 25.0,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      select1 = false;
+                      select2 = true;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14.0),
+                        color: Utils.isDarkMode
+                            ? kDarkLightCardColorColor
+                            : kCardColorColor,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 5.0,
+                              color: select2 ? kAppColor : Colors.white)
+                        ]),
+                    child: CardWidget(
+                      childWidget: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Visa on Delivery',
+                            style: TextStyle(
+                                color: kTextColorColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Image.asset(
+                              "assets/images/creditCart.png",
+                              height: 25.0,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 15.0)),
+                Padding(padding: EdgeInsets.only(top: 15.0)),
 
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    select1 = false;
-                    select2 = false;
-                    select3 = true;
-                    select4 = false;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: Utils.isDarkMode
-                          ? kDarkLightCardColorColor
-                          : kCardColorColor,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5.0,
-                            color: select3 ? kAppColor : Colors.white)
-                      ]),
-                  child: CardWidget(
-                    childWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                            ApplicationLocalizations.of(context)
-                                .translate("paypal"),
-                            style: _customStyle),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Image.asset(
-                            "assets/images/paypal.png",
-                            height: 25.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                Padding(padding: EdgeInsets.only(top: 15.0)),
+
+                Padding(padding: EdgeInsets.only(top: 60.0)),
+                ButtonCustom(
+                  txt: 'Place Order',
+                  ontap: () {
+                    _showDialog(context);
+                  },
+                  bacgroudColor: kAppColor,
+                  textColor: kWhiteColor,
                 ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 15.0)),
 
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    select1 = false;
-                    select2 = false;
-                    select3 = false;
-                    select4 = true;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: Utils.isDarkMode
-                          ? kDarkLightCardColorColor
-                          : kCardColorColor,
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5.0,
-                            color: select4 ? kAppColor : Colors.white)
-                      ]),
-                  child: CardWidget(
-                    childWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                            ApplicationLocalizations.of(context)
-                                .translate("google_wallet"),
-                            style: _customStyle),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: Image.asset(
-                            "assets/images/googleWallet.png",
-                            height: 25.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(padding: EdgeInsets.only(top: 60.0)),
-              ButtonCustom(
-                txt: ApplicationLocalizations.of(context).translate("payment"),
-                ontap: () {
-                  _showDialog(context);
-                
-                },
-                bacgroudColor: kAppColor,
-                textColor: kWhiteColor,
-              ),
+                /// Button pay
+                ///
 
-              /// Button pay
-              ///
-
-              SizedBox(
-                height: 20.0,
-              )
-            ],
+                SizedBox(
+                  height: 20.0,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -244,8 +165,6 @@ class _PaymentBodyState extends State<PaymentBody> {
     Navigator.of(context)
         .pushReplacementNamed(CustomBottomNavigationBar.routeName);
   }
-
- 
 
   /// Custom Text Header for Dialog after user succes payment
   var _txtCustomHead = TextStyle(
@@ -262,7 +181,8 @@ class _PaymentBodyState extends State<PaymentBody> {
   );
 
   _showDialog(BuildContext ctx) {
-    showDialog(builder: (context) =>   SimpleDialog(
+    showDialog(
+      builder: (context) => SimpleDialog(
         backgroundColor:
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
         children: <Widget>[
@@ -290,10 +210,8 @@ class _PaymentBodyState extends State<PaymentBody> {
           )),
         ],
       ),
-    
       context: ctx,
       barrierDismissible: true,
-  
     );
   }
 }
