@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/screens/edit_profile/components/RemoveAddress.dart';
+
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/default_texfromfield.dart';
 import 'package:dellyshop/widgets/normal_text.dart';

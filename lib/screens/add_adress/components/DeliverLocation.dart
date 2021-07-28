@@ -1,6 +1,8 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CitiesModel/cities.dart';
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
+import 'package:dellyshop/screens/cart/components/cart_body.dart';
+import 'package:dellyshop/screens/cart/components/cart_screen.dart';
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;
 import 'package:dellyshop/widgets/shimmer_widger.dart';
@@ -321,6 +323,9 @@ class _DelieverLocationState extends State<DelieverLocation> {
                             chosencityid,
                             currentPostion.latitude,
                             currentPostion.longitude));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CartScreen(),
+                        ));
                       } else {
                         Toast.show("please fill all the fields", context,
                             duration: Toast.LENGTH_SHORT,

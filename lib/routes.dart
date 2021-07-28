@@ -15,7 +15,7 @@ import 'package:dellyshop/screens/payment/payment_screen.dart';
 import 'package:dellyshop/screens/progfile/porile_screen.dart';
 import 'package:dellyshop/screens/register/register_screen.dart';
 import 'package:dellyshop/screens/search/search_screen.dart';
-import 'package:dellyshop/screens/select_credit_card/select_credit_card_screen.dart';
+
 import 'package:dellyshop/screens/settings/settings_screen.dart';
 import 'package:dellyshop/screens/splash/splash_screen.dart';
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
@@ -29,7 +29,6 @@ final Map<String, WidgetBuilder> routes = {
   HomeScreen.routeName: (context) => HomeScreen(),
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
-  SelectCreditCartScreen.routeName: (context) => SelectCreditCartScreen(),
   AddCreditCardScreen.routeName: (context) => AddCreditCardScreen(),
   LastViewScreen.routeName: (context) => LastViewScreen(),
   MyFavoriteScreen.routeName: (context) => MyFavoriteScreen(),

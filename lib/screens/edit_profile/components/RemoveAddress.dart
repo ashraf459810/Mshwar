@@ -6,7 +6,6 @@ import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:toast/toast.dart';
 
 class RemoveAddress extends StatefulWidget {
   RemoveAddress({Key key}) : super(key: key);
