@@ -38,3 +38,8 @@ class GetAddressState extends CartState {
 
   GetAddressState(this.addressModel);
 }
+
+class PlaceOrderState extends CartState {
+  final PlaceOrderModel placeOrderModel;
+  PlaceOrderState(this.placeOrderModel);
+}
