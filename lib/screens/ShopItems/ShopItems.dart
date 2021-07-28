@@ -23,6 +23,9 @@ class ShopItems extends StatefulWidget {
 }
 
 class _ShopItemsState extends State<ShopItems> {
+  ScrollController controller = ScrollController();
+  int pages = 0;
+  int ssize = 12;
   List<Datum> items = [];
   final _fontCostumSheetBotomHeader = TextStyle(
       color: Utils.isDarkMode ? kDarkTextColorColor : kLightBlackTextColor,
@@ -178,22 +181,23 @@ class _ShopItemsState extends State<ShopItems> {
       ),
     );
     return BlocProvider(
-      create: (context) => ShopitemsBloc()..add(GetItemsEvent(widget.shopid)),
+      create: (context) =>
+          ShopitemsBloc()..add(GetItemsEvent(widget.shopid, pages, ssize)),
       child: Scaffold(
         backgroundColor:
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
         key: _key,
         body: BlocBuilder<ShopitemsBloc, ShopitemsState>(
             builder: (context, state) {
-          if (state is Loading) {
-            return Container(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.orange,
-                ),
-              ),
-            );
-          }
+          // if (state is Loading) {
+          //   return Container(
+          //     child: Center(
+          //       child: CircularProgressIndicator(
+          //         color: Colors.orange,
+          //       ),
+          //     ),
+          //   );
+          // }
           if (state is Error) {
             return Center(
                 child: Text(
@@ -202,159 +206,95 @@ class _ShopItemsState extends State<ShopItems> {
             ));
           }
           if (state is GetItemsState) {
-            items = state.shopItem.items.data;
+            items = state.shopItem;
           }
-          return CustomScrollView(
-            scrollDirection: Axis.vertical,
-            slivers: <Widget>[
-              /// Appbar Custom using a SliverAppBar
-              SliverAppBar(
-                centerTitle: true,
-                backgroundColor:
-                    Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-                iconTheme: IconThemeData(color: kAppColor),
-                expandedHeight: h(300),
-                elevation: 0.1,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    title: Text(
-                      widget.shopname,
-                      style: TextStyle(
-                          color: kAppColor,
-                          fontSize: 17.0,
-                          fontFamily: "Popins",
-                          fontWeight: FontWeight.w700),
-                    ),
-                    background: Material(
-                      child: hero,
-                    )),
-              ),
+          return NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification is ScrollEndNotification &&
+                    controller.position.extentAfter == 0) {
+                  print("here from listener");
+                  pages++;
+                  print(pages);
+                  context
+                      .read<ShopitemsBloc>()
+                      .add(GetItemsEvent(widget.shopid, pages, ssize));
+                }
 
-              /// Container for description to Sort and Refine
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
-                          child: Container(
-                            height: h(79),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4.0)),
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 30.0, left: 20.0, right: 20.0),
-                                  child: Text(
-                                    "shop1 provide  the best goods for you ...",
-                                    style: TextStyle(
-                                        color: Colors.orange[900],
-                                        fontSize: 18),
-                                    // ApplicationLocalizations.of(context)
-                                    //     .translate("lorem"),
-                                    // style: TextStyle(
-                                    //     fontWeight: FontWeight.w400,
-                                    //     fontSize: 15.0,
-                                    //     color: Utils.isDarkMode
-                                    //         ? kDarkTextColorColor
-                                    //         : Colors.black54),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              /// Create Grid Item
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ItemDetails(
-                              datum: items[index],
-                            ),
-                          ));
-                        },
-                        child: Container(
-                          color: Colors.white,
-                          height: h(150),
-                          width: w(200),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  height: h(150),
-                                  width: w(200),
-                                  child: Image.network(
-                                    "${items[index].images}",
-                                    fit: BoxFit.cover,
-                                  )),
-                              SizedBox(
-                                height: h(10),
+                return false;
+              },
+              child: SafeArea(
+                top: true,
+                child: GridView.builder(
+                    physics:
+                        ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                    scrollDirection: Axis.vertical,
+                    controller: controller,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 3 / 3.8,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20),
+                    itemCount: items.length,
+                    // ignore: missing_return
+                    itemBuilder: (BuildContext ctx, index) {
+                      return InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ItemDetails(
+                                datum: items[index],
                               ),
-                              Column(
+                            ));
+                          },
+                          child: Card(
+                            child: Container(
+                              color: Colors.white,
+                              height: h(150),
+                              width: w(200),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    "${items[index].titleEn}",
-                                    style: TextStyle(
-                                        color: Colors.orange[900],
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w800),
-                                  ),
+                                  Container(
+                                      height: h(150),
+                                      width: w(200),
+                                      child: Image.network(
+                                        "${items[index].images}",
+                                        fit: BoxFit.cover,
+                                      )),
                                   SizedBox(
                                     height: h(10),
                                   ),
-                                  Text(
-                                    "Price  :${items[index].price}",
-                                    style: TextStyle(
-                                        color: Colors.orange[900],
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w800),
-                                  ),
-                                  // Text(
-                                  //   items[index].discount.toString(),
-                                  //   style: TextStyle(
-                                  //       color: Colors.orange[900],
-                                  //       fontSize: 16,
-                                  //       fontWeight: FontWeight.w800),
-                                  // ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        "${items[index].titleEn}",
+                                        style: TextStyle(
+                                            color: Colors.orange[900],
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        height: h(10),
+                                      ),
+                                      Text(
+                                        "Price : ${items[index].price}",
+                                        style: TextStyle(
+                                            color: Colors.orange[900],
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                        ));
-                  },
-                  childCount: items.length,
-                ),
-
-                /// Setting Size for Grid Item
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 250.0,
-                  mainAxisSpacing: 9.0,
-                  crossAxisSpacing: 9.0,
-                  childAspectRatio: 3 / 3.5,
-                ),
-              ),
-            ],
-          );
+                              ),
+                            ),
+                          ));
+                    }),
+              ));
         }),
       ),
     );

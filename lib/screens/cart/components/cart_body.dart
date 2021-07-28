@@ -5,9 +5,8 @@ import 'package:dellyshop/models/CartModel.dart';
 
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
-import 'package:dellyshop/screens/home/components/category_list_builder.dart';
+
 import 'package:dellyshop/screens/payment/components/payment_body.dart';
-import 'package:dellyshop/screens/payment/payment_screen.dart';
 
 import 'package:dellyshop/widgets/card_widget.dart';
 

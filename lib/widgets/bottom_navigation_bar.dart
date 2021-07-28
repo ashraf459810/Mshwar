@@ -66,6 +66,7 @@ class _customBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                 color:
                     Utils.isDarkMode ? kDarkBottomIconColor : kBottomIconColor,
               ),
+              // ignore: deprecated_member_use
               title: Text(
                 ApplicationLocalizations.of(context).translate("home"),
                 style: TextStyle(
@@ -88,6 +89,7 @@ class _customBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                       ? kDarkBottomIconColor
                       : kBottomIconColor,
                 ),
+                // ignore: deprecated_member_use
                 title: Text(
                   ApplicationLocalizations.of(context).translate("cart"),
                   style: TextStyle(
@@ -109,6 +111,7 @@ class _customBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                 color:
                     Utils.isDarkMode ? kDarkBottomIconColor : kBottomIconColor,
               ),
+              // ignore: deprecated_member_use
               title: Text(
                 ApplicationLocalizations.of(context).translate("profile"),
                 style: TextStyle(

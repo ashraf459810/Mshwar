@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 import '../constant.dart';
 import '../util.dart';
 
+// ignore: must_be_immutable
 class ShimmerWidget extends StatefulWidget {
   Widget child;
 

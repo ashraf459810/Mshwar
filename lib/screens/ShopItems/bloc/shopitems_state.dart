@@ -13,6 +13,6 @@ class Error extends ShopitemsState {
 }
 
 class GetItemsState extends ShopitemsState {
-  final ShopItem shopItem;
+  final List<Datum> shopItem;
   GetItemsState(this.shopItem);
 }

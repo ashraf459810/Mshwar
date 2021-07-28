@@ -10,7 +10,7 @@ part 'shopitems_state.dart';
 
 class ShopitemsBloc extends Bloc<ShopitemsEvent, ShopitemsState> {
   ShopitemsBloc() : super(ShopitemsInitial());
-
+  List<Datum> items = [];
   var repo = sl.get<IRepository>();
   ShopItem shopItem;
   @override
@@ -22,9 +22,14 @@ class ShopitemsBloc extends Bloc<ShopitemsEvent, ShopitemsState> {
       try {
         print("here");
         var response = await repo.iHttpHlper.getrequest(
-            "/Items?title=&description=&quantity=&shops_id=${event.shopid}&orderBy=&orderDir=&results_num=");
+            "/Items?title=&description=&quantity=&shops_id=${event.shopid}&orderBy=&orderDir=&results_num=${event.size}");
         shopItem = shopItemFromJson(response);
-        yield GetItemsState(shopItem);
+        for (var i = 0; i < shopItem.items.data.length; i++) {
+          if (items.length < shopItem.items.data.length) {
+            items.add(shopItem.items.data[i]);
+          } else {}
+        }
+        yield GetItemsState(items);
       } catch (error) {
         print(error);
         yield Error(error);

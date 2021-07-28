@@ -5,5 +5,7 @@ abstract class ShopitemsEvent {}
 
 class GetItemsEvent extends ShopitemsEvent {
   final int shopid;
-  GetItemsEvent(this.shopid);
+  final int page;
+  final int size;
+  GetItemsEvent(this.shopid, this.page, this.size);
 }

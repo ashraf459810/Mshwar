@@ -166,7 +166,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                       if (state is PlaceOrderState) {
                         Toast.show('Order Places Successfully', context,
                             duration: Toast.LENGTH_LONG,
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
                       }
                       Navigator.of(context).push(MaterialPageRoute(
@@ -208,53 +208,7 @@ class _PaymentBodyState extends State<PaymentBody> {
   }
 
   /// Custom Text Header for Dialog after user succes payment
-  var _txtCustomHead = TextStyle(
-    color: Utils.isDarkMode ? kDarkTextColorColor : Colors.black54,
-    fontSize: kPriceFontSize,
-    fontWeight: FontWeight.w600,
-  );
 
-  /// Custom Text Description for Dialog after user succes payment
-  var _txtCustomSub = TextStyle(
-    color: Utils.isDarkMode ? kLightBlackTextColor : Colors.black38,
-    fontSize: kSmallFontSize,
-    fontWeight: FontWeight.w500,
-  );
-
-  _showDialog(BuildContext ctx) {
-    showDialog(
-      builder: (context) => SimpleDialog(
-        backgroundColor:
-            Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-        children: <Widget>[
-          Container(
-              padding: EdgeInsets.only(top: 30.0, right: 60.0, left: 60.0),
-              child: Icon(
-                Icons.check_circle,
-                color: kAppColor,
-              )),
-          Center(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              ApplicationLocalizations.of(context).translate("success"),
-              style: _txtCustomHead,
-            ),
-          )),
-          Center(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 30.0, bottom: 40.0),
-            child: Text(
-              ApplicationLocalizations.of(context).translate("success_message"),
-              style: _txtCustomSub,
-            ),
-          )),
-        ],
-      ),
-      context: ctx,
-      barrierDismissible: true,
-    );
-  }
 }
 
 double h(double h) {

@@ -1,7 +1,7 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CitiesModel/cities.dart';
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
-import 'package:dellyshop/screens/cart/components/cart_body.dart';
+
 import 'package:dellyshop/screens/cart/components/cart_screen.dart';
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;

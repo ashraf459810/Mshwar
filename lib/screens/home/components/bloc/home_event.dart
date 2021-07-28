@@ -11,3 +11,5 @@ class GetCategoryShopsEvent extends HomeEvent {
   final String id;
   GetCategoryShopsEvent(this.id);
 }
+
+class GetDicountItemsEvent extends HomeEvent {}

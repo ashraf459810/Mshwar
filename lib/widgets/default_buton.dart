@@ -1,8 +1,10 @@
 import 'package:dellyshop/constant.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ButtonCustom extends StatelessWidget {
   @override
+  // ignore: override_on_non_overriding_member
   String txt;
   Color bacgroudColor;
   Color textColor;
@@ -26,6 +28,7 @@ class ButtonCustom extends StatelessWidget {
         return ButtonTheme(
           height: height,
           minWidth: witdh,
+          // ignore: deprecated_member_use
           child: RaisedButton(
               color: bacgroudColor,
               shape: RoundedRectangleBorder(

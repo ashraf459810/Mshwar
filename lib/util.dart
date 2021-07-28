@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class Utils {
   static double totalPrice;
 
-  // ignore: missing_return
   static double GridHeight() {
     if (Platform.isIOS)
       return 260;
