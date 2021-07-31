@@ -1,10 +1,13 @@
+import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 import 'package:dellyshop/models/product_item_model.dart';
-import 'package:dellyshop/screens/home/components/product_item_builder.dart';
+import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
+import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
+
 import 'package:dellyshop/screens/product_detail/product_detail_screen.dart';
 import 'package:dellyshop/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../../util.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AllProductScreenBody extends StatefulWidget {
   @override
@@ -12,66 +15,104 @@ class AllProductScreenBody extends StatefulWidget {
 }
 
 class _AllProductScreenBody extends State<AllProductScreenBody> {
+  HomeBloc homeBloc = HomeBloc();
+  List<ItemsWithDiscount> items = [];
+  @override
+  void initState() {
+    homeBloc.add(GetDicountItemsEvent(12));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        PreferredSize(preferredSize: Size.fromHeight(20),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(SearchScreen.routeName);
-            },
-            child: Container(
-              height: 40,
-              margin: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  shape: BoxShape.rectangle),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.search,
-                      color: Colors.black38,
-                    ),
-                  ),
-                ],
+    return BlocBuilder(
+      bloc: homeBloc,
+      builder: (context, state) {
+        if (state is GetDiscountItemsState) {
+          items = state.discountItems;
+        }
+        if (state is Error) {
+          return Text(
+            state.error,
+            style: TextStyle(color: Colors.black),
+          );
+        }
+
+        return ListView(
+          children: [
+            PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Container(
+                height: h(40),
               ),
             ),
-          ),
-        ),
-        GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: (140 / Utils.GridHeight()),
-          controller: new ScrollController(keepScrollOffset: false),
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          children: newestLit.map(
-            (value) {
-              return Hero(
-                tag: "hero-Item-${value.id}",
-                child: Material(
-                  child: GestureDetector(
+            Container(
+              height: h(200),
+              child: GridView.builder(
+                  itemCount: items.length,
+                  physics:
+                      ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetailScreen(value)));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DiscountItemDetails(
+                            itemsWithDiscount: items[index],
+                          ),
+                        ));
                       },
-                      child: FittedBox(
-                        child: ProductItemBuilder(
-                            isDiscount: false, ),
-                      )),
-                ),
-              );
-            },
-          ).toList(),
-        ),
-      ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          height: h(100),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                  height: h(150),
+                                  width: w(150),
+                                  child: Image.asset(
+                                    "assets/images/apple.jpg",
+                                    fit: BoxFit.cover,
+                                  )),
+                              Container(
+                                color: Colors.grey[100],
+                                width: w(150),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "${items[index].titleEn}",
+                                      style:
+                                          TextStyle(color: Colors.orange[900]),
+                                    ),
+                                    Text(
+                                      "Price : ${items[index].price}",
+                                      style:
+                                          TextStyle(color: Colors.orange[900]),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            )
+          ],
+        );
+      },
     );
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }
