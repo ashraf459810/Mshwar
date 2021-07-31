@@ -16,3 +16,8 @@ class Error extends ProfileState {
   final String error;
   Error(this.error);
 }
+
+class CartHistoryState extends ProfileState {
+  final CartHistory cartHistory;
+  CartHistoryState(this.cartHistory);
+}

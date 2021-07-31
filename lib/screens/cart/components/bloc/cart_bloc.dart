@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/models/AddOrDelete.dart';
+import 'package:dellyshop/models/CartHistory/CartHistory.dart';
 import 'package:dellyshop/models/CartModel.dart';
 import 'package:dellyshop/models/PlaceOrderModel.dart';
 
@@ -21,6 +22,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   int payid;
   var repo = sl.get<IRepository>();
   AddressModel addressModel;
+  CartHistory cartHistory;
 
   @override
   Stream<CartState> mapEventToState(

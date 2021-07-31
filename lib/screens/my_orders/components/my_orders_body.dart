@@ -1,8 +1,12 @@
 import 'package:dellyshop/app_localizations.dart';
+import 'package:dellyshop/models/CartHistory/CartHistory.dart';
 import 'package:dellyshop/models/my_favorite_model.dart';
+import 'package:dellyshop/screens/CategoryShops/CategoryShopsBuilder.dart';
+import 'package:dellyshop/screens/progfile/components/bloc/profile_bloc.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 
 import '../../../constant.dart';
@@ -15,16 +19,44 @@ class MyOrdersBody extends StatefulWidget {
 
 class _MyOrdersBodyState extends State<MyOrdersBody>
     with TickerProviderStateMixin {
+  bool showdetails = false;
+  List<MyOrder> carthistory = [];
+  ProfileBloc profileBloc = ProfileBloc();
+  @override
+  void initState() {
+    profileBloc.add(CartHistoryEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return buildProductItem(index);
-        },
-        itemCount: myFavList.length,
-      ),
+    return BlocBuilder(
+      bloc: profileBloc,
+      builder: (context, state) {
+        if (state is Loading) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is Error) {
+          return Center(
+            child: Text(
+              state.error,
+              style: TextStyle(color: Colors.black),
+            ),
+          );
+        }
+        if (state is CartHistoryState) {
+          carthistory = state.cartHistory.myOrders;
+        }
+        return Container(
+          margin: EdgeInsets.all(10.0),
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return buildProductItem(index);
+            },
+            itemCount: carthistory.length,
+          ),
+        );
+      },
     );
   }
 
@@ -36,44 +68,45 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CardWidget(
-          height: myFavList[index].itemHeight,
+          height: h(200),
           childWidget: Column(
             children: [
               Row(
                 children: [
                   Container(
                     margin: EdgeInsets.only(right: 10.0, top: 5.0),
-                    height: 100,
-                    width: 100,
+                    height: h(100),
+                    width: w(150),
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                          fit: BoxFit.fitHeight,
-                          image: AssetImage(myFavList[index].productImage),
-                        )),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Image.asset(
+                      "assets/images/apple.jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(myFavList[index].productName,
+                        Text(carthistory[index].itemName,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Utils.isDarkMode
                                     ? kDarkTextColorColor
                                     : kLightBlackTextColor,
                                 fontSize: kTitleFontSize)),
-                        Text(myFavList[index].companyName,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: kGrayColor, fontSize: kSmallFontSize)),
+                        // Text(carthistory[index].invoiceId.toString(),
+                        //     overflow: TextOverflow.ellipsis,
+                        //     style: TextStyle(
+                        //         color: kGrayColor, fontSize: kSmallFontSize)),
                         SizedBox(
                           height: 2,
                         ),
                         Text(
-                          "${myFavList[index].price}\$",
+                          "${carthistory[index].price}\$",
                           style: TextStyle(
                               color: kAppColor, fontSize: kPriceFontSize),
                         ),
@@ -82,66 +115,25 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: GestureDetector(
-                  onTap: () {
-                    print("press");
-                    setState(
-                      () {
-                        myFavList[index].isSelect =
-                            myFavList[index].isSelect == false;
-                        print(myFavList[index].isSelect);
-                        myFavList[index].arrowRotate =
-                            myFavList[index].isSelect ? 90 : 0;
-                        if (myFavList[index].itemHeight == 150)
-                          myFavList[index].itemHeight = 250;
-                        else {
-                          myFavList[index].itemHeight = 150;
-                        }
-                      },
-                    );
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      NormalTextWidget(
-                          ApplicationLocalizations.of(context)
-                              .translate("show_mote_detail"),
-                          Utils.isDarkMode
-                              ? kDarkTextColorColor
-                              : kLightBlackTextColor,
-                          kSubTitleFontSize),
-                      RotationTransition(
-                        turns: new AlwaysStoppedAnimation(
-                            myFavList[index].arrowRotate / 360),
-                        child: Icon(Icons.arrow_forward_ios,
-                            size: 25, color: kAppColor),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Visibility(
-                visible: myFavList[index].isSelect,
+                visible: true,
                 child: Column(
                   children: [
                     buildOrderInfo(
                         index,
                         ApplicationLocalizations.of(context)
                             .translate("order_no"),
-                        myFavList[index].orderNo.toString()),
+                        carthistory[index].invoiceId.toString()),
                     buildOrderInfo(
                         index,
                         ApplicationLocalizations.of(context)
                             .translate("order_date"),
-                        Jiffy(myFavList[index].orderDate).yMMMd),
+                        Jiffy(carthistory[index].createdAt).yMMMd),
                     buildOrderInfo(
                         index,
                         ApplicationLocalizations.of(context)
                             .translate("order_status"),
-                        myFavList[index].orderStatus.toString()),
+                        carthistory[index].status.name),
                   ],
                 ),
               )
