@@ -26,3 +26,8 @@ class GetCategoryShopsState extends HomeState {
   final CategoryShopsModel categoryShopsModel;
   GetCategoryShopsState(this.categoryShopsModel);
 }
+
+class GetDiscountItemsState extends HomeState {
+  final List<ItemsWithDiscount> discountItems;
+  GetDiscountItemsState(this.discountItems);
+}

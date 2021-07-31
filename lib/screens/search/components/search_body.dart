@@ -1,7 +1,7 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/product_item_model.dart';
-import 'package:dellyshop/screens/home/components/product_item_builder.dart';
+
 import 'package:dellyshop/screens/product_detail/product_detail_screen.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
@@ -141,17 +141,14 @@ class _SearchBodyState extends State<SearchBody> {
                     tag: "hero-Item-${value.id}",
                     child: Material(
                       child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ProductDetailScreen(value)));
-                          },
-                          child: FittedBox(
-                            child: ProductItemBuilder(
-                                isDiscount: false,),
-                          )),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProductDetailScreen(value)));
+                        },
+                      ),
                     ),
                   );
                 },

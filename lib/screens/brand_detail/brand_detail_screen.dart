@@ -5,8 +5,6 @@ import 'package:dellyshop/models/category_models.dart';
 import 'package:dellyshop/screens/CategoryShops/CategoryShops.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 
-import 'package:dellyshop/screens/home/components/product_item_builder.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -286,18 +284,14 @@ class _BrandDetailScreenState extends State<BrandDetailScreen> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  CategoryShops(widget.category)));
-                    },
-                    child: FittedBox(
-                      child: ProductItemBuilder(
-                        isDiscount: false,
-                      ),
-                    ));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CategoryShops(widget.category)));
+                  },
+                );
               },
               childCount: 5,
             ),

@@ -12,4 +12,7 @@ class GetCategoryShopsEvent extends HomeEvent {
   GetCategoryShopsEvent(this.id);
 }
 
-class GetDicountItemsEvent extends HomeEvent {}
+class GetDicountItemsEvent extends HomeEvent {
+  final int size;
+  GetDicountItemsEvent(this.size);
+}
