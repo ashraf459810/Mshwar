@@ -131,7 +131,7 @@ class _SearchBodyState extends State<SearchBody> {
             padding: const EdgeInsets.all(10.0),
             child: GridView.count(
               crossAxisCount: 2,
-              childAspectRatio: (140 / Utils.GridHeight()),
+              childAspectRatio: (140 / Utils.gridHeight()),
               controller: new ScrollController(keepScrollOffset: false),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,

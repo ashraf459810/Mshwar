@@ -34,7 +34,7 @@ class _SettingsBodyState extends State<SettingsBody> {
       child: Container(
         child: Column(
           children: <Widget>[
-            setting(
+            Setting(
               head: ApplicationLocalizations.of(context).translate("account"),
               sub1: ApplicationLocalizations.of(context).translate("addresses"),
               sub2: ApplicationLocalizations.of(context).translate("telephone"),
@@ -49,7 +49,7 @@ class _SettingsBodyState extends State<SettingsBody> {
                 emailBottomSheet();
               },
             ),
-            setting(
+            Setting(
               head: ApplicationLocalizations.of(context).translate("settings"),
               sub1: ApplicationLocalizations.of(context)
                   .translate("notifications"),
@@ -559,7 +559,9 @@ class _DarkModeBottomSheetState extends State<DarkModeBottomSheet> {
 // ignore: must_be_immutable
 // ignore: camel_case_types
 // ignore: must_be_immutable
-class setting extends StatelessWidget {
+// ignore: camel_case_types
+// ignore: must_be_immutable
+class Setting extends StatelessWidget {
   static var _txtCustomHead = TextStyle(
     color: kAppColor,
     fontSize: kTitleFontSize,
@@ -570,7 +572,7 @@ class setting extends StatelessWidget {
   GestureTapCallback sub1Tap;
   GestureTapCallback sub2Tap;
   GestureTapCallback sub3Tap;
-  setting(
+  Setting(
       {this.head,
       this.sub1,
       this.sub2,

@@ -161,25 +161,6 @@ class _ShopItemsState extends State<ShopItems> {
   @override
   Widget build(BuildContext context) {
     /// Hero animation for image
-    final hero = Hero(
-      tag: 'hero-tag-${widget.shopid}',
-      child: Material(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                  "https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg"),
-            ),
-            shape: BoxShape.rectangle,
-          ),
-          child: Container(
-            margin: EdgeInsets.only(top: 130.0),
-            decoration: BoxDecoration(),
-          ),
-        ),
-      ),
-    );
     return BlocProvider(
       create: (context) =>
           ShopitemsBloc()..add(GetItemsEvent(widget.shopid, pages, ssize)),

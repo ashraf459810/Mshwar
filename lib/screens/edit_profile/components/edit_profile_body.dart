@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
-import 'package:dellyshop/screens/home/home_screen.dart';
+
 import 'package:dellyshop/screens/progfile/components/bloc/profile_bloc.dart';
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 
@@ -204,7 +204,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
     });
   }
 
-  void _showPicker(context) {
+  void showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {

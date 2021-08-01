@@ -3,8 +3,6 @@ import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 
-import 'package:dellyshop/screens/product_detail/product_detail_screen.dart';
-import 'package:dellyshop/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

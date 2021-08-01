@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constant.dart';
 
 class PageTitle extends StatefulWidget {
-  String title;
+  final String title;
 
   PageTitle(this.title);
 

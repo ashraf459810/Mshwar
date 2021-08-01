@@ -12,11 +12,12 @@ import '../util.dart';
 class CustomBottomNavigationBar extends StatefulWidget {
   static const String routeName = "/bottom_nav_bar";
   @override
-  _customBottomNavigationBarState createState() =>
-      _customBottomNavigationBarState();
+  customBottomNavigationBarState createState() =>
+      customBottomNavigationBarState();
 }
 
-class _customBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+// ignore: camel_case_types
+class customBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int currentIndex = 0;
 
   /// Set a type current number a layout class

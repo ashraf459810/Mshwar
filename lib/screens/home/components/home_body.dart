@@ -8,7 +8,7 @@ import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 
 import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
 import 'package:dellyshop/screens/home/components/DiscountDetails.dart';
-import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
+
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 import 'package:dellyshop/screens/home/components/carousel_view_builder.dart';
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
@@ -36,7 +36,6 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => HomeBloc()..add(GetCategoriesEvent()),
       child: BlocBuilder<HomeBloc, HomeState>(
@@ -149,7 +148,7 @@ class _HomeBodyState extends State<HomeBody> {
                                                   ),
                                                 ],
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),

@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 class Utils {
   static double totalPrice;
 
-  static double GridHeight() {
+  static double gridHeight() {
     if (Platform.isIOS)
       return 260;
     else if (Platform.isAndroid) return 250;
+    return null;
   }
 
   static bool isDarkMode = false;
