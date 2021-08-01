@@ -7,6 +7,7 @@ import 'package:dellyshop/models/category_models.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 
 import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
+import 'package:dellyshop/screens/home/components/DiscountDetails.dart';
 import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 import 'package:dellyshop/screens/home/components/carousel_view_builder.dart';
@@ -110,10 +111,8 @@ class _HomeBodyState extends State<HomeBody> {
                                     onTap: () {
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            DiscountItemDetails(
-                                          itemsWithDiscount:
-                                              discountitems[index],
+                                        builder: (context) => DiscountDetails(
+                                          datum: discountitems[index],
                                         ),
                                       ));
                                     },
@@ -132,7 +131,7 @@ class _HomeBodyState extends State<HomeBody> {
                                                   fit: BoxFit.cover,
                                                 )),
                                             Container(
-                                              color: Colors.grey[100],
+                                              color: Colors.grey[50],
                                               width: w(150),
                                               child: Column(
                                                 children: [

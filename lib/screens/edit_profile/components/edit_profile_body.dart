@@ -4,6 +4,7 @@ import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
 import 'package:dellyshop/screens/home/home_screen.dart';
 import 'package:dellyshop/screens/progfile/components/bloc/profile_bloc.dart';
+import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/default_texfromfield.dart';
@@ -140,7 +141,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                           backgroundColor: Colors.orange,
                           gravity: Toast.TOP);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
+                        builder: (context) => CustomBottomNavigationBar(),
                       ));
                     }
                   },
