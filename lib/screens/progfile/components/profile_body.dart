@@ -2,6 +2,7 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
 import 'package:dellyshop/screens/edit_profile/components/RemoveAddress.dart';
+import 'package:dellyshop/screens/edit_profile/components/edit_profile_body.dart';
 import 'package:dellyshop/screens/edit_profile/edit_profile_screen.dart';
 
 import 'package:dellyshop/screens/my_comments/my_comments_screen.dart';
@@ -90,8 +91,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.of(context)
-                                  .pushNamed(EditProfileScreen.routeName);
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    EditProfileBody(profileModel),
+                              ));
                             },
                             child: CardWidget(
                               height: 45.0,

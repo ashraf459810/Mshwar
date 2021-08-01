@@ -78,7 +78,14 @@ class _HomeBodyState extends State<HomeBody> {
                   Navigator.of(context)
                       .pushNamed(CategoryDetailScreen.routeName);
                 }),
-                CateogryListBuilder(categories),
+                categories != null
+                    ? CateogryListBuilder(categories)
+                    : ShimmerWidget(
+                        child: Container(
+                          height: h(100),
+                          color: Colors.grey,
+                        ),
+                      ),
                 sliders != null ? CarouselViewBuilder(sliders) : Container(),
                 HeaderTitle(
                     'Discount',

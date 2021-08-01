@@ -1,134 +1,179 @@
 import 'dart:io';
 
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
+import 'package:dellyshop/screens/home/home_screen.dart';
+import 'package:dellyshop/screens/progfile/components/bloc/profile_bloc.dart';
 
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/default_texfromfield.dart';
-import 'package:dellyshop/widgets/normal_text.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toast/toast.dart';
 
 import '../../../app_localizations.dart';
 
 class EditProfileBody extends StatefulWidget {
+  final ProfileModel profileModel;
+  EditProfileBody([this.profileModel]);
   @override
   _EditProfileBodyState createState() => _EditProfileBodyState();
 }
 
 class _EditProfileBodyState extends State<EditProfileBody> {
+  ProfileBloc profileBloc = ProfileBloc();
+  String email;
+  String mobile;
+  String name;
   File _image;
   final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Center(
-                child: Hero(
-                  tag: "profile",
-                  child: Material(
-                    child: GestureDetector(
-                      onTap: () {
-                        _showPicker(context);
-                      },
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          Container(
-                            height: 150,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                  image: _image == null
-                                      ? AssetImage(
-                                          "assets/images/profilepic.jpg")
-                                      : FileImage(_image),
-                                  fit: BoxFit.cover),
+    return Scaffold(
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Center(
+                  child: Hero(
+                    tag: "profile",
+                    child: Material(
+                      child: GestureDetector(
+                        onTap: () {
+                          // _showPicker(context);
+                        },
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Container(
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                    image: _image == null
+                                        ? AssetImage(
+                                            "assets/images/profilepic.jpg")
+                                        : FileImage(_image),
+                                    fit: BoxFit.cover),
+                              ),
                             ),
-                          ),
-                          Container(
-                            alignment: Alignment.center,
-                            width: 150,
-                            height: 20,
-                            color: Colors.black.withOpacity(0.5),
-                            child: NormalTextWidget(
-                                ApplicationLocalizations.of(context)
-                                    .translate("edit"),
-                                kWhiteColor,
-                                kMicroFontSize),
-                          )
-                        ],
+                            // Container(
+                            //   alignment: Alignment.center,
+                            //   width: 150,
+                            //   height: 20,
+                            //   color: Colors.black.withOpacity(0.5),
+                            //   child: NormalTextWidget(
+                            //       ApplicationLocalizations.of(context)
+                            //           .translate("edit"),
+                            //       kWhiteColor,
+                            //       kMicroFontSize),
+                            // )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextFromField(
-                    height: 60.0,
-                    icon: Icons.person,
-                    ispassword: false,
-                    placeHolder: "Briana",
-                    inputType: TextInputType.text,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFromField(
+                      height: 60.0,
+                      icon: Icons.person,
+                      ispassword: false,
+                      placeHolder: "${widget.profileModel.name}",
+                      inputType: TextInputType.text,
+                      onChanged: (value) {
+                        name = value;
+                      },
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Expanded(
-                  child: CustomTextFromField(
-                    height: 60.0,
-                    icon: Icons.person,
-                    ispassword: false,
-                    placeHolder: "Lane",
-                    inputType: TextInputType.text,
+                  SizedBox(
+                    width: 10.0,
                   ),
+                ],
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              CustomTextFromField(
+                height: 60.0,
+                icon: Icons.mail,
+                ispassword: false,
+                placeHolder: "${widget.profileModel.email}",
+                inputType: TextInputType.text,
+                onChanged: (value) {
+                  email = value;
+                },
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              CustomTextFromField(
+                height: 60.0,
+                icon: Icons.mobile_friendly,
+                ispassword: false,
+                placeHolder: "${widget.profileModel.phone}",
+                inputType: TextInputType.number,
+                onChanged: (value) {
+                  mobile = value;
+                },
+              ),
+              SizedBox(height: h(80)),
+              GestureDetector(
+                onTap: () {},
+                child: BlocConsumer(
+                  bloc: profileBloc,
+                  listener: (context, state) {
+                    if (state is EditProfileState) {
+                      Toast.show("Updated Successfully", context,
+                          duration: Toast.LENGTH_SHORT,
+                          backgroundColor: Colors.orange,
+                          gravity: Toast.TOP);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is Loading) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is Error) {
+                      return Center(
+                        child: Text(
+                          state.error,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      );
+                    }
+
+                    return ButtonCustom(
+                      txt: ApplicationLocalizations.of(context)
+                          .translate("save"),
+                      ontap: () {
+                        profileBloc.add(
+                            EditProfileEvent(int.parse(mobile), email, name));
+                      },
+                      bacgroudColor: kAppColor,
+                      textColor: kWhiteColor,
+                    );
+                  },
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            CustomTextFromField(
-              height: 60.0,
-              icon: Icons.mail,
-              ispassword: false,
-              placeHolder: "XamAppDesign@gmail.com",
-              inputType: TextInputType.text,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            // ButtonCustom(
-            //   txt: "Remove Addresss",
-            //   ontap: () {
-            //     Navigator.of(context).push(MaterialPageRoute(
-            //       builder: (context) => RemoveAddress(),
-            //     ));
-            //   },
-            //   bacgroudColor: kAppColor,
-            //   textColor: kWhiteColor,
-            // ),
-            SizedBox(height: h(10)),
-            ButtonCustom(
-              txt: ApplicationLocalizations.of(context).translate("save"),
-              ontap: () {
-                Navigator.of(context).pop();
-              },
-              bacgroudColor: kAppColor,
-              textColor: kWhiteColor,
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

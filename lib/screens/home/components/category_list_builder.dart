@@ -71,7 +71,7 @@ class _CateogryListBuilderState extends State<CateogryListBuilder> {
                   ),
                 );
               },
-              itemCount: 5,
+              itemCount: widget.categories.categories.length,
             ),
     );
   }

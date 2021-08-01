@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
 import 'package:dellyshop/models/CartHistory/CartHistory.dart';
+import 'package:dellyshop/models/EditProfile.dart/EditProfile.dart';
 import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
 import 'package:meta/meta.dart';
 import 'package:dellyshop/injection.dart';
@@ -32,14 +33,26 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (event is CartHistoryEvent) {
       yield Loading();
       String token = await repo.iprefsHelper.gettoken();
-      // try {
-      var response = await repo.iHttpHlper
-          .getrequest("/Orders/ListMyOrders?api_token=$token");
-      cartHistory = cartHistoryFromJson(response);
-      yield CartHistoryState(cartHistory);
-      // } catch (error) {
-      //   yield (Error(error.toString()));
-      // }
+      try {
+        var response = await repo.iHttpHlper
+            .getrequest("/Orders/ListMyOrders?api_token=$token");
+        cartHistory = cartHistoryFromJson(response);
+        yield CartHistoryState(cartHistory);
+      } catch (error) {
+        yield (Error(error.toString()));
+      }
+    }
+    if (event is EditProfileEvent) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response = await repo.iHttpHlper.getrequest(
+            "/User/Update?name=${event.name}&email=${event.email}&phone=${event.mobile}&api_token=$token");
+        EditProfile editProfile = editProfileFromJson(response);
+        yield EditProfileState(editProfile);
+      } catch (error) {
+        yield Error(error.toString());
+      }
     }
   }
 }

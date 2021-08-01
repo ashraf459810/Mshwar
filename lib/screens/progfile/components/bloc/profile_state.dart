@@ -21,3 +21,8 @@ class CartHistoryState extends ProfileState {
   final CartHistory cartHistory;
   CartHistoryState(this.cartHistory);
 }
+
+class EditProfileState extends ProfileState {
+  final EditProfile editProfile;
+  EditProfileState(this.editProfile);
+}

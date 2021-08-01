@@ -1,5 +1,5 @@
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
-import 'package:dellyshop/models/product_item_model.dart';
+
 import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 

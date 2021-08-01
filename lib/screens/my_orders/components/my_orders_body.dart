@@ -1,6 +1,6 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/models/CartHistory/CartHistory.dart';
-import 'package:dellyshop/models/my_favorite_model.dart';
+
 import 'package:dellyshop/screens/CategoryShops/CategoryShopsBuilder.dart';
 import 'package:dellyshop/screens/progfile/components/bloc/profile_bloc.dart';
 import 'package:dellyshop/widgets/card_widget.dart';
