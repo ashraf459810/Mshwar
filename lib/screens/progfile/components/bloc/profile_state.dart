@@ -26,3 +26,5 @@ class EditProfileState extends ProfileState {
   final EditProfile editProfile;
   EditProfileState(this.editProfile);
 }
+
+class SupportState extends ProfileState {}

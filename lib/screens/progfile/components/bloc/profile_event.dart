@@ -13,3 +13,8 @@ class EditProfileEvent extends ProfileEvent {
   final int mobile;
   EditProfileEvent(this.mobile, this.email, this.name);
 }
+
+class SupportEvent extends ProfileEvent {
+  final int orderid;
+  SupportEvent(this.orderid);
+}

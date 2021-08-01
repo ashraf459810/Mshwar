@@ -8,6 +8,7 @@ import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:toast/toast.dart';
 
 import '../../../constant.dart';
 import '../../../util.dart';
@@ -30,7 +31,13 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
+    return BlocConsumer(
+      listener: (context, state) {
+        if (state is SupportState) {
+          Toast.show("Thanks we will contact you ASAP", context,
+              duration: 2, backgroundColor: Colors.orange, gravity: 2);
+        }
+      },
       bloc: profileBloc,
       builder: (context, state) {
         if (state is Loading) {
@@ -109,6 +116,24 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                           "${carthistory[index].price}\$",
                           style: TextStyle(
                               color: kAppColor, fontSize: kPriceFontSize),
+                        ),
+                        SizedBox(
+                          height: h(10),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            profileBloc
+                                .add(SupportEvent(carthistory[index].id));
+                          },
+                          child: Container(
+                            child: Text(
+                              "click for Support",
+                              style: TextStyle(
+                                  color: kAppColor,
+                                  fontSize: 14,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
                         ),
                       ],
                     ),

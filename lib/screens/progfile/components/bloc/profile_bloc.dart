@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
@@ -50,6 +51,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             "/User/Update?name=${event.name}&email=${event.email}&phone=${event.mobile}&api_token=$token");
         EditProfile editProfile = editProfileFromJson(response);
         yield EditProfileState(editProfile);
+      } catch (error) {
+        yield Error(error.toString());
+      }
+    }
+    if (event is SupportEvent) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response = await repo.iHttpHlper.getrequest(
+            "/HelpRequests/Add?orders_id=${event.orderid}&api_token=$token");
+        if (response != null) yield SupportState();
       } catch (error) {
         yield Error(error.toString());
       }
