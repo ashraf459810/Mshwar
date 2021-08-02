@@ -86,7 +86,7 @@ class _LoginBodyState extends State<LoginBody> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30.0),
                                     child: Container(
-                                      height: h(60),
+                                      height: h(46),
                                       width: w(327),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -137,16 +137,17 @@ class _LoginBodyState extends State<LoginBody> {
                                                   cursorColor: Colors.orange,
                                                   decoration: InputDecoration(
                                                       labelStyle: TextStyle(
-                                                        color: myFocusNode
-                                                                .hasFocus
-                                                            ? Colors.grey[600]
-                                                            : Colors.grey[600],
-                                                      ),
-                                                      labelText:
-                                                          ApplicationLocalizations.of(
-                                                                  context)
-                                                              .translate(
-                                                                  "email or mobile number"),
+                                                          color: myFocusNode
+                                                                  .hasFocus
+                                                              ? Colors.grey[600]
+                                                              : Colors
+                                                                  .grey[600],
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                      labelText: ApplicationLocalizations.of(
+                                                              context)
+                                                          .translate(
+                                                              "email or mobile number"),
                                                       floatingLabelBehavior:
                                                           FloatingLabelBehavior
                                                               .auto,
@@ -200,7 +201,7 @@ class _LoginBodyState extends State<LoginBody> {
                                       .pushNamed((RegisterScreen.routeName));
                                 }),
                                 SizedBox(
-                                  height: h(50),
+                                  height: h(40),
                                 ),
                                 BlocConsumer<LoginBloc, LoginState>(
                                   listener: (context, state) {

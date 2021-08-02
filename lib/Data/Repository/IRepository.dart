@@ -15,8 +15,8 @@ class IRepository implements Repository {
     return decodeddata;
   }
 
-  dynamic postrequest(model([String response]), String url) async {
-    String response = await iHttpHlper.postrequest(url);
+  dynamic postrequest(model([String response]), String url, [var body]) async {
+    String response = await iHttpHlper.postrequest(url, body);
     var decodeddata = model(response);
     return decodeddata;
   }

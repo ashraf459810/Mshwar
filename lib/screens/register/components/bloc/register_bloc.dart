@@ -24,7 +24,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEvent event,
   ) async* {
     if (event is CitiesEvent) {
-      print("here from event");
       yield Loading();
       try {
         var cities = await repo.getrequest(
@@ -36,7 +35,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
     }
     if (event is RegisterE) {
-      print("here from bloc");
       yield Loading();
       try {
         var response = await repo.iHttpHlper.getrequest(
@@ -48,7 +46,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } on SocketException {
         yield Error("Check your connection");
       } catch (e) {
-        print("ere from expetopn");
         print(e.toString());
         yield Error(e.toString());
       }

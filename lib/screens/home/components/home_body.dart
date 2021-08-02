@@ -177,6 +177,9 @@ class _HomeBodyState extends State<HomeBody> {
                           ),
                         ),
                       ),
+                SizedBox(
+                  height: h(10),
+                ),
                 Container(
                   child: Text(
                     "  Mshwar Taxi",
@@ -192,11 +195,13 @@ class _HomeBodyState extends State<HomeBody> {
                       builder: (context) => Taxi(),
                     ));
                   },
-                  child: Container(
-                    height: h(150),
-                    child: Image.asset(
-                      'assets/images/taxi.jpeg',
-                      fit: BoxFit.cover,
+                  child: Card(
+                    child: Container(
+                      height: h(150),
+                      child: Image.asset(
+                        'assets/images/taxi.jpeg',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 )

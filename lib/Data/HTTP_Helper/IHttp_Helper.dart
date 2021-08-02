@@ -1,5 +1,3 @@
-
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dellyshop/Core/AppExcepition.dart';
 import 'package:dellyshop/Data/HTTP_Helper/Http_Helper.dart';
@@ -31,7 +29,7 @@ class IHttpHlper implements HttpHelper {
   }
 
   @override
-  Future postrequest(String url) async {
+  Future postrequest(String url, [var body]) async {
     var responseJson;
     var connectivityResult = await (Connectivity().checkConnectivity());
     switch (connectivityResult) {
@@ -43,7 +41,11 @@ class IHttpHlper implements HttpHelper {
         throw NoInternet("");
     }
 
-    final response = await http.post(Uri.parse(_baseUrl + url));
+    final response = await http.post(
+        Uri.parse(
+          _baseUrl + url,
+        ),
+        body: body);
     responseJson = returnResponse(response);
 
     return responseJson;

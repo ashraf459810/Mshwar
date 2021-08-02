@@ -170,9 +170,9 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Description :${widget.datum.descriptionEn}",
+            "Description :   ${widget.datum.descriptionEn}",
             style: TextStyle(
-                color: kAppColor,
+                color: Colors.grey,
                 fontWeight: FontWeight.w700,
                 fontSize: kTitleFontSize),
           ),
@@ -182,21 +182,6 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           SizedBox(
             height: h(30),
           ),
-          Center(
-            child: InkWell(
-              onTap: () {
-                _bottomSheet();
-              },
-              child: Text(
-                ApplicationLocalizations.of(context).translate("view_more"),
-                style: TextStyle(
-                  color: kAppColor,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -204,6 +189,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
   Row colorAndAmount(Size size) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -332,13 +318,13 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               ),
             ],
           ),
-          Text(
-            "optoinal",
-            style: TextStyle(
-                color: Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-                fontSize: kTitleFontSize,
-                fontWeight: FontWeight.w500),
-          ),
+          // Text(
+          //   "optoinal",
+          //   style: TextStyle(
+          //       color: Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
+          //       fontSize: kTitleFontSize,
+          //       fontWeight: FontWeight.w500),
+          // ),
         ],
       ),
     );
@@ -363,90 +349,90 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     );
   }
 
-  void _bottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Utils.isDarkMode ? kDarkDefaultBgColor : kWhiteColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0))),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 2.0),
-                child: Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          "description : ${widget.datum.descriptionEn}",
-                          style: TextStyle(
-                              color: kAppColor, fontSize: kTitleFontSize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 20.0, right: 20.0, bottom: 0.0),
-                        child: Text(widget.datum.description,
-                            style: TextStyle(
-                                color: Utils.isDarkMode
-                                    ? kDarkBlackTextColor
-                                    : kLightBlackTextColor)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: h(205),
-                          width: w(650.0),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text(
-                                    ApplicationLocalizations.of(context)
-                                        .translate("product_detail"),
-                                    style: TextStyle(
-                                        color: kAppColor,
-                                        fontSize: kTitleFontSize),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0,
-                                      right: 20.0,
-                                      bottom: 10.0,
-                                      left: 20.0),
-                                  child: Text(
-                                    widget.datum.description,
-                                    style: TextStyle(
-                                        color: Utils.isDarkMode
-                                            ? kDarkBlackTextColor
-                                            : kLightBlackTextColor),
-                                    textDirection: TextDirection.ltr,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
-  }
+  // void _bottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return SingleChildScrollView(
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //                 color: Utils.isDarkMode ? kDarkDefaultBgColor : kWhiteColor,
+  //                 borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(0.0),
+  //                     topRight: Radius.circular(0.0))),
+  //             child: Padding(
+  //               padding: const EdgeInsets.only(top: 2.0),
+  //               child: Container(
+  //                 child: new Column(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: <Widget>[
+  //                     Padding(padding: EdgeInsets.only(top: 20.0)),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(left: 20.0),
+  //                       child: Text(
+  //                         "description : ${widget.datum.descriptionEn}",
+  //                         style: TextStyle(
+  //                             color: kAppColor, fontSize: kTitleFontSize),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(
+  //                           top: 20.0, left: 20.0, right: 20.0, bottom: 0.0),
+  //                       child: Text(widget.datum.description,
+  //                           style: TextStyle(
+  //                               color: Utils.isDarkMode
+  //                                   ? kDarkBlackTextColor
+  //                                   : kLightBlackTextColor)),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(top: 10.0),
+  //                       child: Container(
+  //                         height: h(205),
+  //                         width: w(650.0),
+  //                         child: Padding(
+  //                           padding: EdgeInsets.only(top: 20.0),
+  //                           child: Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             children: <Widget>[
+  //                               Padding(
+  //                                 padding: const EdgeInsets.only(left: 20.0),
+  //                                 child: Text(
+  //                                   ApplicationLocalizations.of(context)
+  //                                       .translate("product_detail"),
+  //                                   style: TextStyle(
+  //                                       color: kAppColor,
+  //                                       fontSize: kTitleFontSize),
+  //                                 ),
+  //                               ),
+  //                               Padding(
+  //                                 padding: const EdgeInsets.only(
+  //                                     top: 10.0,
+  //                                     right: 20.0,
+  //                                     bottom: 10.0,
+  //                                     left: 20.0),
+  //                                 child: Text(
+  //                                   widget.datum.description,
+  //                                   style: TextStyle(
+  //                                       color: Utils.isDarkMode
+  //                                           ? kDarkBlackTextColor
+  //                                           : kLightBlackTextColor),
+  //                                   textDirection: TextDirection.ltr,
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
   void _commentBottomSheet() {
     showModalBottomSheet(
