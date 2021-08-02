@@ -39,3 +39,10 @@ class UpdateAddressEvent extends GetlocationEvent {
 }
 
 class GetAddressEvent extends GetlocationEvent {}
+
+class TaxiOrderEvent extends GetlocationEvent {
+  final int addressid;
+  final double lat;
+  final double long;
+  TaxiOrderEvent(this.addressid, this.long, this.lat);
+}

@@ -4,6 +4,7 @@ import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 
 import 'package:dellyshop/models/Sliders.dart/Sliders.dart';
 import 'package:dellyshop/models/category_models.dart';
+import 'package:dellyshop/screens/MshwarTaxi/Taxi.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 
 import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
@@ -167,7 +168,30 @@ class _HomeBodyState extends State<HomeBody> {
                             color: Colors.grey,
                           ),
                         ),
-                      )
+                      ),
+                Container(
+                  child: Text(
+                    "  Mshwar Taxi",
+                    style: TextStyle(
+                        color: kLightBlackTextColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => Taxi(),
+                    ));
+                  },
+                  child: Container(
+                    height: h(150),
+                    child: Image.asset(
+                      'assets/images/taxi.jpeg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
               ],
             ),
           );

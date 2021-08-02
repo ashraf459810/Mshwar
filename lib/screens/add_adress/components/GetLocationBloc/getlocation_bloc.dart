@@ -100,6 +100,19 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         yield Error(error);
       }
     }
+    if (event is TaxiOrderEvent) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+        var response = await repo.iHttpHlper.getrequest(
+            "/Orders/TaxiPlaceOrder?addresses_id=${event.addressid}&user_lat=${event.lat}&user_lng=${event.long}&api_token=$token");
+        if (response != null) {
+          yield TaxiOrderState();
+        }
+      } catch (error) {
+        yield Error(error.toString());
+      }
+    }
   }
 }
 

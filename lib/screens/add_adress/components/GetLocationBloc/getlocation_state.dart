@@ -38,3 +38,5 @@ class GetAddressState extends GetlocationState {
 
   GetAddressState(this.addressModel);
 }
+
+class TaxiOrderState extends GetlocationState {}
