@@ -44,7 +44,6 @@ class _TaxiState extends State<Taxi> {
   List<Address> address = [];
   @override
   void initState() {
-    registerBloc.add(c.CitiesEvent());
     super.initState();
   }
 
@@ -88,7 +87,7 @@ class _TaxiState extends State<Taxi> {
                     listener: (context, state) {
                       if (state is TaxiOrderState) {
                         Toast.show("Order Placed Successfully", context,
-                            duration: 2,
+                            duration: 3,
                             gravity: 0,
                             backgroundColor: Colors.orange[900]);
                       }
@@ -130,16 +129,7 @@ class _TaxiState extends State<Taxi> {
                                         zoomControlsEnabled: false,
                                         //there is a lot more options you can add here
 
-                                        onMapCreated: (controller) {
-                                          Marker marker = Marker(
-                                              position: currentPostion,
-                                              markerId: MarkerId("IDs"));
-                                          markers.add(marker);
-                                          street2 = street;
-                                          city2 = city;
-                                          country2 = country;
-                                          setState(() {});
-                                        },
+                                        onMapCreated: (controller) {},
                                         gestureRecognizers: <
                                             Factory<
                                                 OneSequenceGestureRecognizer>>[
@@ -302,13 +292,13 @@ class _TaxiState extends State<Taxi> {
                 Builder(
                   builder: (context) => GestureDetector(
                     onTap: () {
-                      print(selectedAddress);
-                      print(currentPostion.latitude);
-                      print(currentPostion.longitude);
-                      context.read<GetlocationBloc>().add(TaxiOrderEvent(
-                          selectedAddress,
-                          currentPostion.longitude,
-                          currentPostion.latitude));
+                      selectedAddress != null
+                          ? context.read<GetlocationBloc>().add(TaxiOrderEvent(
+                              selectedAddress,
+                              currentPostion.longitude,
+                              currentPostion.latitude))
+                          : Toast.show("please select address", context,
+                              backgroundColor: Colors.orange[900]);
                     },
                     child: Container(
                       height: size.height * 0.06,
