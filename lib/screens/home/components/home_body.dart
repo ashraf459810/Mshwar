@@ -7,7 +7,6 @@ import 'package:dellyshop/models/category_models.dart';
 import 'package:dellyshop/screens/MshwarTaxi/Taxi.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 
-import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
 import 'package:dellyshop/screens/home/components/DiscountDetails.dart';
 
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
@@ -72,15 +71,14 @@ class _HomeBodyState extends State<HomeBody> {
                 HeaderTitle(
                     ApplicationLocalizations.of(context)
                         .translate("categories"),
-                    ApplicationLocalizations.of(context).translate("view_all"),
+                    "",
                     Utils.isDarkMode
                         ? kDarkBlackFontColor
-                        : kLightBlackTextColor, () {
-                  Navigator.of(context)
-                      .pushNamed(CategoryDetailScreen.routeName);
-                }),
+                        : kLightBlackTextColor,
+                    () {}),
                 categories != null
-                    ? CateogryListBuilder(categories)
+                    ? Container(
+                        height: h(110), child: CateogryListBuilder(categories))
                     : ShimmerWidget(
                         child: Container(
                           height: h(100),
@@ -119,24 +117,34 @@ class _HomeBodyState extends State<HomeBody> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
-                                      child: Container(
-                                        height: h(100),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                                height: h(170),
-                                                width: w(150),
-                                                child: Image.asset(
-                                                  "assets/images/apple.jpg",
-                                                  fit: BoxFit.cover,
-                                                )),
-                                            Container(
-                                              color: Colors.grey[50],
-                                              width: w(150),
-                                              child: Column(
+                                      child: Card(
+                                        child: Container(
+                                          height: h(100),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              SizedBox(
+                                                  height: h(170),
+                                                  width: w(150),
+                                                  child: Image.asset(
+                                                    "assets/images/apple.jpg",
+                                                    fit: BoxFit.cover,
+                                                  )),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     "${discountitems[index].titleEn}",
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.orange[900]),
+                                                  ),
+                                                  Text(
+                                                    "Discount : ${discountitems[index].discount}",
                                                     style: TextStyle(
                                                         color:
                                                             Colors.orange[900]),
@@ -149,8 +157,8 @@ class _HomeBodyState extends State<HomeBody> {
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ));

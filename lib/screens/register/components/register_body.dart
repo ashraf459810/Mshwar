@@ -149,6 +149,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                               child: Text(cityhint),
                             ),
                             isExpanded: true,
+                            underline: SizedBox(),
                             items: cityfromstate.map((value) {
                               return DropdownMenuItem<City>(
                                 value: value,
@@ -195,7 +196,10 @@ class _RegisterBodyState extends State<RegisterBody> {
                                 child: Text(
                                   ApplicationLocalizations.of(context)
                                       .translate("sign_up"),
-                                  style: TextStyle(color: Colors.orange[900]),
+                                  style: TextStyle(
+                                      color: Colors.orange[900],
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ))
