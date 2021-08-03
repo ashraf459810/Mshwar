@@ -29,6 +29,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
   String email;
   String mobile;
   String name;
+  // ignore: unused_field
   File _image;
   final picker = ImagePicker();
 
@@ -54,17 +55,22 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                           alignment: Alignment.bottomCenter,
                           children: [
                             Container(
-                              height: 150,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                    image: _image == null
-                                        ? AssetImage(
-                                            "assets/images/profilepic.jpg")
-                                        : FileImage(_image),
-                                    fit: BoxFit.cover),
+                              height: h(150),
+                              width: w(150),
+                              child: Icon(
+                                Icons.account_circle_sharp,
+                                size: 100,
+                                color: kAppColor,
                               ),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(10.0),
+                              //   image: DecorationImage(
+                              //       image: _image == null
+                              //           ? AssetImage(
+                              //               "assets/images/profilepic.jpg")
+                              //           : FileImage(_image),
+                              //       fit: BoxFit.cover),
+                              // ),
                             ),
                             // Container(
                             //   alignment: Alignment.center,
@@ -164,8 +170,9 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       txt: ApplicationLocalizations.of(context)
                           .translate("save"),
                       ontap: () {
-                        profileBloc.add(
-                            EditProfileEvent(int.parse(mobile), email, name));
+                        if (mobile != null || email != null || name != null)
+                          profileBloc.add(
+                              EditProfileEvent(int.parse(mobile), email, name));
                       },
                       bacgroudColor: kAppColor,
                       textColor: kWhiteColor,

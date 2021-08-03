@@ -1,10 +1,10 @@
 class AppException implements Exception {
   final _message;
   final _prefix;
-  
-AppException([this._message, this._prefix]);
-  
-String toString() {
+
+  AppException([this._message, this._prefix]);
+
+  String toString() {
     return "$_prefix$_message";
   }
 }
@@ -27,9 +27,10 @@ class InvalidInputException extends AppException {
 }
 
 class NoInternet extends AppException {
-  NoInternet([String message]) : super(message, "Check your Internet");
+  NoInternet([String message]) : super(message, " ");
 }
 
 class InternalServerError extends AppException {
-  InternalServerError([String message]) : super(message, "Internal Server Error");
+  InternalServerError([String message])
+      : super(message, "Internal Server Error");
 }

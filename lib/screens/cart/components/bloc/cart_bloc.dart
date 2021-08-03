@@ -28,10 +28,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     CartEvent event,
   ) async* {
     if (event is CartCountEvent) {
-      print("here from event");
       cartcount = await repo.iprefsHelper.getcartcount();
       yield CartCountState(cartcount);
-      print("here after state");
     }
     if (event is AddItemToCartEvent) {
       print("${repo.iprefsHelper.gettoken()}");
@@ -61,7 +59,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
-        // add(CartCountEvent());
       } catch (error) {
         print(" $error");
         yield Error(error.toString());
@@ -76,12 +73,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             .getrequest("/Cart/Remove/${event.itemid}?api_token=$token");
 
         cartModel = cartModelFromJson(response);
-        await repo.iprefsHelper.increasecartcount();
+        await repo.iprefsHelper.decreasecartcount();
 
         yield RemoveFromCartState(cartModel);
-        add(CartCountEvent());
+        // add(CartCountEvent());
       } catch (error) {
-        yield Error(error);
+        yield Error(error.toString());
       }
     }
     if (event is GetAddressEvent) {

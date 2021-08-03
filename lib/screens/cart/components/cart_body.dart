@@ -38,257 +38,255 @@ class _CartBodyState extends State<CartBody> {
   int pay = 200;
   int totalpay;
   List<Address> address = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.read<CartBloc>().add(GetCartItemsEvent());
     totalpay = pay * value;
     totalListHeight = ((index * itemHeight)).toDouble();
 
-    return BlocProvider(
-      create: (context) => CartBloc()..add(GetCartItemsEvent()),
-      child: BlocBuilder<CartBloc, CartState>(
-        builder: (context, state) {
-          if (state is GetAddressState) {
-            address = state.addressModel.addresses;
-            print(address.length);
-          }
-          if (state is Loading) {
-            print("here loading");
-            return Center(
-              child: CircularProgressIndicator(
-                color: Colors.orange,
-              ),
-            );
-          }
-          if (state is GetCartItemsState) {
-            cartModel = state.cartModel;
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is GetAddressState) {
+          address = state.addressModel.addresses;
+          print(address.length);
+        }
+        if (state is Loading) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.orange,
+            ),
+          );
+        }
+        if (state is GetCartItemsState) {
+          cartModel = state.cartModel;
 
-            context.read<CartBloc>().add(GetAddressEvent());
-          }
-          if (state is RemoveFromCartState) {
-            cartModel = state.cartModel;
-          }
-          if (state is Error) {
-            return Text(
-              state.error,
-              style: TextStyle(color: Colors.black),
-            );
-          }
-          return cartModel != null
-              ? Container(
-                  margin: EdgeInsets.all(10.0),
-                  child: cartModel.carts.isNotEmpty
-                      ? ListView(
-                          children: [
-                            //Product List
-                            SizedBox(
-                              height: h(400),
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    height: itemHeight,
-                                    child: cartProductItem(index),
-                                  );
-                                },
-                                itemCount: cartModel.carts.length,
-                              ),
-                            ),
+          context.read<CartBloc>().add(GetAddressEvent());
+        }
+        if (state is RemoveFromCartState) {
+          print(cartModel.carts.length);
 
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Container(
-                                height: 1.0,
-                                color: kLightBlackTextColor.withOpacity(0.3),
-                              ),
+          cartModel = state.cartModel;
+          context.read<CartBloc>().add(CartCountEvent());
+        }
+        if (state is Error) {
+          return Text(
+            state.error,
+            style: TextStyle(color: Colors.black),
+          );
+        }
+        return cartModel != null
+            ? Container(
+                margin: EdgeInsets.all(10.0),
+                child: cartModel.carts.isNotEmpty
+                    ? ListView(
+                        children: [
+                          //Product List
+                          SizedBox(
+                            height: h(400),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  height: itemHeight,
+                                  child: cartProductItem(index),
+                                );
+                              },
+                              itemCount: cartModel.carts.length,
                             ),
-                            SizedBox(
-                              height: 10,
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: 1.0,
+                              color: kLightBlackTextColor.withOpacity(0.3),
                             ),
-                            CardWidget(
-                              childWidget: FractionalTranslation(
-                                translation: Offset(0.0, -0.1),
-                                child: ListTile(
-                                  title: Text(
-                                    ApplicationLocalizations.of(context)
-                                        .translate("shipping_cost"),
-                                    style: TextStyle(
-                                        color: Utils.isDarkMode
-                                            ? kDarkBlackTextColor
-                                            : kLightBlackTextColor),
-                                  ),
-                                  subtitle: Text(
-                                    ApplicationLocalizations.of(context)
-                                        .translate("ship_company"),
-                                    style: TextStyle(
-                                        color: Utils.isDarkMode
-                                            ? kDarkTextColorColor
-                                            : kGrayColor),
-                                  ),
-                                  trailing: Text(
-                                    "${cartModel.deliveryFees}",
-                                    style: TextStyle(
-                                        color: kAppColor,
-                                        fontSize: kPriceFontSize),
-                                  ),
-                                  leading: Container(
-                                    child: Icon(
-                                      Icons.local_shipping,
-                                      size: 35,
-                                      color: kAppColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: h(10),
-                            ),
-                            CardWidget(
-                              childWidget: ListTile(
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CardWidget(
+                            childWidget: FractionalTranslation(
+                              translation: Offset(0.0, -0.1),
+                              child: ListTile(
                                 title: Text(
                                   ApplicationLocalizations.of(context)
-                                      .translate("total_price"),
+                                      .translate("shipping_cost"),
                                   style: TextStyle(
                                       color: Utils.isDarkMode
                                           ? kDarkBlackTextColor
                                           : kLightBlackTextColor),
                                 ),
+                                subtitle: Text(
+                                  "",
+                                ),
                                 trailing: Text(
-                                  "${cartModel.cartsTotal}",
+                                  "${cartModel.deliveryFees}",
                                   style: TextStyle(
                                       color: kAppColor,
                                       fontSize: kPriceFontSize),
                                 ),
+                                leading: Container(
+                                  child: Icon(
+                                    Icons.local_shipping,
+                                    size: 35,
+                                    color: kAppColor,
+                                  ),
+                                ),
                               ),
                             ),
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: TextWidget(
-                                  ApplicationLocalizations.of(context)
-                                      .translate("select_address"),
-                                  kAppColor),
-                            ),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                address.isNotEmpty
-                                    ? Container(
-                                        height: h(47),
-                                        width: w(150),
-                                        child: CardWidget(
-                                          childWidget: DropdownButton<Address>(
-                                            hint: Center(
-                                                child: Text(
-                                              selectaddress,
-                                              style: TextStyle(
-                                                  color: kTextColorColor,
-                                                  fontWeight: FontWeight.w400),
-                                            )),
-
-                                            value: chosenaddress,
-                                            isExpanded: true,
-
-                                            iconSize: 24,
-                                            elevation: 16,
-
-                                            // style: const TextStyle(color: Colors.deepPurple),
-
-                                            underline: SizedBox(),
-                                            onChanged: (Address newValue) {
-                                              selectaddress = newValue.name;
-                                              addressid = newValue.id;
-
-                                              setState(() {});
-                                            },
-
-                                            items: address
-                                                .map<DropdownMenuItem<Address>>(
-                                                    (Address value) {
-                                              return DropdownMenuItem<Address>(
-                                                value: value,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(value.name),
-                                                  ],
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                CardWidget(
-                                    childWidget: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DelieverLocation()));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      TextWidget(
-                                          ApplicationLocalizations.of(context)
-                                              .translate("add_address"),
-                                          Utils.isDarkMode
-                                              ? kDarkTextColorColor
-                                              : kLightBlackTextColor),
-                                      Icon(
-                                        Icons.add,
-                                        color: kAppColor,
-                                        size: 20,
-                                      )
-                                    ],
-                                  ),
-                                )),
-                              ],
-                            )
-                            // : ShimmerWidget(
-                            //     child: Container(
-                            //       height: h(50),
-                            //       width: w(50),
-                            //       decoration: BoxDecoration(
-                            //         shape: BoxShape.rectangle,
-                            //         borderRadius: BorderRadius.all(
-                            //             Radius.circular(30)),
-                            //         color: Colors.grey[300],
-                            //       ),
-                            //     ),
-                            //   ),
-                            ,
-                            SizedBox(
-                              height: h(20),
-                            ),
-                            ButtonCustom(
-                              txt: 'select payment method',
-                              ontap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        PaymentBody(addressid)));
-                              },
-                              bacgroudColor: kAppColor,
-                              textColor: kWhiteColor,
-                            )
-                          ],
-                        )
-                      : Container(
-                          child: Center(
-                            child: Text(
-                              "No Items In your cart",
-                              style: TextStyle(
-                                  color: Colors.orange[900], fontSize: 18),
+                          ),
+                          SizedBox(
+                            height: h(10),
+                          ),
+                          CardWidget(
+                            childWidget: ListTile(
+                              title: Text(
+                                ApplicationLocalizations.of(context)
+                                    .translate("total_price"),
+                                style: TextStyle(
+                                    color: Utils.isDarkMode
+                                        ? kDarkBlackTextColor
+                                        : kLightBlackTextColor),
+                              ),
+                              trailing: Text(
+                                "${cartModel.cartsTotal}",
+                                style: TextStyle(
+                                    color: kAppColor, fontSize: kPriceFontSize),
+                              ),
                             ),
                           ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15.0),
+                            child: TextWidget(
+                                ApplicationLocalizations.of(context)
+                                    .translate("select_address"),
+                                kAppColor),
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              address.isNotEmpty
+                                  ? Container(
+                                      height: h(47),
+                                      width: w(150),
+                                      child: CardWidget(
+                                        childWidget: DropdownButton<Address>(
+                                          hint: Center(
+                                              child: Text(
+                                            selectaddress,
+                                            style: TextStyle(
+                                                color: kTextColorColor,
+                                                fontWeight: FontWeight.w400),
+                                          )),
+
+                                          value: chosenaddress,
+                                          isExpanded: true,
+
+                                          iconSize: 24,
+                                          elevation: 16,
+
+                                          // style: const TextStyle(color: Colors.deepPurple),
+
+                                          underline: SizedBox(),
+                                          onChanged: (Address newValue) {
+                                            selectaddress = newValue.name;
+                                            addressid = newValue.id;
+
+                                            setState(() {});
+                                          },
+
+                                          items: address
+                                              .map<DropdownMenuItem<Address>>(
+                                                  (Address value) {
+                                            return DropdownMenuItem<Address>(
+                                              value: value,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(value.name),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                              CardWidget(
+                                  childWidget: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DelieverLocation()));
+                                },
+                                child: Row(
+                                  children: [
+                                    TextWidget(
+                                        ApplicationLocalizations.of(context)
+                                            .translate("add_address"),
+                                        Utils.isDarkMode
+                                            ? kDarkTextColorColor
+                                            : kLightBlackTextColor),
+                                    Icon(
+                                      Icons.add,
+                                      color: kAppColor,
+                                      size: 20,
+                                    )
+                                  ],
+                                ),
+                              )),
+                            ],
+                          )
+                          // : ShimmerWidget(
+                          //     child: Container(
+                          //       height: h(50),
+                          //       width: w(50),
+                          //       decoration: BoxDecoration(
+                          //         shape: BoxShape.rectangle,
+                          //         borderRadius: BorderRadius.all(
+                          //             Radius.circular(30)),
+                          //         color: Colors.grey[300],
+                          //       ),
+                          //     ),
+                          //   ),
+                          ,
+                          SizedBox(
+                            height: h(20),
+                          ),
+                          ButtonCustom(
+                            txt: 'select payment method',
+                            ontap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      PaymentBody(addressid)));
+                            },
+                            bacgroudColor: kAppColor,
+                            textColor: kWhiteColor,
+                          )
+                        ],
+                      )
+                    : Container(
+                        child: Center(
+                          child: Text(
+                            "No Items In your cart",
+                            style: TextStyle(
+                                color: Colors.orange[900], fontSize: 18),
+                          ),
                         ),
-                )
-              : Container();
-        },
-      ),
+                      ),
+              )
+            : Container();
+      },
     );
   }
 
@@ -416,9 +414,9 @@ class _CartBodyState extends State<CartBody> {
                                       context.read<CartBloc>().add(
                                           AddItemToCartEvent(1,
                                               cartModel.carts[index].items.id));
-                                      context
-                                          .read<CartBloc>()
-                                          .add(GetCartItemsEvent());
+                                      // context
+                                      //     .read<CartBloc>()
+                                      //     .add(GetCartItemsEvent());
                                     },
                                     child: Container(
                                       height: h(30),

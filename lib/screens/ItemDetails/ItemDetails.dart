@@ -24,81 +24,75 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   void initState() {
-    print(widget.datum.id);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => CartBloc()..add(CartCountEvent()),
-        child: Scaffold(
-            backgroundColor:
-                Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-            appBar: AppBar(
-              centerTitle: true,
-              backgroundColor:
-                  Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-              iconTheme: IconThemeData(color: kAppColor),
-              title: Text(
-                ApplicationLocalizations.of(context)
-                    .translate("product_detail"),
-                style: TextStyle(color: kAppColor),
-              ),
-              actions: <Widget>[
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushNamed((CartScreen.routeName));
-                  },
-                  child: Stack(
-                    alignment: AlignmentDirectional(-1.0, -0.8),
-                    children: <Widget>[
-                      IconButton(
-                          onPressed: null,
-                          icon: Icon(
-                            Icons.shopping_cart,
-                            color: Utils.isDarkMode
-                                ? kDarkBottomIconColor
-                                : kBottomIconColor,
-                          )),
-                      BlocConsumer<CartBloc, CartState>(
-                          listener: (context, state) {
-                        if (state is CartInitial) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.orange,
+    context.read<CartBloc>().add(CartCountEvent());
+    return Scaffold(
+        backgroundColor:
+            Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor:
+              Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
+          iconTheme: IconThemeData(color: kAppColor),
+          title: Text(
+            ApplicationLocalizations.of(context).translate("product_detail"),
+            style: TextStyle(color: kAppColor),
+          ),
+          actions: <Widget>[
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed((CartScreen.routeName));
+              },
+              child: Stack(
+                alignment: AlignmentDirectional(-1.0, -0.8),
+                children: <Widget>[
+                  IconButton(
+                      onPressed: null,
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        color: Utils.isDarkMode
+                            ? kDarkBottomIconColor
+                            : kBottomIconColor,
+                      )),
+                  BlocConsumer<CartBloc, CartState>(listener: (context, state) {
+                    if (state is CartInitial) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.orange,
+                        ),
+                      );
+                    }
+                    if (state is AddItemToCartState) {
+                      Toast.show("Added to cart Successfully", context,
+                          duration: Toast.LENGTH_SHORT,
+                          gravity: Toast.TOP,
+                          backgroundColor: Colors.orange[900]);
+                    }
+                  }, builder: (context, state) {
+                    if (state is CartCountState) {
+                      cartcount = state.count;
+                    }
+                    return cartcount != null
+                        ? CircleAvatar(
+                            radius: 10.0,
+                            backgroundColor: Colors.red,
+                            child: Text(
+                              cartcount.toString(),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 13.0),
                             ),
-                          );
-                        }
-                        if (state is AddItemToCartState) {
-                          Toast.show("Added to cart Successfully", context,
-                              duration: Toast.LENGTH_SHORT,
-                              gravity: Toast.TOP,
-                              backgroundColor: Colors.orange[900]);
-                        }
-                      }, builder: (context, state) {
-                        if (state is GetCartItemsState) {}
-                        if (state is CartCountState) {
-                          print("here from state of vcount");
-                          cartcount = state.count;
-                        }
-                        return cartcount != null
-                            ? CircleAvatar(
-                                radius: 10.0,
-                                backgroundColor: Colors.red,
-                                child: Text(
-                                  cartcount.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 13.0),
-                                ),
-                              )
-                            : Container();
-                      }),
-                    ],
-                  ),
-                ),
-              ],
+                          )
+                        : Container();
+                  }),
+                ],
+              ),
             ),
-            body: ItemDetailsBody(datum: widget.datum)));
+          ],
+        ),
+        body: ItemDetailsBody(datum: widget.datum));
   }
 }

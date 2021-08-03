@@ -34,30 +34,31 @@ class _SettingsBodyState extends State<SettingsBody> {
       child: Container(
         child: Column(
           children: <Widget>[
-            Setting(
-              head: ApplicationLocalizations.of(context).translate("account"),
-              sub1: ApplicationLocalizations.of(context).translate("addresses"),
-              sub2: ApplicationLocalizations.of(context).translate("telephone"),
-              sub3: ApplicationLocalizations.of(context).translate("email"),
-              sub1Tap: () {
-                addressBottomSheet();
-              },
-              sub2Tap: () {
-                telephoneBottomSheet();
-              },
-              sub3Tap: () {
-                emailBottomSheet();
-              },
-            ),
+            // Setting(
+            //   head: ApplicationLocalizations.of(context).translate("account"),
+            //   sub1: ApplicationLocalizations.of(context).translate("addresses"),
+            //   sub2: ApplicationLocalizations.of(context).translate("telephone"),
+            //   sub3: ApplicationLocalizations.of(context).translate("email"),
+            //   sub1Tap: () {
+            //     addressBottomSheet();
+            //   },
+            //   sub2Tap: () {
+            //     telephoneBottomSheet();
+            //   },
+            //   sub3Tap: () {
+            //     emailBottomSheet();
+            //   },
+            // ),
+
             Setting(
               head: ApplicationLocalizations.of(context).translate("settings"),
               sub1: ApplicationLocalizations.of(context)
                   .translate("notifications"),
               sub2: ApplicationLocalizations.of(context).translate("dark_mode"),
               sub3: ApplicationLocalizations.of(context).translate("languages"),
-              sub1Tap: () {
-                notificationBottomSheet();
-              },
+              // sub1Tap: () {
+              //   notificationBottomSheet();
+              // },
               sub2Tap: () {
                 darkModeBottomSheet();
               },
@@ -368,70 +369,70 @@ class _SettingsBodyState extends State<SettingsBody> {
         });
   }
 
-  void notificationBottomSheet() {
-    bool _switchValue = false;
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return Container(
-            height: 180,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CardWidget(
-                        childWidget: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            NormalTextWidget(
-                                ApplicationLocalizations.of(context)
-                                    .translate("order_notif"),
-                                Utils.isDarkMode
-                                    ? kDarkTextColorColor
-                                    : kLightBlackTextColor,
-                                kSubTitleFontSize),
-                            BottomSheetSwitch(
-                              switchValue: _switchValue,
-                              valueChanged: (value) {
-                                _switchValue = value;
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CardWidget(
-                        childWidget: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            NormalTextWidget(
-                                ApplicationLocalizations.of(context)
-                                    .translate("discount_notif"),
-                                Utils.isDarkMode
-                                    ? kDarkTextColorColor
-                                    : kLightBlackTextColor,
-                                kSubTitleFontSize),
-                            BottomSheetSwitch(
-                              switchValue: _switchValue,
-                              valueChanged: (value) {
-                                _switchValue = value;
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        });
-  }
+  // void notificationBottomSheet() {
+  //   bool _switchValue = false;
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return Container(
+  //           height: 180,
+  //           child: Column(
+  //             children: [
+  //               Padding(
+  //                 padding: const EdgeInsets.all(8.0),
+  //                 child: Column(
+  //                   children: [
+  //                     CardWidget(
+  //                       childWidget: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           NormalTextWidget(
+  //                               ApplicationLocalizations.of(context)
+  //                                   .translate("order_notif"),
+  //                               Utils.isDarkMode
+  //                                   ? kDarkTextColorColor
+  //                                   : kLightBlackTextColor,
+  //                               kSubTitleFontSize),
+  //                           BottomSheetSwitch(
+  //                             switchValue: _switchValue,
+  //                             valueChanged: (value) {
+  //                               _switchValue = value;
+  //                             },
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 20,
+  //                     ),
+  //                     CardWidget(
+  //                       childWidget: Row(
+  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                         children: [
+  //                           NormalTextWidget(
+  //                               ApplicationLocalizations.of(context)
+  //                                   .translate("discount_notif"),
+  //                               Utils.isDarkMode
+  //                                   ? kDarkTextColorColor
+  //                                   : kLightBlackTextColor,
+  //                               kSubTitleFontSize),
+  //                           BottomSheetSwitch(
+  //                             switchValue: _switchValue,
+  //                             valueChanged: (value) {
+  //                               _switchValue = value;
+  //                             },
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         );
+  //       });
+  // }
 
   void darkModeBottomSheet() {
     showModalBottomSheet(
@@ -608,36 +609,36 @@ class Setting extends StatelessWidget {
                 height: 0.5,
               ),
             ),
-            GestureDetector(
-              onTap: sub1Tap,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CardWidget(
-                  childWidget: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          sub1,
-                          style: TextStyle(
-                            color: Utils.isDarkMode
-                                ? kDarkTextColorColor
-                                : kLightBlackTextColor,
-                            fontSize: kSubTitleFontSize,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Icon(
-                          Utils.textisRTL(context)
-                              ? Icons.keyboard_arrow_left
-                              : Icons.keyboard_arrow_right,
-                          color: Utils.isDarkMode
-                              ? kDarkTextColorColor
-                              : Colors.black38,
-                        )
-                      ]),
-                ),
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: sub1Tap,
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: Ca  rdWidget(
+            //       childWidget: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: <Widget>[
+            //             Text(
+            //               sub1,
+            //               style: TextStyle(
+            //                 color: Utils.isDarkMode
+            //                     ? kDarkTextColorColor
+            //                     : kLightBlackTextColor,
+            //                 fontSize: kSubTitleFontSize,
+            //                 fontWeight: FontWeight.w500,
+            //               ),
+            //             ),
+            //             Icon(
+            //               Utils.textisRTL(context)
+            //                   ? Icons.keyboard_arrow_left
+            //                   : Icons.keyboard_arrow_right,
+            //               color: Utils.isDarkMode
+            //                   ? kDarkTextColorColor
+            //                   : Colors.black38,
+            //             )
+            //           ]),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 20.0),
               child: Divider(

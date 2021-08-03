@@ -99,12 +99,6 @@ class _TaxiState extends State<Taxi> {
                       }
                     },
                     builder: (context, state) {
-                      if (state is Loading) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 100),
-                          child: CircularProgressIndicator(),
-                        );
-                      }
                       if (state is LocationState) {
                         currentPostion = LatLng(
                             state.position.latitude, state.position.longitude);
@@ -300,27 +294,37 @@ class _TaxiState extends State<Taxi> {
                           : Toast.show("please select address", context,
                               backgroundColor: Colors.orange[900]);
                     },
-                    child: Container(
-                      height: size.height * 0.06,
-                      width: size.width * 0.35,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: kAppColor,
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Order Taxi",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                    child: BlocBuilder<GetlocationBloc, GetlocationState>(
+                      builder: (context, state) {
+                        if (state is Loading) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 100),
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Container(
+                          height: size.height * 0.06,
+                          width: size.width * 0.35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: kAppColor,
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Order Taxi",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),

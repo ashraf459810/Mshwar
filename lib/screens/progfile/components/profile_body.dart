@@ -4,10 +4,8 @@ import 'package:dellyshop/models/ProfileModel/ProfileModel.dart';
 import 'package:dellyshop/screens/edit_profile/components/RemoveAddress.dart';
 import 'package:dellyshop/screens/edit_profile/components/edit_profile_body.dart';
 
-import 'package:dellyshop/screens/my_comments/my_comments_screen.dart';
-
 import 'package:dellyshop/screens/my_orders/my_orders_screen.dart';
-import 'package:dellyshop/screens/notifications/notification_screen.dart';
+
 import 'package:dellyshop/screens/settings/settings_screen.dart';
 import 'package:dellyshop/screens/updateAddress/UpdateAddress.dart';
 import 'package:dellyshop/util.dart';
@@ -56,14 +54,20 @@ class _ProfileBodyState extends State<ProfileBody> {
                       tag: "profile",
                       child: Material(
                         child: Container(
-                          height: 110,
-                          width: 110,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/blank-portrait.jpg"),
-                                  fit: BoxFit.cover)),
+                          height: h(100),
+                          width: w(100),
+                          child: Icon(
+                            Icons.account_circle,
+                            size: 100,
+                            color: kAppColor,
+                          ),
+
+                          // decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10.0),
+                          //     image: DecorationImage(
+                          //         image: AssetImage(
+                          //             "assets/images/blank-portrait.jpg"),
+                          //         fit: BoxFit.cover)),
                         ),
                       ),
                     ),
@@ -148,24 +152,24 @@ class _ProfileBodyState extends State<ProfileBody> {
                     Icons.indeterminate_check_box, () {
                   Navigator.of(context).pushNamed(MyOdersScreen.routeName);
                 }),
-                SizedBox(
-                  height: 10.0,
-                ),
-                buildCard(
-                    ApplicationLocalizations.of(context)
-                        .translate("my_comments"),
-                    Icons.comment, () {
-                  Navigator.of(context).pushNamed(MyCommentScreen.routeName);
-                }),
-                SizedBox(
-                  height: 10.0,
-                ),
-                buildCard(
-                    ApplicationLocalizations.of(context)
-                        .translate("notifications"),
-                    Icons.notifications, () {
-                  Navigator.of(context).pushNamed(NotificationScreen.routeName);
-                }),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
+                // buildCard(
+                //     ApplicationLocalizations.of(context)
+                //         .translate("my_comments"),
+                //     Icons.comment, () {
+                //   Navigator.of(context).pushNamed(MyCommentScreen.routeName);
+                // }),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
+                // buildCard(
+                //     ApplicationLocalizations.of(context)
+                //         .translate("notifications"),
+                //     Icons.notifications, () {
+                //   Navigator.of(context).pushNamed(NotificationScreen.routeName);
+                // }),
                 SizedBox(
                   height: 10.0,
                 ),
