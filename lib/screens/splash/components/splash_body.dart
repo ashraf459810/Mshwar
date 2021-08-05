@@ -1,4 +1,3 @@
-
 import 'package:dellyshop/screens/home/home_screen.dart';
 import 'package:dellyshop/screens/login/login_screen.dart';
 import 'package:dellyshop/screens/register/register_screen.dart';
@@ -18,6 +17,7 @@ class _SplashBodyState extends State<SplashBody> with TickerProviderStateMixin {
   var tapSignup = 0;
   @override
   Widget build(BuildContext context) {
+    print("here splash body");
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -111,7 +111,7 @@ class _SplashBodyState extends State<SplashBody> with TickerProviderStateMixin {
                       /// To set white line (Click to open code)
                       Container(
                         color: Colors.white,
-                        height:h(2),
+                        height: h(2),
                         width: w(90),
                       )
                     ],
@@ -123,7 +123,6 @@ class _SplashBodyState extends State<SplashBody> with TickerProviderStateMixin {
                         .translate('sign_in'),
                     bacgroudColor: Colors.white,
                     textColor: Colors.orange[900],
-                    
                     ontap: () {
                       Navigator.of(context).pushNamed((LoginScreen.routeName));
                     },

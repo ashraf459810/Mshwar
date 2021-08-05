@@ -5,6 +5,7 @@ class SplashScreen extends StatelessWidget {
   static const String routeName = "/splash_screen";
   @override
   Widget build(BuildContext context) {
+    print("here splash");
     return SplashBody();
   }
 }

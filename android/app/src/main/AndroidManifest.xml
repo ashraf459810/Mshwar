@@ -12,7 +12,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="dellyshop"
         android:requestLegacyExternalStorage="true"
-        android:icon="@mipmap/delly_icon">
+        android:icon="@drawable/mshwarlogo">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

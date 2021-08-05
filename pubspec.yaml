@@ -90,7 +90,6 @@ dependencies:
   flutter_tags: ^0.4.9+1
   http: ^0.13.2
   firebase_core: ^1.2.1
-  google_sign_in: ^4.5.3
   fluttertoast: ^7.1.8
 
 

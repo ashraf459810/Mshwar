@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toast/toast.dart';
 
 import '../../../util.dart';
 
@@ -266,9 +267,16 @@ class _CartBodyState extends State<CartBody> {
                           ButtonCustom(
                             txt: 'select payment method',
                             ontap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      PaymentBody(addressid)));
+                              addressid != null
+                                  ? Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentBody(addressid)))
+                                  : Toast.show(
+                                      "Please Select Address first", context,
+                                      duration: 2,
+                                      gravity: 2,
+                                      backgroundColor: Colors.orange[900]);
                             },
                             bacgroudColor: kAppColor,
                             textColor: kWhiteColor,

@@ -75,7 +75,7 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CardWidget(
-          height: h(200),
+          height: h(220),
           childWidget: Column(
             children: [
               Row(

@@ -26,6 +26,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
+    print("here from main");
     return AppBuilder(
       builder: (context) {
         return ScreenUtilInit(
