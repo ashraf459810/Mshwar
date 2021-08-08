@@ -86,7 +86,7 @@ class _LoginBodyState extends State<LoginBody> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 30.0),
                                     child: Container(
-                                      height: h(46),
+                                      height: h(55),
                                       width: w(327),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -182,16 +182,20 @@ class _LoginBodyState extends State<LoginBody> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 30.0),
-                                  child: CustomTextFromField(
-                                    icon: Icons.lock,
-                                    ispassword: true,
-                                    placeHolder:
-                                        ApplicationLocalizations.of(context)
-                                            .translate("password"),
-                                    inputType: TextInputType.visiblePassword,
-                                    onChanged: (value) {
-                                      password = value;
-                                    },
+                                  child: Container(
+                                    height: h(55),
+                                    width: w(327),
+                                    child: CustomTextFromField(
+                                      icon: Icons.lock,
+                                      ispassword: true,
+                                      placeHolder:
+                                          ApplicationLocalizations.of(context)
+                                              .translate("password"),
+                                      inputType: TextInputType.visiblePassword,
+                                      onChanged: (value) {
+                                        password = value;
+                                      },
+                                    ),
                                   ),
                                 ),
                                 CutomTextButton(
@@ -230,7 +234,9 @@ class _LoginBodyState extends State<LoginBody> {
                                     }
                                     return ButtonCustom(
                                       txt: ApplicationLocalizations.of(context)
-                                          .translate("sign_in"),
+                                          .translate(
+                                        "sign_in",
+                                      ),
                                       ontap: () {
                                         if (_formKey2.currentState.validate() &&
                                             password != null) {
@@ -242,7 +248,8 @@ class _LoginBodyState extends State<LoginBody> {
                                               context,
                                               duration: Toast.LENGTH_SHORT,
                                               gravity: Toast.TOP,
-                                              backgroundColor: Colors.orange);
+                                              backgroundColor:
+                                                  Colors.orange[900]);
                                         }
                                       },
                                       bacgroudColor: kWhiteColor,

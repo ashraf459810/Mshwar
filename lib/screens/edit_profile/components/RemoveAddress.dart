@@ -6,6 +6,7 @@ import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toast/toast.dart';
 
 class RemoveAddress extends StatefulWidget {
   RemoveAddress({Key key}) : super(key: key);
@@ -23,31 +24,34 @@ class _RemoveAddressState extends State<RemoveAddress> {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
         create: (context) => GetlocationBloc()..add(GetAddressEvent()),
-        child: BlocBuilder<GetlocationBloc, GetlocationState>(
-            builder: (context, state) {
+        child: BlocConsumer<GetlocationBloc, GetlocationState>(
+            listener: (context, state) {
           if (state is RemoveAddressState) {
             address = state.removeAddressRespnose.addresses;
+            Toast.show("Addredd Removed", context,
+                backgroundColor: Colors.deepOrange[900]);
+            selectedaddreddname = null;
           }
 
           if (state is GetAddressState) {
             address = state.addressModel.addresses;
           }
-          // if (state is Loading) {
-          //   print("here loading");
-          //   return Center(
-          //     child: CircularProgressIndicator(
-          //       color: Colors.orange,
-          //     ),
-          //   );
-          // }
-
           if (state is Error) {
-            return Text(
-              state.error,
-              style: TextStyle(color: Colors.black),
+            return Scaffold(
+              body: Center(
+                child: Container(
+                  child: Text(
+                    state.error,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
             );
           }
-
+        }, builder: (context, state) {
+          if (state is GetlocationInitial) {
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
           return Scaffold(
               body: address.isNotEmpty
                   ? Container(
@@ -92,20 +96,22 @@ class _RemoveAddressState extends State<RemoveAddress> {
                           SizedBox(
                             height: h(40),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              context
-                                  .read<GetlocationBloc>()
-                                  .add(RemoveAddressEvent(selectedAddress));
-                            },
-                            child: Container(
-                              height: h(50),
-                              width: w(300),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.orange),
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: kAppColor),
-                              child: Center(child: Text("Remove")),
+                          Builder(
+                            builder: (context) => GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<GetlocationBloc>()
+                                    .add(RemoveAddressEvent(selectedAddress));
+                              },
+                              child: Container(
+                                height: h(50),
+                                width: w(300),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.orange),
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: kAppColor),
+                                child: Center(child: Text("Remove")),
+                              ),
                             ),
                           )
                         ],

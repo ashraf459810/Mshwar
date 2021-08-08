@@ -15,7 +15,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toast/toast.dart';
 
 class DelieverLocation extends StatefulWidget {
-  DelieverLocation({Key key}) : super(key: key);
+  final Function f;
+  DelieverLocation({Key key, this.f}) : super(key: key);
 
   @override
   _DelieverLocationState createState() => _DelieverLocationState();
@@ -88,7 +89,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
                         Toast.show(
                             "Added Successfiully to your Addresses", context,
                             duration: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
                       }
                       if (state is Error) {
@@ -322,11 +323,12 @@ class _DelieverLocationState extends State<DelieverLocation> {
                             chosencityid,
                             currentPostion.latitude,
                             currentPostion.longitude));
-                        Navigator.of(context).pop();
+
+                        Navigator.of(context).pop(widget.f());
                       } else {
                         Toast.show("please fill all the fields", context,
                             duration: Toast.LENGTH_SHORT,
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
                       }
                     },

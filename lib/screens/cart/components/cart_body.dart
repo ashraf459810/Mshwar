@@ -42,12 +42,12 @@ class _CartBodyState extends State<CartBody> {
 
   @override
   void initState() {
+    context.read<CartBloc>().add(GetCartItemsEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<CartBloc>().add(GetCartItemsEvent());
     totalpay = pay * value;
     totalListHeight = ((index * itemHeight)).toDouble();
 
@@ -199,10 +199,10 @@ class _CartBodyState extends State<CartBody> {
 
                                           underline: SizedBox(),
                                           onChanged: (Address newValue) {
-                                            selectaddress = newValue.name;
-                                            addressid = newValue.id;
-
-                                            setState(() {});
+                                            setState(() {
+                                              selectaddress = newValue.name;
+                                              addressid = newValue.id;
+                                            });
                                           },
 
                                           items: address
@@ -227,8 +227,13 @@ class _CartBodyState extends State<CartBody> {
                                   childWidget: InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          DelieverLocation()));
+                                      builder: (context) => DelieverLocation(
+                                            f: () {
+                                              context
+                                                  .read<CartBloc>()
+                                                  .add(GetAddressEvent());
+                                            },
+                                          )));
                                 },
                                 child: Row(
                                   children: [

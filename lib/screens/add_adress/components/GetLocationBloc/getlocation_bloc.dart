@@ -71,10 +71,12 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         String token = await repo.iprefsHelper.gettoken();
         var response = await repo.iHttpHlper.getrequest(
             "/Addresses/Remove/${event.addressid}?api_token=$token");
+        print(response);
         addressModel = addressModelFromJson(response);
+
         yield RemoveAddressState(addressModel);
       } catch (error) {
-        yield Error(error);
+        yield Error(error.toString());
       }
     }
     if (event is UpdateAddressEvent) {
@@ -90,16 +92,19 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
       }
     }
     if (event is GetAddressEvent) {
-      try {
-        String token = await repo.iprefsHelper.gettoken();
-        var response =
-            await repo.iHttpHlper.getrequest("/Addresses?api_token=$token");
-        addressModel = addressModelFromJson(response);
-        yield GetAddressState(addressModel);
-      } catch (error) {
-        yield Error(error);
+      String token = await repo.iprefsHelper.gettoken();
+
+      if (token != null) {
+        try {
+          var response =
+              await repo.iHttpHlper.getrequest("/Addresses?api_token=$token");
+          addressModel = addressModelFromJson(response);
+          yield GetAddressState(addressModel);
+        } catch (error) {
+          yield Error(error.toString());
+        }
       }
-    }
+    } else {}
     if (event is TaxiOrderEvent) {
       yield Loading();
       try {

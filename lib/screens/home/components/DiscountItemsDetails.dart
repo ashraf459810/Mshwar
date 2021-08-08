@@ -59,10 +59,10 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               SizedBox(
                 height: h(2),
               ),
-              NormalTextWidget(
-                  widget.itemsWithDiscount.title,
-                  Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-                  kTitleFontSize),
+              // NormalTextWidget(
+              //     widget.itemsWithDiscount.title,
+              //     Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
+              //     kTitleFontSize),
               SizedBox(
                 height: h(10),
               ),
@@ -75,72 +75,72 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                 height: h(40),
               ),
               addToCart(size),
-              HeaderTitle(
-                  ApplicationLocalizations.of(context).translate("comments"),
-                  ApplicationLocalizations.of(context).translate("view_all"),
-                  kAppColor, () {
-                _commentBottomSheet();
-              }),
+              // HeaderTitle(
+              //     ApplicationLocalizations.of(context).translate("comments"),
+              //     ApplicationLocalizations.of(context).translate("view_all"),
+              //     kAppColor, () {
+              //   _commentBottomSheet();
+              // }),
               SizedBox(
                 height: h(10),
               ),
-              SizedBox(
-                height: myCommentList.take(2).length * 160.0,
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (c, i) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CardWidget(
-                        height: h(140),
-                        childWidget: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: widget
-                                      .itemsWithDiscount.comments.isNotEmpty
-                                  ? StarDisplay(
-                                      value:
-                                          widget.itemsWithDiscount.comments[i])
-                                  : Text(""),
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     NormalTextWidget(myCommentList[i].userName,
-                            //         kAppColor, kTitleFontSize),
-                            //     NormalTextWidget(
-                            //         Jiffy(myCommentList[i].commentDate).yMMMd,
-                            //         Utils.isDarkMode
-                            //             ? kDarkTextColorColor
-                            //             : kGrayColor,
-                            //         kSmallFontSize),
-                            //   ],
-                            // ),
-                            SizedBox(
-                              height: h(10),
-                            ),
-                            Text(
-                              myCommentList[i].userComment,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                  color: Utils.isDarkMode
-                                      ? kDarkBlackTextColor
-                                      : kLightBlackTextColor,
-                                  fontSize: kSubTitleFontSize),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: myCommentList.take(2).length,
-                ),
-              )
+              // SizedBox(
+              //   height: myCommentList.take(2).length * 160.0,
+              //   child: ListView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemBuilder: (c, i) {
+              //       return Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CardWidget(
+              //           height: h(140),
+              //           childWidget: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             children: [
+              //               Padding(
+              //                 padding:
+              //                     const EdgeInsets.symmetric(vertical: 10.0),
+              //                 child: widget
+              //                         .itemsWithDiscount.comments.isNotEmpty
+              //                     ? StarDisplay(
+              //                         value:
+              //                             widget.itemsWithDiscount.comments[i])
+              //                     : Text(""),
+              //               ),
+              //               // Row(
+              //               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               //   children: [
+              //               //     NormalTextWidget(myCommentList[i].userName,
+              //               //         kAppColor, kTitleFontSize),
+              //               //     NormalTextWidget(
+              //               //         Jiffy(myCommentList[i].commentDate).yMMMd,
+              //               //         Utils.isDarkMode
+              //               //             ? kDarkTextColorColor
+              //               //             : kGrayColor,
+              //               //         kSmallFontSize),
+              //               //   ],
+              //               // ),
+              //               SizedBox(
+              //                 height: h(10),
+              //               ),
+              //               Text(
+              //                 myCommentList[i].userComment,
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 2,
+              //                 style: TextStyle(
+              //                     color: Utils.isDarkMode
+              //                         ? kDarkBlackTextColor
+              //                         : kLightBlackTextColor,
+              //                     fontSize: kSubTitleFontSize),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //     itemCount: myCommentList.take(2).length,
+              //   ),
+              // )
             ],
           ),
         ),
@@ -187,21 +187,21 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           SizedBox(
             height: h(30),
           ),
-          Center(
-            child: InkWell(
-              onTap: () {
-                _bottomSheet();
-              },
-              child: Text(
-                ApplicationLocalizations.of(context).translate("view_more"),
-                style: TextStyle(
-                  color: kAppColor,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          )
+          // Center(
+          //   child: InkWell(
+          //     onTap: () {
+          //       // _bottomSheet();
+          //     },
+          //     child: Text(
+          //       ApplicationLocalizations.of(context).translate("view_more"),
+          //       style: TextStyle(
+          //         color: kAppColor,
+          //         fontSize: 15.0,
+          //         fontWeight: FontWeight.w700,
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -288,8 +288,11 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
             Text(
               "sold     : ${widget.itemsWithDiscount.discount}",
               style: TextStyle(
-                  color: Utils.isDarkMode ? kDarkBlackTextColor : Colors.black,
-                  fontSize: 18),
+                  color: Utils.isDarkMode
+                      ? kDarkBlackTextColor
+                      : Colors.orange[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: h(10),
@@ -300,12 +303,19 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                   color: Utils.isDarkMode
                       ? kDarkBlackTextColor
                       : Colors.orange[900],
-                  fontSize: 18),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: h(20),
             ),
-            NormalTextWidget("Count : ${count.toString()}", kAppColor, 18),
+            Text(
+              "Count    : ${count.toString()}",
+              style: TextStyle(
+                  color: kBlackFontColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ],
@@ -346,13 +356,13 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               ),
             ],
           ),
-          Text(
-            "optoinal",
-            style: TextStyle(
-                color: Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-                fontSize: kTitleFontSize,
-                fontWeight: FontWeight.w500),
-          ),
+          // Text(
+          //   "optoinal",
+          //   style: TextStyle(
+          //       color: Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
+          //       fontSize: kTitleFontSize,
+          //       fontWeight: FontWeight.w500),
+          // ),
         ],
       ),
     );
@@ -377,162 +387,163 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
     );
   }
 
-  void _bottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Utils.isDarkMode ? kDarkDefaultBgColor : kWhiteColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0))),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 2.0),
-                child: Container(
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          "description : ${widget.itemsWithDiscount.descriptionEn}",
-                          style: TextStyle(
-                              color: kAppColor, fontSize: kTitleFontSize),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 20.0, right: 20.0, bottom: 0.0),
-                        child: Text(widget.itemsWithDiscount.description,
-                            style: TextStyle(
-                                color: Utils.isDarkMode
-                                    ? kDarkBlackTextColor
-                                    : kLightBlackTextColor)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: h(205),
-                          width: w(650.0),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text(
-                                    ApplicationLocalizations.of(context)
-                                        .translate("product_detail"),
-                                    style: TextStyle(
-                                        color: kAppColor,
-                                        fontSize: kTitleFontSize),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0,
-                                      right: 20.0,
-                                      bottom: 10.0,
-                                      left: 20.0),
-                                  child: Text(
-                                    widget.itemsWithDiscount.description,
-                                    style: TextStyle(
-                                        color: Utils.isDarkMode
-                                            ? kDarkBlackTextColor
-                                            : kLightBlackTextColor),
-                                    textDirection: TextDirection.ltr,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
-  }
+  // void _bottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return SingleChildScrollView(
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //                 color: Utils.isDarkMode ? kDarkDefaultBgColor : kWhiteColor,
+  //                 borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(0.0),
+  //                     topRight: Radius.circular(0.0))),
+  //             child: Padding(
+  //               padding: const EdgeInsets.only(top: 2.0),
+  //               child: Container(
+  //                 child: new Column(
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: <Widget>[
+  //                     Padding(padding: EdgeInsets.only(top: 20.0)),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(left: 20.0),
+  //                       child: Text(
+  //                         "description : ${widget.itemsWithDiscount.descriptionEn}",
+  //                         style: TextStyle(
+  //                             color: kAppColor, fontSize: kTitleFontSize),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(
+  //                           top: 20.0, left: 20.0, right: 20.0, bottom: 0.0),
+  //                       child: Text(widget.itemsWithDiscount.description,
+  //                           style: TextStyle(
+  //                               color: Utils.isDarkMode
+  //                                   ? kDarkBlackTextColor
+  //                                   : kLightBlackTextColor)),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(top: 10.0),
+  //                       child: Container(
+  //                         height: h(205),
+  //                         width: w(650.0),
+  //                         child: Padding(
+  //                           padding: EdgeInsets.only(top: 20.0),
+  //                           child: Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             children: <Widget>[
+  //                               Padding(
+  //                                 padding: const EdgeInsets.only(left: 20.0),
+  //                                 child: Text(
+  //                                   ApplicationLocalizations.of(context)
+  //                                       .translate("product_detail"),
+  //                                   style: TextStyle(
+  //                                       color: kAppColor,
+  //                                       fontSize: kTitleFontSize),
+  //                                 ),
+  //                               ),
+  //                               Padding(
+  //                                 padding: const EdgeInsets.only(
+  //                                     top: 10.0,
+  //                                     right: 20.0,
+  //                                     bottom: 10.0,
+  //                                     left: 20.0),
+  //                                 child: Text(
+  //                                   widget.itemsWithDiscount.description,
+  //                                   style: TextStyle(
+  //                                       color: Utils.isDarkMode
+  //                                           ? kDarkBlackTextColor
+  //                                           : kLightBlackTextColor),
+  //                                   textDirection: TextDirection.ltr,
+  //                                 ),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
-  void _commentBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color:
-                      Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0))),
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: SizedBox(
-                    height: myCommentList.length * 160.0,
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (c, i) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CardWidget(
-                            height: h(140),
-                            childWidget: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  child: StarDisplay(
-                                      value: myCommentList[i].range),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    NormalTextWidget(myCommentList[i].userName,
-                                        kAppColor, kTitleFontSize),
-                                    NormalTextWidget(
-                                        Jiffy(myCommentList[i].commentDate)
-                                            .yMMMd,
-                                        Utils.isDarkMode
-                                            ? kDarkTextColorColor
-                                            : kGrayColor,
-                                        kSmallFontSize),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: h(10),
-                                ),
-                                Text(
-                                  myCommentList[i].userComment,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                      color: Utils.isDarkMode
-                                          ? kDarkBlackTextColor
-                                          : kLightBlackTextColor,
-                                      fontSize: kSubTitleFontSize),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: myCommentList.length,
-                    ),
-                  )),
-            ),
-          );
-        });
-  }
+  // void _commentBottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return SingleChildScrollView(
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //                 color:
+  //                     Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
+  //                 borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(0.0),
+  //                     topRight: Radius.circular(0.0))),
+  //             child: Padding(
+  //                 padding: const EdgeInsets.only(top: 2.0),
+  //                 child: SizedBox(
+  //                   height: myCommentList.length * 160.0,
+  //                   child: ListView.builder(
+  //                     physics: NeverScrollableScrollPhysics(),
+  //                     itemBuilder: (c, i) {
+  //                       return Padding(
+  //                         padding: const EdgeInsets.all(8.0),
+  //                         child: CardWidget(
+  //                           height: h(140),
+  //                           childWidget: Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             mainAxisAlignment: MainAxisAlignment.start,
+  //                             children: [
+  //                               Padding(
+  //                                 padding: const EdgeInsets.symmetric(
+  //                                     vertical: 10.0),
+  //                                 child: StarDisplay(
+  //                                     value: myCommentList[i].range),
+  //                               ),
+  //                               Row(
+  //                                 mainAxisAlignment:
+  //                                     MainAxisAlignment.spaceBetween,
+  //                                 children: [
+  //                                   NormalTextWidget(myCommentList[i].userName,
+  //                                       kAppColor, kTitleFontSize),
+  //                                   NormalTextWidget(
+  //                                       Jiffy(myCommentList[i].commentDate)
+  //                                           .yMMMd,
+  //                                       Utils.isDarkMode
+  //                                           ? kDarkTextColorColor
+  //                                           : kGrayColor,
+  //                                       kSmallFontSize),
+  //                                 ],
+  //                               ),
+  //                               SizedBox(
+  //                                 height: h(10),
+  //                               ),
+  //                               Text(
+  //                                 myCommentList[i].userComment,
+  //                                 overflow: TextOverflow.ellipsis,
+  //                                 maxLines: 2,
+  //                                 style: TextStyle(
+  //                                     color: Utils.isDarkMode
+  //                                         ? kDarkBlackTextColor
+  //                                         : kLightBlackTextColor,
+  //                                     fontSize: kSubTitleFontSize),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       );
+  //                     },
+  //                     itemCount: myCommentList.length,
+  //                   ),
+  //                 )),
+  //           ),
+  //         );
+  //       });
+  // }
+
 }

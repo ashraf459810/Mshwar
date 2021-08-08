@@ -31,6 +31,5 @@ class NoInternet extends AppException {
 }
 
 class InternalServerError extends AppException {
-  InternalServerError([String message])
-      : super(message, "Internal Server Error");
+  InternalServerError([String message]) : super(message, "");
 }

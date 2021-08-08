@@ -34,20 +34,21 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
           // mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: h(90),
-              width: w(150),
+              height: h(80),
+              width: w(200),
               child: (Image.network(
                 'https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg',
                 fit: BoxFit.fitWidth,
               )),
             ),
             Container(
-              width: w(150),
-              color: Colors.orange[600],
+              width: w(200),
+              color: Colors.white,
               child: Center(
                 child: Text(
                   "${widget.shop.nameEn}",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ),
             )

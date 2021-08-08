@@ -140,20 +140,17 @@ class _HomeBodyState extends State<HomeBody> {
                                                   Text(
                                                     "${discountitems[index].titleEn}",
                                                     style: TextStyle(
-                                                        color:
-                                                            Colors.orange[900]),
+                                                        color: Colors.black),
                                                   ),
                                                   Text(
                                                     "Discount : ${discountitems[index].discount}",
                                                     style: TextStyle(
-                                                        color:
-                                                            Colors.orange[900]),
+                                                        color: Colors.black),
                                                   ),
                                                   Text(
                                                     "Price : ${discountitems[index].price}",
                                                     style: TextStyle(
-                                                        color:
-                                                            Colors.orange[900]),
+                                                        color: Colors.black),
                                                   ),
                                                 ],
                                               ),

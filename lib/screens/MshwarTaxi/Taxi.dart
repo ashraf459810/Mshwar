@@ -6,6 +6,7 @@ import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocat
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;
 import 'package:dellyshop/screens/splash/components/splash_body.dart';
+import 'package:dellyshop/screens/splash/splash_screen.dart';
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -266,13 +267,39 @@ class _TaxiState extends State<Taxi> {
                               ],
                             ),
                           )
-                        : state is GetAddressState && address.isEmpty
-                            ? Container(
-                                child: Center(
-                                    child: Text(
-                                  "No addresses added for you",
-                                  style: TextStyle(color: kAppColor),
-                                )),
+                        : address.isEmpty
+                            ? Column(
+                                children: [
+                                  SizedBox(
+                                    height: h(40),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          "No addresses added for you  ",
+                                          style: TextStyle(color: kAppColor),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                            builder: (context) =>
+                                                SplashScreen(),
+                                          ));
+                                        },
+                                        child: Container(
+                                          child: Text("register or login first",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                              )),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               )
                             : ShimmerWidget(
                                 child: Container(

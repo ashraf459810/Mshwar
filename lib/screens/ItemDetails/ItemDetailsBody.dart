@@ -47,7 +47,6 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               ]),
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               rating(),
               SizedBox(
@@ -57,85 +56,85 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(2),
               ),
-              NormalTextWidget(
-                  widget.datum.title,
-                  Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-                  kTitleFontSize),
+              // NormalTextWidget(
+              //     widget.datum.title,
+              //     Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
+              //     kTitleFontSize),
               SizedBox(
                 height: h(10),
               ),
               colorAndAmount(size),
               SizedBox(
-                height: h(10),
+                height: h(50),
               ),
               description(size),
               SizedBox(
                 height: h(40),
               ),
               addToCart(size),
-              HeaderTitle(
-                  ApplicationLocalizations.of(context).translate("comments"),
-                  ApplicationLocalizations.of(context).translate("view_all"),
-                  kAppColor, () {
-                _commentBottomSheet();
-              }),
+              // HeaderTitle(
+              //     ApplicationLocalizations.of(context).translate("comments"),
+              //     ApplicationLocalizations.of(context).translate("view_all"),
+              //     kAppColor, () {
+              //   _commentBottomSheet();
+              // }),
               SizedBox(
                 height: h(10),
               ),
-              SizedBox(
-                height: myCommentList.take(2).length * 160.0,
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (c, i) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CardWidget(
-                        height: h(140),
-                        childWidget: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: widget.datum.comments.isNotEmpty
-                                  ? StarDisplay(value: widget.datum.comments[i])
-                                  : Text(""),
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     NormalTextWidget(myCommentList[i].userName,
-                            //         kAppColor, kTitleFontSize),
-                            //     NormalTextWidget(
-                            //         Jiffy(myCommentList[i].commentDate).yMMMd,
-                            //         Utils.isDarkMode
-                            //             ? kDarkTextColorColor
-                            //             : kGrayColor,
-                            //         kSmallFontSize),
-                            //   ],
-                            // ),
-                            SizedBox(
-                              height: h(10),
-                            ),
-                            Text(
-                              myCommentList[i].userComment,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                  color: Utils.isDarkMode
-                                      ? kDarkBlackTextColor
-                                      : kLightBlackTextColor,
-                                  fontSize: kSubTitleFontSize),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: myCommentList.take(2).length,
-                ),
-              )
+              // SizedBox(
+              //   height: myCommentList.take(2).length * 160.0,
+              //   child: ListView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemBuilder: (c, i) {
+              //       return Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: CardWidget(
+              //           height: h(140),
+              //           childWidget: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             children: [
+              //               Padding(
+              //                 padding:
+              //                     const EdgeInsets.symmetric(vertical: 10.0),
+              //                 child: widget.datum.comments.isNotEmpty
+              //                     ? StarDisplay(value: widget.datum.comments[i])
+              //                     : Text(""),
+              //               ),
+              //               // Row(
+              //               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //               //   children: [
+              //               //     NormalTextWidget(myCommentList[i].userName,
+              //               //         kAppColor, kTitleFontSize),
+              //               //     NormalTextWidget(
+              //               //         Jiffy(myCommentList[i].commentDate).yMMMd,
+              //               //         Utils.isDarkMode
+              //               //             ? kDarkTextColorColor
+              //               //             : kGrayColor,
+              //               //         kSmallFontSize),
+              //               //   ],
+              //               // ),
+              //               SizedBox(
+              //                 height: h(10),
+              //               ),
+              //               Text(
+              //                 myCommentList[i].userComment,
+              //                 overflow: TextOverflow.ellipsis,
+              //                 maxLines: 2,
+              //                 style: TextStyle(
+              //                     color: Utils.isDarkMode
+              //                         ? kDarkBlackTextColor
+              //                         : kLightBlackTextColor,
+              //                     fontSize: kSubTitleFontSize),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //     itemCount: myCommentList.take(2).length,
+              //   ),
+              // )
             ],
           ),
         ),
@@ -167,6 +166,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     return Container(
       width: size.width,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
@@ -179,9 +179,6 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           SizedBox(
             height: h(10),
           ),
-          SizedBox(
-            height: h(30),
-          ),
         ],
       ),
     );
@@ -189,7 +186,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
   Row colorAndAmount(Size size) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,12 +269,17 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                   color: Utils.isDarkMode
                       ? kDarkBlackTextColor
                       : Colors.orange[900],
-                  fontSize: 18),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: h(20),
             ),
-            NormalTextWidget("Count : ${count.toString()}", kAppColor, 18),
+            Text(
+              "Count : ${count.toString()}",
+              style: TextStyle(
+                  color: kAppColor, fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ],
@@ -434,77 +436,77 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   //       });
   // }
 
-  void _commentBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color:
-                      Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(0.0),
-                      topRight: Radius.circular(0.0))),
-              child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: SizedBox(
-                    height: myCommentList.length * 160.0,
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (c, i) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CardWidget(
-                            height: h(140),
-                            childWidget: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  child: StarDisplay(
-                                      value: myCommentList[i].range),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    NormalTextWidget(myCommentList[i].userName,
-                                        kAppColor, kTitleFontSize),
-                                    NormalTextWidget(
-                                        Jiffy(myCommentList[i].commentDate)
-                                            .yMMMd,
-                                        Utils.isDarkMode
-                                            ? kDarkTextColorColor
-                                            : kGrayColor,
-                                        kSmallFontSize),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: h(10),
-                                ),
-                                Text(
-                                  myCommentList[i].userComment,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                      color: Utils.isDarkMode
-                                          ? kDarkBlackTextColor
-                                          : kLightBlackTextColor,
-                                      fontSize: kSubTitleFontSize),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      itemCount: myCommentList.length,
-                    ),
-                  )),
-            ),
-          );
-        });
-  }
+  // void _commentBottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return SingleChildScrollView(
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //                 color:
+  //                     Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
+  //                 borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(0.0),
+  //                     topRight: Radius.circular(0.0))),
+  //             child: Padding(
+  //                 padding: const EdgeInsets.only(top: 2.0),
+  //                 child: SizedBox(
+  //                   height: myCommentList.length * 160.0,
+  //                   child: ListView.builder(
+  //                     physics: NeverScrollableScrollPhysics(),
+  //                     itemBuilder: (c, i) {
+  //                       return Padding(
+  //                         padding: const EdgeInsets.all(8.0),
+  //                         child: CardWidget(
+  //                           height: h(140),
+  //                           childWidget: Column(
+  //                             crossAxisAlignment: CrossAxisAlignment.start,
+  //                             mainAxisAlignment: MainAxisAlignment.start,
+  //                             children: [
+  //                               Padding(
+  //                                 padding: const EdgeInsets.symmetric(
+  //                                     vertical: 10.0),
+  //                                 child: StarDisplay(
+  //                                     value: myCommentList[i].range),
+  //                               ),
+  //                               Row(
+  //                                 mainAxisAlignment:
+  //                                     MainAxisAlignment.spaceBetween,
+  //                                 children: [
+  //                                   NormalTextWidget(myCommentList[i].userName,
+  //                                       kAppColor, kTitleFontSize),
+  //                                   NormalTextWidget(
+  //                                       Jiffy(myCommentList[i].commentDate)
+  //                                           .yMMMd,
+  //                                       Utils.isDarkMode
+  //                                           ? kDarkTextColorColor
+  //                                           : kGrayColor,
+  //                                       kSmallFontSize),
+  //                                 ],
+  //                               ),
+  //                               SizedBox(
+  //                                 height: h(10),
+  //                               ),
+  //                               Text(
+  //                                 myCommentList[i].userComment,
+  //                                 overflow: TextOverflow.ellipsis,
+  //                                 maxLines: 2,
+  //                                 style: TextStyle(
+  //                                     color: Utils.isDarkMode
+  //                                         ? kDarkBlackTextColor
+  //                                         : kLightBlackTextColor,
+  //                                     fontSize: kSubTitleFontSize),
+  //                               ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                       );
+  //                     },
+  //                     itemCount: myCommentList.length,
+  //                   ),
+  //                 )),
+  //           ),
+  //         );
+  //       });
+  // }
 }

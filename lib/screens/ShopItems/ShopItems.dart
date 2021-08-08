@@ -282,7 +282,7 @@ class _ShopItemsState extends State<ShopItems> {
                                             Text(
                                               "${items[index].titleEn}",
                                               style: TextStyle(
-                                                  color: Colors.orange[900],
+                                                  color: Colors.black,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500),
                                             ),
@@ -292,7 +292,7 @@ class _ShopItemsState extends State<ShopItems> {
                                             Text(
                                               "Price : ${items[index].price}",
                                               style: TextStyle(
-                                                  color: Colors.orange[900],
+                                                  color: Colors.black,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500),
                                             ),
