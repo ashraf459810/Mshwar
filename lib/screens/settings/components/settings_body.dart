@@ -2,10 +2,10 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/address_model.dart';
 import 'package:dellyshop/models/language.dart';
+import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/edit_address/edit_address_screen.dart';
 
-import 'package:dellyshop/screens/splash/splash_screen.dart';
 import 'package:dellyshop/widgets/app_builder.dart';
 
 import 'package:dellyshop/widgets/card_widget.dart';
@@ -125,7 +125,7 @@ class _SettingsBodyState extends State<SettingsBody> {
                                         ontap: () {
                                           Navigator.of(context)
                                               .pushReplacementNamed(
-                                                  SplashScreen.routeName);
+                                                  App.routeName);
                                         },
                                         witdh: 100,
                                         height: 40,

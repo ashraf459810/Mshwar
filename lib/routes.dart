@@ -1,3 +1,4 @@
+import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/add_credit_card/add_credit_cart_screen.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 import 'package:dellyshop/screens/app_intro/app_intro_screen.dart';
@@ -17,12 +18,12 @@ import 'package:dellyshop/screens/register/register_screen.dart';
 import 'package:dellyshop/screens/search/search_screen.dart';
 
 import 'package:dellyshop/screens/settings/settings_screen.dart';
-import 'package:dellyshop/screens/splash/splash_screen.dart';
+
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  SplashScreen.routeName: (context) => SplashScreen(),
+  App.routeName: (context) => App(),
   LoginScreen.routeName: (context) => LoginScreen(),
   RegisterScreen.routeName: (context) => RegisterScreen(),
   CustomBottomNavigationBar.routeName: (context) => CustomBottomNavigationBar(),

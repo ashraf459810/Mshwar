@@ -4,13 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 class ReusableWidget {
-
-
-Widget container(TextEditingController editingController, String inputtext,
+  Widget container(TextEditingController editingController, String inputtext,
       String label, String type,
-   
-   
-    
       [double height]) {
     return Column(
       children: [
@@ -22,9 +17,9 @@ Widget container(TextEditingController editingController, String inputtext,
             Text(
               label,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp,
-          ),
+                color: Colors.black,
+                fontSize: 16.sp,
+              ),
             ),
           ],
         ),
@@ -39,12 +34,12 @@ Widget container(TextEditingController editingController, String inputtext,
             color: Colors.white,
           ),
           child: TextFormField(
+            obscureText: type == "password" ? true : false,
             validator: type == "name"
                 ? (value) => value.isEmpty
                     ? 'Enter Your Name'
-                    :     !RegexValidation.hasMatch(
-                                value, RegexPattern.alphabetOnly)
-                           
+                    : !RegexValidation.hasMatch(
+                            value, RegexPattern.alphabetOnly)
                         ? "Enter a valid name"
                         : null
                 : type == "email"
@@ -52,7 +47,7 @@ Widget container(TextEditingController editingController, String inputtext,
                         if (value.isEmpty) {
                           return 'Enter Your Email';
                         }
-                        
+
                         bool emailValid = EmailValidator.validate(value);
                         print(emailValid);
                         if (emailValid == true) {
@@ -97,5 +92,4 @@ Widget container(TextEditingController editingController, String inputtext,
       ],
     );
   }
-
 }

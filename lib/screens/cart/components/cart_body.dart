@@ -37,7 +37,7 @@ class _CartBodyState extends State<CartBody> {
   int index = 1;
   int value = 2;
   int pay = 200;
-  int totalpay;
+
   List<Address> address = [];
 
   @override
@@ -48,7 +48,6 @@ class _CartBodyState extends State<CartBody> {
 
   @override
   Widget build(BuildContext context) {
-    totalpay = pay * value;
     totalListHeight = ((index * itemHeight)).toDouble();
 
     return BlocBuilder<CartBloc, CartState>(
@@ -66,6 +65,7 @@ class _CartBodyState extends State<CartBody> {
         }
         if (state is GetCartItemsState) {
           cartModel = state.cartModel;
+          print(cartModel.cartsTotal.toString());
 
           context.read<CartBloc>().add(GetAddressEvent());
         }

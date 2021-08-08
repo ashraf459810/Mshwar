@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../app_localizations.dart';
 import '../../util.dart';
 
 class ShopItems extends StatefulWidget {
@@ -27,136 +26,8 @@ class _ShopItemsState extends State<ShopItems> {
   int pages = 0;
   int ssize = 12;
   List<Datum> items = [];
-  final _fontCostumSheetBotomHeader = TextStyle(
-      color: Utils.isDarkMode ? kDarkTextColorColor : kLightBlackTextColor,
-      fontWeight: FontWeight.w600,
-      fontSize: kSubTitleFontSize);
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   /// Custom text for bottomSheet
-  final _fontCostumSheetBotom = TextStyle(
-      color: Utils.isDarkMode ? kDarkBlackTextColor : Colors.black45,
-      fontWeight: FontWeight.w400,
-      fontSize: kSubTitleFontSize);
-
-  /// Create Modal BottomSheet (SortBy)
-  void modalBottomSheetSort() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: new Container(
-              height: 340.0,
-              color: Utils.isDarkMode ? kDarkDefaultBgColor : Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Text(
-                      ApplicationLocalizations.of(context).translate("sort_by"),
-                      style: _fontCostumSheetBotomHeader),
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Container(
-                    width: 500.0,
-                    color: Colors.black26,
-                    height: 0.5,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  InkWell(
-                      onTap: () {},
-                      child: Text(
-                        ApplicationLocalizations.of(context)
-                            .translate("popularity"),
-                        style: _fontCostumSheetBotom,
-                      )),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("new"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("discount"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("high_low"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("low_high"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  /// Create Modal BottomSheet (RefineBy)
-  void modalBottomSheetRefine() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: new Container(
-              height: 340.0,
-              color: Utils.isDarkMode ? kDarkDefaultBgColor : Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Text(
-                      ApplicationLocalizations.of(context)
-                          .translate("refine_by"),
-                      style: _fontCostumSheetBotomHeader),
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Container(
-                    width: 500.0,
-                    color: Colors.black26,
-                    height: 0.5,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  InkWell(
-                      onTap: () {},
-                      child: Text(
-                        ApplicationLocalizations.of(context)
-                            .translate("popularity"),
-                        style: _fontCostumSheetBotom,
-                      )),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("new"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("discount"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("high_low"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                  Text(
-                    ApplicationLocalizations.of(context).translate("low_high"),
-                    style: _fontCostumSheetBotom,
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 25.0)),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +56,6 @@ class _ShopItemsState extends State<ShopItems> {
         ),
         backgroundColor:
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
-        key: _key,
         body: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(

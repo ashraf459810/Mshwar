@@ -1,6 +1,6 @@
 import 'package:dellyshop/routes.dart';
+import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
-import 'package:dellyshop/screens/splash/splash_screen.dart';
 
 import 'package:dellyshop/theme.dart';
 import 'package:dellyshop/util.dart';
@@ -62,7 +62,7 @@ class _MainAppState extends State<MainApp> {
                       return supportedLocales.first;
                     },
                     title: 'Mshwar',
-                    initialRoute: SplashScreen.routeName,
+                    initialRoute: App.routeName,
                     builder: (context, widget) {
                       return MediaQuery(
                         //Setting font does not change with system font size

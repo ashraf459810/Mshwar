@@ -1,5 +1,6 @@
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/screens/splash/splash_screen.dart';
+import 'package:dellyshop/screens/App/App.dart';
+
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
@@ -17,7 +18,7 @@ class _AppIntroScreenState extends State<AppIntroScreen> {
     return IntroViewsFlutter(
       [page, page1, page2],
       onTapDoneButton: () {
-        Navigator.of(context).pushReplacementNamed(SplashScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(App.routeName);
       },
       showSkipButton: true,
       pageButtonTextStyles: new TextStyle(

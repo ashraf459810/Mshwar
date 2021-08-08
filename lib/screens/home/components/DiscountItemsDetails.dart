@@ -2,21 +2,19 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 
-import 'package:dellyshop/models/my_comment_model.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
-import 'package:dellyshop/screens/home/components/header_title.dart';
+
 import 'package:dellyshop/util.dart';
-import 'package:dellyshop/widgets/card_widget.dart';
+
 import 'package:dellyshop/widgets/carousel_pro.dart';
 
 import 'package:dellyshop/widgets/default_buton.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
-import 'package:dellyshop/widgets/star_display.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jiffy/jiffy.dart';
 
 class DiscountItemDetails extends StatefulWidget {
   final ItemsWithDiscount itemsWithDiscount;

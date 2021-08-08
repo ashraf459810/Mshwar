@@ -1,12 +1,13 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
+import 'package:dellyshop/screens/App/App.dart';
+import 'package:dellyshop/screens/App/components/Signup.dart';
 
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
 
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;
-import 'package:dellyshop/screens/splash/components/splash_body.dart';
-import 'package:dellyshop/screens/splash/splash_screen.dart';
+
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -286,8 +287,7 @@ class _TaxiState extends State<Taxi> {
                                         onTap: () {
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(
-                                            builder: (context) =>
-                                                SplashScreen(),
+                                            builder: (context) => App(),
                                           ));
                                         },
                                         child: Container(

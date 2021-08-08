@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../app_localizations.dart';
 
-class SplashBody extends StatefulWidget {
+class Signup extends StatefulWidget {
   @override
-  _SplashBodyState createState() => _SplashBodyState();
+  _SignupState createState() => _SignupState();
 }
 
-class _SplashBodyState extends State<SplashBody> with TickerProviderStateMixin {
+class _SignupState extends State<Signup> with TickerProviderStateMixin {
   AnimationController animationController;
   var tapLogin = 0;
   var tapSignup = 0;
