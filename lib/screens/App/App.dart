@@ -1,5 +1,6 @@
 import 'package:dellyshop/screens/App/components/Signup.dart';
-import 'package:dellyshop/screens/home/home_screen.dart';
+
+import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ class App extends StatelessWidget {
           if (state is IsLoginState) {
             if (state.islogin == true) {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => HomeScreen(),
+                builder: (context) => CustomBottomNavigationBar(),
               ));
             } else
               Navigator.of(context).pushReplacement(

@@ -268,7 +268,7 @@ class _TaxiState extends State<Taxi> {
                               ],
                             ),
                           )
-                        : address.isEmpty
+                        : address.isEmpty && state is GetAddressState
                             ? Column(
                                 children: [
                                   SizedBox(
