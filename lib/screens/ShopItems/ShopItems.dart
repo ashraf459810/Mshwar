@@ -1,12 +1,12 @@
+import 'package:dellyshop/Widgets%20copy/Container.dart';
+import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/ShopItem.dart';
 import 'package:dellyshop/screens/ItemDetails/ItemDetails.dart';
 import 'package:dellyshop/screens/ShopItems/bloc/shopitems_bloc.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../util.dart';
 
 class ShopItems extends StatefulWidget {
@@ -58,7 +58,10 @@ class _ShopItemsState extends State<ShopItems> {
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
         body: Container(
           height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 height: h(10),
@@ -98,23 +101,19 @@ class _ShopItemsState extends State<ShopItems> {
 
                       return false;
                     },
-                    child: Container(
-                      height: h(650),
-                      child: GridView.builder(
-                          physics: ScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          scrollDirection: Axis.vertical,
-                          controller: controller,
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  childAspectRatio: 3 / 3.8,
-                                  crossAxisSpacing: 20,
-                                  mainAxisSpacing: 20),
-                          itemCount: items.length,
-                          // ignore: missing_return
-                          itemBuilder: (BuildContext ctx, index) {
-                            return InkWell(
+                    child: Center(
+                      child: Container(
+                        height: h(650),
+                        width: w(350),
+                        child: ListView.builder(
+                            physics: ScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            scrollDirection: Axis.vertical,
+                            controller: controller,
+                            itemCount: items.length,
+                            // ignore: missing_return
+                            itemBuilder: (BuildContext ctx, index) {
+                              return InkWell(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ItemDetails(
@@ -122,57 +121,67 @@ class _ShopItemsState extends State<ShopItems> {
                                     ),
                                   ));
                                 },
-                                child: Card(
-                                  child: Container(
-                                    color: Colors.white,
-                                    height: h(150),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  child: container(
+                                    borderRadius: 16,
+                                    hight: h(100),
                                     width: w(200),
-                                    child: Column(
+                                    shadow: true,
+                                    child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                            height: h(150),
-                                            width: w(200),
-                                            child: Image.network(
-                                              "${items[index].images}",
-                                              fit: BoxFit.cover,
-                                            )),
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                          child: Container(
+                                              color: Colors.red,
+                                              child: Image.network(
+                                                "${items[index].images}",
+                                                fit: BoxFit.cover,
+                                              )),
+                                        ),
                                         SizedBox(
-                                          height: h(10),
+                                          width: w(40),
                                         ),
                                         Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Text(
-                                              "${items[index].titleEn}",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500),
+                                            // SizedBox(
+                                            //   height: h(10),
+                                            // ),
+                                            text(
+                                                text:
+                                                    "${items[index].titleEn},",
+                                                color: Colors.grey[900]),
+                                            Container(
+                                              height: h(30),
+                                              width: w(150),
+                                              child: Flexible(
+                                                child: text(
+                                                    text:
+                                                        "${items[index].descriptionEn},",
+                                                    fontsize: 11,
+                                                    color: Colors.grey),
+                                              ),
                                             ),
-                                            SizedBox(
-                                              height: h(10),
-                                            ),
-                                            Text(
-                                              "Price : ${items[index].price}",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
+                                            text(
+                                                text:
+                                                    "Price ${items[index].price}",
+                                                color: Colors.orange[900]),
                                           ],
                                         )
                                       ],
                                     ),
                                   ),
-                                ));
-                          }),
+                                ),
+                              );
+                            }),
+                      ),
                     ));
               }),
             ],

@@ -11,7 +11,6 @@ class App extends StatelessWidget {
   static const String routeName = "/splash_screen";
   @override
   Widget build(BuildContext context) {
-    print("here splash");
     return BlocProvider(
       create: (context) => AppBloc()..add(IsLoginEvent()),
       child: BlocListener<AppBloc, AppState>(

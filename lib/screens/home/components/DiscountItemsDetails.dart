@@ -378,7 +378,8 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           autoplay: false,
           boxFit: BoxFit.fitHeight,
           images: [
-            Image.network(widget.itemsWithDiscount.images),
+            Image.asset('assets/images/apple.jpg'),
+            // Image.network(widget.itemsWithDiscount.images),
           ],
         ),
       ),
