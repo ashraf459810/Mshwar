@@ -2,9 +2,9 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/address_model.dart';
 import 'package:dellyshop/models/language.dart';
-import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
 import 'package:dellyshop/screens/edit_address/edit_address_screen.dart';
+import 'package:dellyshop/screens/login/login_screen.dart';
 
 import 'package:dellyshop/widgets/app_builder.dart';
 
@@ -124,8 +124,9 @@ class _SettingsBodyState extends State<SettingsBody> {
                                                 .translate("logout"),
                                         ontap: () {
                                           Navigator.of(context)
-                                              .pushReplacementNamed(
-                                                  App.routeName);
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => LoginScreen(),
+                                          ));
                                         },
                                         witdh: 100,
                                         height: 40,

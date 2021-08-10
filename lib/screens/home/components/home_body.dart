@@ -14,7 +14,7 @@ import 'package:dellyshop/screens/home/components/DiscountDetails.dart';
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 import 'package:dellyshop/screens/home/components/carousel_view_builder.dart';
 import 'package:dellyshop/screens/home/components/category_list_builder.dart';
-import 'package:dellyshop/screens/home/ttt.dart';
+
 import 'package:dellyshop/util.dart';
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 
@@ -70,21 +70,14 @@ class _HomeBodyState extends State<HomeBody> {
             color: Utils.isDarkMode ? kDarkColor : kWhiteColor,
             child: ListView(
               children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Tess(),
-                    ));
-                  },
-                  child: HeaderTitle(
-                      ApplicationLocalizations.of(context)
-                          .translate("categories"),
-                      "",
-                      Utils.isDarkMode
-                          ? kDarkBlackFontColor
-                          : kLightBlackTextColor,
-                      () {}),
-                ),
+                HeaderTitle(
+                    ApplicationLocalizations.of(context)
+                        .translate("categories"),
+                    "",
+                    Utils.isDarkMode
+                        ? kDarkBlackFontColor
+                        : kLightBlackTextColor,
+                    () {}),
                 categories != null
                     ? Container(
                         height: h(110), child: CateogryListBuilder(categories))
@@ -107,9 +100,11 @@ class _HomeBodyState extends State<HomeBody> {
                 state is GetDiscountItemsState
                     ? discountitems.isNotEmpty
                         ? Container(
-                            height: h(200),
+                            height: h(160),
                             child: Container(
                               child: ListView.builder(
+                                  physics: ScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics()),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: discountitems.length,
                                   shrinkWrap: true,
@@ -133,7 +128,7 @@ class _HomeBodyState extends State<HomeBody> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             SizedBox(
-                                              height: h(12),
+                                              height: h(10),
                                             ),
                                             container(
                                               shadow: true,
@@ -160,26 +155,23 @@ class _HomeBodyState extends State<HomeBody> {
                                                       text:
                                                           "${discountitems[index].titleEn},",
                                                       color: Colors.grey[900]),
-                                                  Container(
-                                                    width: w(100),
-                                                    child: Flexible(
-                                                      fit: FlexFit.loose,
-                                                      child: text(
-                                                          text:
-                                                              "sdfsdfsdfgsdfsddsgsdgsdggsgrgerg${discountitems[index].descriptionEn},",
-                                                          fontsize: 11,
-                                                          color: Colors.grey),
-                                                    ),
+                                                  Column(
+                                                    children: [
+                                                      Container(
+                                                        height: w(10),
+                                                        child: text(
+                                                            text:
+                                                                "${discountitems[index].descriptionEn},",
+                                                            fontsize: 11,
+                                                            color: Colors.grey),
+                                                      ),
+                                                    ],
                                                   ),
                                                   text(
                                                       text:
                                                           "Discount ${discountitems[index].discount}",
-                                                      color:
-                                                          Colors.orange[900]),
-                                                  text(
-                                                      text:
-                                                          "Price ${discountitems[index].price}",
-                                                      color: Colors.orange[900])
+                                                      color: Colors.orange[900],
+                                                      fontsize: 12),
                                                 ],
                                               ),
                                             ),

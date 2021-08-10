@@ -159,15 +159,15 @@ class _ShopItemsState extends State<ShopItems> {
                                                     "${items[index].titleEn},",
                                                 color: Colors.grey[900]),
                                             Container(
-                                              height: h(30),
-                                              width: w(150),
-                                              child: Flexible(
-                                                child: text(
-                                                    text:
-                                                        "${items[index].descriptionEn},",
-                                                    fontsize: 11,
-                                                    color: Colors.grey),
-                                              ),
+                                              constraints: BoxConstraints(
+                                                  maxWidth: w(150),
+                                                  minHeight: h(10),
+                                                  maxHeight: h(30)),
+                                              child: text(
+                                                  text:
+                                                      "${items[index].descriptionEn},",
+                                                  fontsize: 11,
+                                                  color: Colors.grey),
                                             ),
                                             text(
                                                 text:

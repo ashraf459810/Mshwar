@@ -5,16 +5,14 @@ import 'package:dellyshop/screens/search/search_screen.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../util.dart';
+import 'components/category_item_builder.dart';
 import 'components/home_body.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = "/home_screen";
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
         backgroundColor:
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
@@ -33,16 +31,30 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Mshwar",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: kAppColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: kLargeFontSize),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Mshwar",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  color: kAppColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: kLargeFontSize),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 14),
+                              child: Image.asset(
+                                "assets/images/MshwarLogo.png",
+                                height: h(40),
+                                width: w(100),
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 2.0,bottom: 1),
+                          padding: const EdgeInsets.only(left: 2.0, bottom: 1),
                           // child: Text(
                           //   ApplicationLocalizations.of(context)
                           //       .translate("delly_shop_desc"),
@@ -58,7 +70,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              bottom: PreferredSize(preferredSize: Size.fromHeight(30),
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(30),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed(SearchScreen.routeName);
@@ -86,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                             Utils.isDarkMode
                                 ? kDarkTextColorColor
                                 : kLightBlackTextColor,
-                            kSmallFontSize)
+                            kSmallFontSize),
                       ],
                     ),
                   ),

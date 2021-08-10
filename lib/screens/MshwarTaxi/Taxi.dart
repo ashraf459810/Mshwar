@@ -4,6 +4,7 @@ import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/App/components/Signup.dart';
 
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
+import 'package:dellyshop/screens/home/home_screen.dart';
 
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;
@@ -92,6 +93,9 @@ class _TaxiState extends State<Taxi> {
                             duration: 3,
                             gravity: 0,
                             backgroundColor: Colors.orange[900]);
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ));
                       }
                       if (state is Error) {
                         Toast.show(state.error, context,

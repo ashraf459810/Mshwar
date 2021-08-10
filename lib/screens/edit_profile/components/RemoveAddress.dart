@@ -28,8 +28,8 @@ class _RemoveAddressState extends State<RemoveAddress> {
             listener: (context, state) {
           if (state is RemoveAddressState) {
             address = state.removeAddressRespnose.addresses;
-            Toast.show("Addredd Removed", context,
-                backgroundColor: Colors.deepOrange[900]);
+            Toast.show("Address Removed", context,
+                backgroundColor: Colors.orange[900]);
             selectedaddreddname = null;
           }
 

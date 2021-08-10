@@ -1,3 +1,4 @@
+import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
@@ -15,6 +16,7 @@ import 'package:dellyshop/widgets/normal_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toast/toast.dart';
 
 class DiscountItemDetails extends StatefulWidget {
   final ItemsWithDiscount itemsWithDiscount;
@@ -72,7 +74,18 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               SizedBox(
                 height: h(40),
               ),
-              addToCart(size),
+              BlocConsumer<CartBloc, CartState>(listener: (context, state) {
+                if (state is AddItemToCartState) {
+                  Toast.show("Added Successfully ", context,
+                      backgroundColor: Colors.orange[900], gravity: 2);
+                }
+              }, builder: (context, state) {
+                if (state is Error) {
+                  return Center(child: text(text: "${state.error}"));
+                }
+
+                return addToCart(size);
+              }),
               // HeaderTitle(
               //     ApplicationLocalizations.of(context).translate("comments"),
               //     ApplicationLocalizations.of(context).translate("view_all"),
