@@ -81,18 +81,16 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
               Row(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(right: 10.0, top: 5.0),
-                    height: h(100),
-                    width: w(150),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Image.asset(
-                      "assets/images/apple.jpg",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      margin: EdgeInsets.only(right: 10.0, top: 5.0),
+                      height: h(100),
+                      width: w(150),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Image.network(
+                        "${carthistory[index].mainImage}",
+                      )),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

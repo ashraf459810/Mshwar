@@ -85,7 +85,7 @@ class MyOrder {
   int itemPrepTime;
   dynamic itemAttributes;
   int quantity;
-  int price;
+  dynamic price;
   int attributesPrice;
   int membershipDiscountPercentage;
   dynamic membershipDiscountAmount;
@@ -349,7 +349,7 @@ class Order {
 
   int id;
   int usersId;
-  int orderTotal;
+  dynamic orderTotal;
   int paymentMethodsId;
   int orderType;
   dynamic driverId;
@@ -409,9 +409,9 @@ class Invoice {
   int id;
   int usersId;
   int ordersId;
-  int total;
+  dynamic total;
   int invoiceStatusesId;
-  int deliveryFees;
+  dynamic deliveryFees;
   DateTime createdAt;
   DateTime updatedAt;
 

@@ -46,7 +46,8 @@ class _CateogryListBuilderState extends State<CateogryListBuilder> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CategoryShops(
-                                      widget.categories.categories[index])));
+                                      category: widget
+                                          .categories.categories[index])));
                         },
                         child: CategoryListItemBuilder(
                             widget.categories.categories[index])),

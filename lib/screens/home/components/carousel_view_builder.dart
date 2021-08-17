@@ -1,5 +1,6 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/Sliders.dart/Sliders.dart';
+
 import 'package:dellyshop/widgets/carousel_pro.dart';
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,11 @@ class _CarouselViewBuilderState extends State<CarouselViewBuilder> {
       height: 182.0,
       child: images.isNotEmpty
           ? new Carousel(
-            
+              // onImageTap: (value) {
+              //   print("tapped $value");
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => CategoryShops(categoryid: value)));
+              // },
               borderRadius: true,
               boxFit: BoxFit.cover,
               radiusDouble: 10,
@@ -67,5 +72,3 @@ List<NetworkImage> getimages(Sliders sliders) {
     return images;
   }
 }
-
-

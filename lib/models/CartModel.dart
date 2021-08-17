@@ -63,7 +63,7 @@ class Cart {
   dynamic notes;
   DateTime createdAt;
   DateTime updatedAt;
-  int subTotal;
+  double subTotal;
   double membershipDiscount;
   double total;
   List<dynamic> customAttributesValues;

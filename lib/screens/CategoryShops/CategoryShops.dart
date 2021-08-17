@@ -14,7 +14,8 @@ import '../../util.dart';
 
 class CategoryShops extends StatefulWidget {
   final Category category;
-  CategoryShops(this.category);
+  final int categoryid;
+  CategoryShops({this.category, this.categoryid});
   @override
   _CategoryShopsState createState() => _CategoryShopsState();
 }
@@ -37,7 +38,9 @@ class _CategoryShopsState extends State<CategoryShops> {
 
     return BlocProvider(
         create: (context) => HomeBloc()
-          ..add(GetCategoryShopsEvent(widget.category.id.toString())),
+          ..add(widget.categoryid == null
+              ? GetCategoryShopsEvent(widget.category.id.toString())
+              : GetCategoryShopsEvent(widget.categoryid.toString())),
         child: Scaffold(
             backgroundColor:
                 Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,

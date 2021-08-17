@@ -70,6 +70,7 @@ class _HomeBodyState extends State<HomeBody> {
             color: Utils.isDarkMode ? kDarkColor : kWhiteColor,
             child: ListView(
               children: [
+                sliders != null ? CarouselViewBuilder(sliders) : Container(),
                 HeaderTitle(
                     ApplicationLocalizations.of(context)
                         .translate("categories"),
@@ -87,7 +88,6 @@ class _HomeBodyState extends State<HomeBody> {
                           color: Colors.grey,
                         ),
                       ),
-                sliders != null ? CarouselViewBuilder(sliders) : Container(),
                 HeaderTitle(
                     'Discount',
                     ApplicationLocalizations.of(context).translate("view_all"),
@@ -100,7 +100,7 @@ class _HomeBodyState extends State<HomeBody> {
                 state is GetDiscountItemsState
                     ? discountitems.isNotEmpty
                         ? Container(
-                            height: h(160),
+                            height: h(150),
                             child: Container(
                               child: ListView.builder(
                                   physics: ScrollPhysics(
@@ -145,31 +145,31 @@ class _HomeBodyState extends State<HomeBody> {
                                                     child: Container(
                                                         height: h(100),
                                                         width: w(150),
-                                                        child: Image.asset(
-                                                          "assets/images/apple.jpg",
+                                                        child: Image.network(
+                                                          "${discountitems[index].images}",
                                                           // "${discountitems[index].images}",
                                                           fit: BoxFit.cover,
                                                         )),
                                                   ),
                                                   text(
                                                       text:
-                                                          "${discountitems[index].titleEn},",
+                                                          "${discountitems[index].titleEn}",
                                                       color: Colors.grey[900]),
-                                                  Column(
-                                                    children: [
-                                                      Container(
-                                                        height: w(10),
-                                                        child: text(
-                                                            text:
-                                                                "${discountitems[index].descriptionEn},",
-                                                            fontsize: 11,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  // Column(
+                                                  //   children: [
+                                                  //     Container(
+                                                  //       height: w(10),
+                                                  //       child: text(
+                                                  //           text:
+                                                  //               "${discountitems[index].descriptionEn},",
+                                                  //           fontsize: 11,
+                                                  //           color: Colors.grey),
+                                                  //     ),
+                                                  //   ],
+                                                  // ),
                                                   text(
                                                       text:
-                                                          "Discount ${discountitems[index].discount}",
+                                                          "Discount ${discountitems[index].discount}%",
                                                       color: Colors.orange[900],
                                                       fontsize: 12),
                                                 ],
@@ -196,7 +196,7 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                       ),
                 SizedBox(
-                  height: h(30),
+                  height: h(20),
                 ),
                 Container(
                   child: Text(

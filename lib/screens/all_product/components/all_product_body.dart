@@ -1,5 +1,5 @@
 import 'package:dellyshop/Widgets%20copy/Container.dart';
-import 'package:dellyshop/Widgets%20copy/Text.dart';
+
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 
 import 'package:dellyshop/screens/home/components/DiscountItemsDetails.dart';
@@ -77,8 +77,8 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                                   child: ClipRRect(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
-                                    child: Image.asset(
-                                      "assets/images/apple.jpg",
+                                    child: Image.network(
+                                      "${items[index].images}",
                                       fit: BoxFit.cover,
                                     ),
                                   )),
@@ -91,21 +91,21 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                                       "${items[index].titleEn}",
                                       style: TextStyle(color: Colors.grey[900]),
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          constraints: BoxConstraints(
-                                              minHeight: 10, maxHeight: 23),
-                                          child: text(
-                                              text:
-                                                  "${items[index].descriptionEn},",
-                                              fontsize: 11,
-                                              color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
+                                    // Column(
+                                    //   crossAxisAlignment:
+                                    //       CrossAxisAlignment.center,
+                                    //   children: [
+                                    //     Container(
+                                    //       constraints: BoxConstraints(
+                                    //           minHeight: 10, maxHeight: 23),
+                                    //       child: text(
+                                    //           text:
+                                    //               "${items[index].descriptionEn},",
+                                    //           fontsize: 11,
+                                    //           color: Colors.grey),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                     SizedBox(
                                       height: h(3),
                                     ),
