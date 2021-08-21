@@ -3,13 +3,13 @@ import 'package:dellyshop/screens/add_credit_card/add_credit_cart_screen.dart';
 import 'package:dellyshop/screens/all_product/all_product_screen.dart';
 import 'package:dellyshop/screens/app_intro/app_intro_screen.dart';
 import 'package:dellyshop/screens/cart/components/cart_screen.dart';
-import 'package:dellyshop/screens/category_detail/category_detail_screen.dart';
+
 import 'package:dellyshop/screens/edit_profile/edit_profile_screen.dart';
 import 'package:dellyshop/screens/home/home_screen.dart';
-import 'package:dellyshop/screens/last_view/last_view_screen.dart';
+
 import 'package:dellyshop/screens/login/login_screen.dart';
 import 'package:dellyshop/screens/my_comments/my_comments_screen.dart';
-import 'package:dellyshop/screens/my_favorites/my_favorites_screen.dart';
+
 import 'package:dellyshop/screens/my_orders/my_orders_screen.dart';
 import 'package:dellyshop/screens/notifications/notification_screen.dart';
 import 'package:dellyshop/screens/payment/payment_screen.dart';
@@ -31,15 +31,15 @@ final Map<String, WidgetBuilder> routes = {
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
   AddCreditCardScreen.routeName: (context) => AddCreditCardScreen(),
-  LastViewScreen.routeName: (context) => LastViewScreen(),
-  MyFavoriteScreen.routeName: (context) => MyFavoriteScreen(),
+  // LastViewScreen.routeName: (context) => LastViewScreen(),
+  // MyFavoriteScreen.routeName: (context) => MyFavoriteScreen(),
   MyOdersScreen.routeName: (context) => MyOdersScreen(),
   MyCommentScreen.routeName: (context) => MyCommentScreen(),
   NotificationScreen.routeName: (context) => NotificationScreen(),
   SearchScreen.routeName: (context) => SearchScreen(),
   SettingsPage.routeName: (context) => SettingsPage(),
   PaymentScreen.routeName: (context) => PaymentScreen(),
-  CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
+  // CategoryDetailScreen.routeName: (context) => CategoryDetailScreen(),
   AllProductItemScreen.routeName: (context) => AllProductItemScreen(),
   AppIntroScreen.routeName: (context) => AppIntroScreen(),
   EditProfileScreen.routeName: (context) => EditProfileScreen(),

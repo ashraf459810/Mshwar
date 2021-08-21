@@ -1,5 +1,6 @@
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/Sliders.dart/Sliders.dart';
+import 'package:dellyshop/screens/ShopItems/ShopItems.dart';
 
 import 'package:dellyshop/widgets/carousel_pro.dart';
 import 'package:dellyshop/widgets/shimmer_widger.dart';
@@ -26,26 +27,34 @@ class _CarouselViewBuilderState extends State<CarouselViewBuilder> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      height: 182.0,
+      height: h(182),
       child: images.isNotEmpty
-          ? new Carousel(
-              // onImageTap: (value) {
-              //   print("tapped $value");
-              //   Navigator.of(context).push(MaterialPageRoute(
-              //       builder: (context) => CategoryShops(categoryid: value)));
-              // },
-              borderRadius: true,
-              boxFit: BoxFit.cover,
-              radiusDouble: 10,
-              radius: Radius.circular(10.0),
-              dotColor: kWhiteColor,
-              dotSize: 5.5,
-              dotSpacing: 16.0,
-              dotBgColor: Colors.transparent,
-              showIndicator: true,
-              overlayShadow: true,
-              overlayShadowSize: 0.9,
-              images: images)
+          ? ListView.builder(
+              itemCount: widget.sliders.slides.length,
+              itemBuilder: (context, index) => Container(
+                height: h(182),
+                child: new Carousel(
+                    onImageTap: (index) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ShopItems(
+                                shopid: int.parse(
+                                    widget.sliders.slides[index].shopsId),
+                              )));
+                    },
+                    borderRadius: true,
+                    boxFit: BoxFit.cover,
+                    radiusDouble: 10,
+                    radius: Radius.circular(10.0),
+                    dotColor: kWhiteColor,
+                    dotSize: 5.5,
+                    dotSpacing: 16.0,
+                    dotBgColor: Colors.transparent,
+                    showIndicator: true,
+                    overlayShadow: true,
+                    overlayShadowSize: 0.9,
+                    images: images),
+              ),
+            )
           : ShimmerWidget(
               child: Container(
                 decoration: BoxDecoration(
