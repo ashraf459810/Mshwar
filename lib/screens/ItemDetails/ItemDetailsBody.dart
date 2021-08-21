@@ -1,6 +1,5 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/models/ShopItem.dart';
 
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 

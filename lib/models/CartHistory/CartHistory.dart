@@ -13,20 +13,26 @@ class CartHistory {
   CartHistory({
     this.azsvr,
     this.myOrders,
+    this.taxiOrderItems,
   });
 
   String azsvr;
   List<MyOrder> myOrders;
+  List<TaxiOrderItem> taxiOrderItems;
 
   factory CartHistory.fromJson(Map<String, dynamic> json) => CartHistory(
         azsvr: json["AZSVR"],
         myOrders: List<MyOrder>.from(
             json["MyOrders"].map((x) => MyOrder.fromJson(x))),
+        taxiOrderItems: List<TaxiOrderItem>.from(
+            json["TaxiOrderItems"].map((x) => TaxiOrderItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "AZSVR": azsvr,
         "MyOrders": List<dynamic>.from(myOrders.map((x) => x.toJson())),
+        "TaxiOrderItems":
+            List<dynamic>.from(taxiOrderItems.map((x) => x.toJson())),
       };
 }
 
@@ -85,12 +91,12 @@ class MyOrder {
   int itemPrepTime;
   dynamic itemAttributes;
   int quantity;
-  dynamic price;
-  int attributesPrice;
+  double price;
+  dynamic attributesPrice;
   int membershipDiscountPercentage;
-  dynamic membershipDiscountAmount;
+  double membershipDiscountAmount;
   dynamic itemDiscountPercentage;
-  dynamic itemDiscountAmount;
+  double itemDiscountAmount;
   dynamic promoFixed;
   dynamic promoPercentage;
   dynamic promoPercentageAmount;
@@ -99,7 +105,7 @@ class MyOrder {
   int refundApplied;
   dynamic cancelReasonsId;
   dynamic subTotal;
-  dynamic total;
+  double total;
   DateTime createdAt;
   DateTime updatedAt;
   int invoiceId;
@@ -125,12 +131,16 @@ class MyOrder {
         itemPrepTime: json["item_prep_time"],
         itemAttributes: json["item_attributes"],
         quantity: json["quantity"],
-        price: json["price"],
+        price: json["price"].toDouble(),
         attributesPrice: json["attributes_price"],
         membershipDiscountPercentage: json["membership_discount_percentage"],
-        membershipDiscountAmount: json["membership_discount_amount"],
-        itemDiscountPercentage: json["item_discount_percentage"],
-        itemDiscountAmount: json["item_discount_amount"],
+        membershipDiscountAmount: json["membership_discount_amount"].toDouble(),
+        itemDiscountPercentage: json["item_discount_percentage"] == null
+            ? null
+            : json["item_discount_percentage"],
+        itemDiscountAmount: json["item_discount_amount"] == null
+            ? null
+            : json["item_discount_amount"].toDouble(),
         promoFixed: json["promo_fixed"],
         promoPercentage: json["promo_percentage"],
         promoPercentageAmount: json["promo_percentage_amount"],
@@ -139,7 +149,7 @@ class MyOrder {
         refundApplied: json["refund_applied"],
         cancelReasonsId: json["cancel_reasons_id"],
         subTotal: json["sub_total"],
-        total: json["total"],
+        total: json["total"].toDouble(),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         invoiceId: json["invoice_id"],
@@ -170,8 +180,10 @@ class MyOrder {
         "attributes_price": attributesPrice,
         "membership_discount_percentage": membershipDiscountPercentage,
         "membership_discount_amount": membershipDiscountAmount,
-        "item_discount_percentage": itemDiscountPercentage,
-        "item_discount_amount": itemDiscountAmount,
+        "item_discount_percentage":
+            itemDiscountPercentage == null ? null : itemDiscountPercentage,
+        "item_discount_amount":
+            itemDiscountAmount == null ? null : itemDiscountAmount,
         "promo_fixed": promoFixed,
         "promo_percentage": promoPercentage,
         "promo_percentage_amount": promoPercentageAmount,
@@ -349,7 +361,7 @@ class Order {
 
   int id;
   int usersId;
-  dynamic orderTotal;
+  double orderTotal;
   int paymentMethodsId;
   int orderType;
   dynamic driverId;
@@ -364,7 +376,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
         usersId: json["users_id"],
-        orderTotal: json["order_total"],
+        orderTotal: json["order_total"].toDouble(),
         paymentMethodsId: json["payment_methods_id"],
         orderType: json["order_type"],
         driverId: json["driver_id"],
@@ -374,7 +386,8 @@ class Order {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
-        invoice: Invoice.fromJson(json["invoice"]),
+        invoice:
+            json["invoice"] == null ? null : Invoice.fromJson(json["invoice"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -390,7 +403,7 @@ class Order {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
-        "invoice": invoice.toJson(),
+        "invoice": invoice == null ? null : invoice.toJson(),
       };
 }
 
@@ -409,9 +422,9 @@ class Invoice {
   int id;
   int usersId;
   int ordersId;
-  dynamic total;
+  double total;
   int invoiceStatusesId;
-  dynamic deliveryFees;
+  int deliveryFees;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -419,7 +432,7 @@ class Invoice {
         id: json["id"],
         usersId: json["users_id"],
         ordersId: json["orders_id"],
-        total: json["total"],
+        total: json["total"].toDouble(),
         invoiceStatusesId: json["invoice_statuses_id"],
         deliveryFees: json["delivery_fees"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -499,7 +512,7 @@ class Status {
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
         id: json["id"],
-        name: json["name"],
+        name: "name",
         color: json["color"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
@@ -639,5 +652,73 @@ class User {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
+      };
+}
+
+class TaxiOrderItem {
+  TaxiOrderItem({
+    this.id,
+    this.usersId,
+    this.ordersId,
+    this.lastUpdateId,
+    this.driverId,
+    this.userLat,
+    this.userLng,
+    this.userLocation,
+    this.subTotal,
+    this.total,
+    this.createdAt,
+    this.updatedAt,
+    this.driver,
+    this.order,
+  });
+
+  int id;
+  int usersId;
+  int ordersId;
+  int lastUpdateId;
+  dynamic driverId;
+  String userLat;
+  String userLng;
+  dynamic userLocation;
+  int subTotal;
+  int total;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic driver;
+  Order order;
+
+  factory TaxiOrderItem.fromJson(Map<String, dynamic> json) => TaxiOrderItem(
+        id: json["id"],
+        usersId: json["users_id"],
+        ordersId: json["orders_id"],
+        lastUpdateId: json["last_update_id"],
+        driverId: json["driver_id"],
+        userLat: json["user_lat"],
+        userLng: json["user_lng"],
+        userLocation: json["user_location"],
+        subTotal: json["sub_total"],
+        total: json["total"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        driver: json["driver"],
+        order: Order.fromJson(json["order"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "users_id": usersId,
+        "orders_id": ordersId,
+        "last_update_id": lastUpdateId,
+        "driver_id": driverId,
+        "user_lat": userLat,
+        "user_lng": userLng,
+        "user_location": userLocation,
+        "sub_total": subTotal,
+        "total": total,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "driver": driver,
+        "order": order.toJson(),
       };
 }
