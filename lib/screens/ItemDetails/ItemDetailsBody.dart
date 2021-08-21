@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemDetailsBody extends StatefulWidget {
-  final Datum datum;
+  final datum;
   ItemDetailsBody({Key key, this.datum}) : super(key: key);
 
   @override

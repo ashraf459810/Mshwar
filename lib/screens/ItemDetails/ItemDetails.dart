@@ -13,7 +13,8 @@ import '../../constant.dart';
 
 class ItemDetails extends StatefulWidget {
   final Datum datum;
-  ItemDetails({Key key, this.datum}) : super(key: key);
+  final data;
+  ItemDetails({Key key, this.datum, this.data}) : super(key: key);
 
   @override
   _ItemDetailsState createState() => _ItemDetailsState();
@@ -93,6 +94,8 @@ class _ItemDetailsState extends State<ItemDetails> {
             ),
           ],
         ),
-        body: ItemDetailsBody(datum: widget.datum));
+        body: widget.data == null
+            ? ItemDetailsBody(datum: widget.datum)
+            : ItemDetailsBody(datum: widget.data));
   }
 }
