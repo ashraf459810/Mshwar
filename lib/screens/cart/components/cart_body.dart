@@ -65,9 +65,6 @@ class _CartBodyState extends State<CartBody> {
         }
         if (state is GetCartItemsState) {
           cartModel = state.cartModel;
-          print(cartModel.cartsTotal.toString());
-
-          context.read<CartBloc>().add(GetAddressEvent());
         }
         if (state is RemoveFromCartState) {
           print(cartModel.carts.length);
@@ -330,7 +327,7 @@ class _CartBodyState extends State<CartBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${cartModel.carts[index].items.titleEn}",
+                    Text("${cartModel.carts[index].items.titleEn.toString()}",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: Utils.isDarkMode
@@ -401,8 +398,9 @@ class _CartBodyState extends State<CartBody> {
                                       ),
                                       child: Center(
                                           child: Text(
-                                        "-",
-                                        style: TextStyle(color: kWhiteColor),
+                                        "--",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
                                       )),
                                     ),
                                   ),
@@ -412,7 +410,7 @@ class _CartBodyState extends State<CartBody> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 18.0),
                                   child: Text(
-                                    "${cartModel.carts[index].items.quantity.toString().substring(12)}",
+                                    "${cartModel.carts[index].quantity}",
                                     style: TextStyle(
                                         color: Utils.isDarkMode
                                             ? kDarkTextColorColor

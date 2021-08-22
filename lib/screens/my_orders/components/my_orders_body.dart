@@ -38,7 +38,7 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
       listener: (context, state) {
         if (state is SupportState) {
           Toast.show("Thanks we will contact you ASAP", context,
-              duration: 2, backgroundColor: Colors.orange, gravity: 2);
+              duration: 2, backgroundColor: Colors.orange[900], gravity: 1);
         }
       },
       bloc: profileBloc,

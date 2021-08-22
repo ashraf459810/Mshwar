@@ -3,7 +3,8 @@
 import 'package:dellyshop/models/CategoyShopsModel/CategoryShopsModel.dart';
 
 import 'package:dellyshop/models/category_models.dart';
-import 'package:dellyshop/screens/CategoryShops/CategoryShopsBuilder.dart';
+
+import 'package:dellyshop/screens/ShopItems/ShopItems.dart' as s;
 import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constant.dart';
 import '../../util.dart';
+import 'CategoryShopsBuilder.dart';
 
 class CategoryShops extends StatefulWidget {
   final Category category;
@@ -45,7 +47,17 @@ class _CategoryShopsState extends State<CategoryShops> {
             backgroundColor:
                 Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
             key: _key,
-            body: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+            body: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
+              if (state is GetCategoryShopsState) {
+                if (state.categoryShopsModel.shops.length == 1) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => s.ShopItems(
+                            shopid: state.categoryShopsModel.shops[0].id,
+                            shopname: state.categoryShopsModel.shops[0].nameEn,
+                          )));
+                }
+              }
+            }, builder: (context, state) {
               if (state is Loading) {
                 return Center(
                   child: CircularProgressIndicator(

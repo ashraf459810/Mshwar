@@ -24,7 +24,7 @@ class ItemDetailsBody extends StatefulWidget {
 }
 
 class _ItemDetailsBodyState extends State<ItemDetailsBody> {
-  int count = 0;
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {

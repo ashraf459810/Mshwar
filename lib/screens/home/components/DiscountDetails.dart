@@ -26,7 +26,7 @@ class _DiscountDetailsState extends State<DiscountDetails> {
 
   @override
   void initState() {
-    print(widget.datum.id);
+    context.read<CartBloc>().add(CartCountEvent());
     super.initState();
   }
 

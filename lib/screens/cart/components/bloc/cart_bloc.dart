@@ -41,7 +41,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         AddResponse addOrDelete = addOrDeleteFromJson(response);
         await repo.iprefsHelper.increasecartcount();
-
+        add(GetCartItemsEvent());
         yield AddItemToCartState(addOrDelete);
         add(CartCountEvent());
       } catch (error) {
@@ -59,6 +59,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
+        add(GetAddressEvent());
       } catch (error) {
         print(" $error");
         yield Error(error.toString());
@@ -76,7 +77,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         await repo.iprefsHelper.decreasecartcount();
 
         yield RemoveFromCartState(cartModel);
-        // add(CartCountEvent());
+        // add(GetCartItemsEvent());
       } catch (error) {
         yield Error(error.toString());
       }

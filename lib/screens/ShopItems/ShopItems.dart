@@ -51,7 +51,8 @@ class _ShopItemsState extends State<ShopItems> {
             ),
             SizedBox(
               width: w(200),
-            )
+            ),
+            CustomScrollView()
           ],
         ),
         backgroundColor:

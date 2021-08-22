@@ -130,7 +130,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                 icon: Icons.mobile_friendly,
                 ispassword: false,
                 placeHolder: "${widget.profileModel.phone}",
-                inputType: TextInputType.number,
+                inputType: TextInputType.phone,
                 onChanged: (value) {
                   mobile = value;
                 },
@@ -173,6 +173,8 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                         if (mobile != null || email != null || name != null)
                           profileBloc.add(
                               EditProfileEvent(int.parse(mobile), email, name));
+                        else
+                          Toast.show("Please update your info fitst", context);
                       },
                       bacgroudColor: kAppColor,
                       textColor: kWhiteColor,

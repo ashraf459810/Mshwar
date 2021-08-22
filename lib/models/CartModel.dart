@@ -77,7 +77,7 @@ class Cart {
         notes: json["notes"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        subTotal: json["sub_total"],
+        // subTotal: json["sub_total"],
         membershipDiscount: json["MembershipDiscount"].toDouble(),
         total: json["total"].toDouble(),
         customAttributesValues:
@@ -126,10 +126,10 @@ class Items {
   });
 
   int id;
-  Title title;
-  TitleEn titleEn;
-  Description description;
-  DescriptionEn descriptionEn;
+  String title;
+  String titleEn;
+  String description;
+  String descriptionEn;
   dynamic internalNotes;
   String images;
   int quantity;
@@ -147,10 +147,10 @@ class Items {
 
   factory Items.fromJson(Map<String, dynamic> json) => Items(
         id: json["id"],
-        title: titleValues.map[json["title"]],
-        titleEn: titleEnValues.map[json["title_en"]],
-        description: descriptionValues.map[json["description"]],
-        descriptionEn: descriptionEnValues.map[json["description_en"]],
+        title: json["title"],
+        titleEn: json["title_en"],
+        description: json["description"],
+        descriptionEn: json["description_en"],
         internalNotes: json["internal_notes"],
         images: json["images"],
         quantity: json["quantity"],
@@ -169,10 +169,10 @@ class Items {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": titleValues.reverse[title],
-        "title_en": titleEnValues.reverse[titleEn],
-        "description": descriptionValues.reverse[description],
-        "description_en": descriptionEnValues.reverse[descriptionEn],
+        "title": title,
+        "title_en": titleEn,
+        "description": description,
+        "description_en": descriptionEn,
         "internal_notes": internalNotes,
         "images": images,
         "quantity": quantity,
@@ -188,60 +188,4 @@ class Items {
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
       };
-}
-
-enum Description { KMASDKMASKDM, EMPTY, DESCRIPTION, PURPLE }
-
-final descriptionValues = EnumValues({
-  "سشنيشسنيسنش": Description.DESCRIPTION,
-  "شسيسشيشسي": Description.EMPTY,
-  "kmasdkmaskdm": Description.KMASDKMASKDM,
-  "سشنيةشسنيةشسنية": Description.PURPLE
-});
-
-enum DescriptionEn {
-  SAKMDASKMD,
-  AS_DSAKDK,
-  ASMKDASMKDKMA,
-  TERSDKSDKSMK_DSMKDMSKDMSK_MSKDMSKDMKSD
-}
-
-final descriptionEnValues = EnumValues({
-  "asmkdasmkdkma": DescriptionEn.ASMKDASMKDKMA,
-  "as,dsakdk": DescriptionEn.AS_DSAKDK,
-  "sakmdaskmd": DescriptionEn.SAKMDASKMD,
-  "tersdksdksmk dsmkdmskdmsk mskdmskdmksd":
-      DescriptionEn.TERSDKSDKSMK_DSMKDMSKDMSK_MSKDMSKDMKSD
-});
-
-enum Title { SAKDMKSAMKDSA, EMPTY, TITLE, PURPLE }
-
-final titleValues = EnumValues({
-  "تجربة": Title.EMPTY,
-  "تجربة تجربة": Title.PURPLE,
-  "sakdmksamkdsa": Title.SAKDMKSAMKDSA,
-  "شسينةسشني": Title.TITLE
-});
-
-enum TitleEn { KASDMASKDKASM, TEST, KDAMSKDAKMASD, TEST_TEST }
-
-final titleEnValues = EnumValues({
-  "kasdmaskdkasm": TitleEn.KASDMASKDKASM,
-  "kdamskdakmasd": TitleEn.KDAMSKDAKMASD,
-  "test": TitleEn.TEST,
-  "test test": TitleEn.TEST_TEST
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }

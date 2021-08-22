@@ -227,7 +227,7 @@ class _TaxiState extends State<Taxi> {
                 ),
                 SizedBox(height: size.height * 0.03),
                 Text(
-                  "Select your Destination",
+                  "Pick up Location",
                   style: TextStyle(color: Colors.orange[900], fontSize: 18),
                 ),
                 SizedBox(height: size.height * 0.01),
