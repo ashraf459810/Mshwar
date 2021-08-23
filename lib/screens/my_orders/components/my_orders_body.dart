@@ -65,7 +65,7 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
             !taxiorders
                 ? carthistory.isNotEmpty
                     ? Container(
-                        height: h(550),
+                        height: h(600),
                         child: ListView.builder(
                           itemBuilder: (context, index) {
                             return buildProductItem(index);
@@ -74,18 +74,18 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                         ),
                       )
                     : Container(
-                        height: 1,
+                        height: h(200),
+                        child: Center(
+                            child: Text(
+                          "No Orders For you",
+                          style: TextStyle(color: Colors.orange[900]),
+                        )),
                       )
                 : Container(
-                    height: h(200),
-                    child: Center(
-                        child: Text(
-                      "No Orders For you",
-                      style: TextStyle(color: Colors.orange[900]),
-                    )),
+                    height: 1,
                   ),
             SizedBox(
-              height: h(40),
+              height: h(20),
             ),
             GestureDetector(
               onTap: () {
@@ -99,7 +99,7 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
               },
               child: Container(
                 child: Text(
-                  "Show Taxi Orders",
+                  !taxiorders ? "Show Taxi Orders" : "Show previous orders",
                   style: TextStyle(
                     color: Colors.orange[900],
                     fontSize: 16,
@@ -108,10 +108,13 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                 ),
               ),
             ),
+            SizedBox(
+              height: h(30),
+            ),
             taxiorders
                 ? carttaxi.isNotEmpty
                     ? Container(
-                        height: h(500),
+                        height: h(600),
                         width: w(200),
                         child: ListView.builder(
                           // scrollDirection: Axis.horizontal,
@@ -121,15 +124,15 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                           itemCount: carttaxi.length,
                         ),
                       )
-                    : Container()
-                : Container(
-                    height: h(200),
-                    child: Center(
-                        child: Text(
-                      "No Taxi Orders For you",
-                      style: TextStyle(color: Colors.orange[900]),
-                    )),
-                  ),
+                    : Container(
+                        height: h(200),
+                        child: Center(
+                            child: Text(
+                          "No Taxi Orders For you",
+                          style: TextStyle(color: Colors.orange[900]),
+                        )),
+                      )
+                : Container(),
           ]),
         );
       },
