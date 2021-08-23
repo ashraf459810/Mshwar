@@ -10,7 +10,7 @@
     <application
 
         android:name="io.flutter.app.FlutterApplication"
-        android:label="dellyshop"
+        android:label="Mshwar"
         android:requestLegacyExternalStorage="true"
         android:icon="@drawable/mshwarlogo">
         <activity

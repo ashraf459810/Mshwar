@@ -58,6 +58,13 @@ class _CategoryShopsState extends State<CategoryShops> {
                 }
               }
             }, builder: (context, state) {
+              if (state is HomeInitial) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ),
+                );
+              }
               if (state is Loading) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -146,9 +153,9 @@ class _CategoryShopsState extends State<CategoryShops> {
                     /// Setting Size for Grid Item
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 250.0,
-                      mainAxisSpacing: 7.0,
-                      crossAxisSpacing: 7.0,
-                      childAspectRatio: 5 / 3,
+                      mainAxisSpacing: 5.0,
+                      crossAxisSpacing: 5.0,
+                      childAspectRatio: 5.5 / 3,
                     ),
                   ),
                 ],

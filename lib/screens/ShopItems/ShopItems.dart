@@ -138,7 +138,7 @@ class _ShopItemsState extends State<ShopItems> {
                                           child: Container(
                                               height: h(100),
                                               width: w(120),
-                                              color: Colors.red,
+                                              color: Colors.grey,
                                               child: Image.network(
                                                 "${items[index].images}",
                                                 fit: BoxFit.cover,

@@ -30,7 +30,7 @@ class DiscountItemDetails extends StatefulWidget {
 }
 
 class _DiscountItemDetailsState extends State<DiscountItemDetails> {
-  int count = 0;
+  int count = 1;
   @override
   void initState() {
     context.read<CartBloc>().add(CartCountEvent());
@@ -158,6 +158,9 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
   Row colorAndAmount(Size size) {
     return Row(
       children: [
+        SizedBox(
+          width: w(230),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -188,6 +191,15 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                   style:
                       TextStyle(color: kWhiteColor, fontSize: kLargeFontSize),
                 )),
+              ),
+            ),
+            Container(
+              width: w(40),
+              child: Center(
+                child: Text(
+                  count.toString(),
+                  style: TextStyle(color: Colors.black, fontSize: 15),
+                ),
               ),
             ),
 
@@ -234,7 +246,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "sold     : ${widget.itemsWithDiscount.discount}",
+              "sold  : ${widget.itemsWithDiscount.discount}%",
               style: TextStyle(
                   color: Utils.isDarkMode
                       ? kDarkBlackTextColor
@@ -246,7 +258,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               height: h(10),
             ),
             Text(
-              "Price    : ${widget.itemsWithDiscount.price}",
+              "Price : ${widget.itemsWithDiscount.price} JOD",
               style: TextStyle(
                   color: Utils.isDarkMode
                       ? kDarkBlackTextColor
@@ -256,13 +268,6 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
             ),
             SizedBox(
               height: h(20),
-            ),
-            Text(
-              "Count    : ${count.toString()}",
-              style: TextStyle(
-                  color: kBlackFontColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
