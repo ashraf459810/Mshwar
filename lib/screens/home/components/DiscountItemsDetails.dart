@@ -31,6 +31,11 @@ class DiscountItemDetails extends StatefulWidget {
 
 class _DiscountItemDetailsState extends State<DiscountItemDetails> {
   int count = 0;
+  @override
+  void initState() {
+    context.read<CartBloc>().add(CartCountEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +67,6 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               SizedBox(
                 height: h(2),
               ),
-              // NormalTextWidget(
-              //     widget.itemsWithDiscount.title,
-              //     Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-              //     kTitleFontSize),
               SizedBox(
                 height: h(10),
               ),
@@ -86,75 +87,8 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                 if (state is Error) {
                   return Center(child: text(text: "${state.error}"));
                 }
-
-                return widget.islogin ? (size) : Container();
+                return widget.islogin ? addToCart(size) : Container();
               }),
-              // HeaderTitle(
-              //     ApplicationLocalizations.of(context).translate("comments"),
-              //     ApplicationLocalizations.of(context).translate("view_all"),
-              //     kAppColor, () {
-              //   _commentBottomSheet();
-              // }),
-              SizedBox(
-                height: h(10),
-              ),
-              // SizedBox(
-              //   height: myCommentList.take(2).length * 160.0,
-              //   child: ListView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     itemBuilder: (c, i) {
-              //       return Padding(
-              //         padding: const EdgeInsets.all(8.0),
-              //         child: CardWidget(
-              //           height: h(140),
-              //           childWidget: Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             mainAxisAlignment: MainAxisAlignment.start,
-              //             children: [
-              //               Padding(
-              //                 padding:
-              //                     const EdgeInsets.symmetric(vertical: 10.0),
-              //                 child: widget
-              //                         .itemsWithDiscount.comments.isNotEmpty
-              //                     ? StarDisplay(
-              //                         value:
-              //                             widget.itemsWithDiscount.comments[i])
-              //                     : Text(""),
-              //               ),
-              //               // Row(
-              //               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               //   children: [
-              //               //     NormalTextWidget(myCommentList[i].userName,
-              //               //         kAppColor, kTitleFontSize),
-              //               //     NormalTextWidget(
-              //               //         Jiffy(myCommentList[i].commentDate).yMMMd,
-              //               //         Utils.isDarkMode
-              //               //             ? kDarkTextColorColor
-              //               //             : kGrayColor,
-              //               //         kSmallFontSize),
-              //               //   ],
-              //               // ),
-              //               SizedBox(
-              //                 height: h(10),
-              //               ),
-              //               Text(
-              //                 myCommentList[i].userComment,
-              //                 overflow: TextOverflow.ellipsis,
-              //                 maxLines: 2,
-              //                 style: TextStyle(
-              //                     color: Utils.isDarkMode
-              //                         ? kDarkBlackTextColor
-              //                         : kLightBlackTextColor,
-              //                     fontSize: kSubTitleFontSize),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     itemCount: myCommentList.take(2).length,
-              //   ),
-              // )
             ],
           ),
         ),

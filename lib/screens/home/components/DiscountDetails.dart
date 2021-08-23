@@ -13,14 +13,14 @@ import '../../../constant.dart';
 
 class DiscountDetails extends StatefulWidget {
   final ItemsWithDiscount datum;
-  DiscountDetails({Key key, this.datum}) : super(key: key);
+  final islogin;
+  DiscountDetails({Key key, this.datum, this.islogin}) : super(key: key);
 
   @override
   _DiscountDetailsState createState() => _DiscountDetailsState();
 }
 
 class _DiscountDetailsState extends State<DiscountDetails> {
-  bool islogin = false;
   int cartcount;
 
   get kDarkDefaultBgColor => null;
@@ -46,7 +46,7 @@ class _DiscountDetailsState extends State<DiscountDetails> {
               ApplicationLocalizations.of(context).translate("product_detail"),
               style: TextStyle(color: kAppColor),
             ),
-            actions: islogin
+            actions: widget.islogin
                 ? <Widget>[
                     InkWell(
                       onTap: () {
@@ -65,9 +65,6 @@ class _DiscountDetailsState extends State<DiscountDetails> {
                               )),
                           BlocConsumer<CartBloc, CartState>(
                               listener: (context, state) {
-                            if (state is GetIsLoginState) {
-                              islogin = state.islogin;
-                            }
                             if (state is CartInitial) {
                               return Center(
                                 child: CircularProgressIndicator(
@@ -104,6 +101,6 @@ class _DiscountDetailsState extends State<DiscountDetails> {
                   ]
                 : <Widget>[]),
         body: DiscountItemDetails(
-            itemsWithDiscount: widget.datum, islogin: islogin));
+            itemsWithDiscount: widget.datum, islogin: widget.islogin));
   }
 }

@@ -21,7 +21,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:toast/toast.dart';
 
 class Taxi extends StatefulWidget {
-  Taxi({Key key}) : super(key: key);
+  final bool islogin;
+  Taxi({Key key, this.islogin}) : super(key: key);
 
   @override
   _TaxiState createState() => _TaxiState();
@@ -58,7 +59,7 @@ class _TaxiState extends State<Taxi> {
     return BlocProvider(
       create: (context) => GetlocationBloc()..add(GetIfLoginEvent()),
       child: Scaffold(
-        body: islogin
+        body: widget.islogin
             ? SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -110,6 +111,7 @@ class _TaxiState extends State<Taxi> {
                           builder: (context, state) {
                             if (state is GetIfLoginState) {
                               islogin = state.islogin;
+                              print(islogin);
                               if (state.islogin == false)
                                 return Container();
                               else

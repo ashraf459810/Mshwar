@@ -109,12 +109,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
     if (event is GetIsLoginEvent) {
-      var islogin = await repo.iprefsHelper.gettoken();
-
-      if (islogin != null)
-        yield GetIsLoginState(false);
-      else
-        yield GetIsLoginState(true);
+      var islogin = await repo.iprefsHelper.getislogin();
+      print("$islogin here from the bloc");
+      yield GetIsLoginState(islogin);
     }
   }
 }

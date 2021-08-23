@@ -11,7 +11,7 @@ class IprefsHelper implements PrefsHelper {
 
   @override
   Future<bool> getislogin() async {
-    return (await getPrefs()).getBool(S.islogin);
+    return (await getPrefs()).getBool(S.islogin) ?? false;
   }
 
   @override

@@ -31,7 +31,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       try {
         var response = await repo.iHttpHlper.getrequest("/Categories");
         categoriesModel = categoriesModelFromJson(response);
-        yield GetCategoriesState(categoriesModel);
+        var islogin = await repo.iprefsHelper.getislogin();
+        print("$islogin from bloc home");
+
+        yield GetCategoriesState(categoriesModel, islogin);
         add(GetSlider());
       } catch (e) {
         yield Error(e.toString());

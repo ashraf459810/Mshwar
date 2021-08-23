@@ -26,6 +26,11 @@ class ItemDetailsBody extends StatefulWidget {
 
 class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   int count = 1;
+  @override
+  void initState() {
+    context.read<CartBloc>().add(CartCountEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

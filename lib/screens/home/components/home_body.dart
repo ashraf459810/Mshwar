@@ -29,6 +29,7 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  bool islogin = false;
   Sliders sliders;
   CategoriesModel categories;
   List<ItemsWithDiscount> discountitems = [];
@@ -58,6 +59,7 @@ class _HomeBodyState extends State<HomeBody> {
 
           if (state is GetCategoriesState) {
             categories = state.categoriesModel;
+            islogin = state.islogin;
           }
           if (state is GetSlidersState) {
             sliders = state.sliders;
@@ -115,6 +117,7 @@ class _HomeBodyState extends State<HomeBody> {
                                             .push(MaterialPageRoute(
                                           builder: (context) => DiscountDetails(
                                             datum: discountitems[index],
+                                            islogin: islogin,
                                           ),
                                         ));
                                       },
@@ -209,8 +212,11 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 InkWell(
                   onTap: () {
+                    print(islogin);
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => Taxi(),
+                      builder: (context) => Taxi(
+                        islogin: islogin,
+                      ),
                     ));
                   },
                   child: Card(

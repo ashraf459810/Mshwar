@@ -14,7 +14,8 @@ class Error extends HomeState {
 
 class GetCategoriesState extends HomeState {
   final CategoriesModel categoriesModel;
-  GetCategoriesState(this.categoriesModel);
+  final bool islogin;
+  GetCategoriesState(this.categoriesModel, this.islogin);
 }
 
 class GetSlidersState extends HomeState {
