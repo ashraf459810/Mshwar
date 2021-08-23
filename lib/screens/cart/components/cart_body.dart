@@ -43,6 +43,7 @@ class _CartBodyState extends State<CartBody> {
   @override
   void initState() {
     context.read<CartBloc>().add(GetCartItemsEvent());
+
     super.initState();
   }
 
@@ -90,9 +91,13 @@ class _CartBodyState extends State<CartBody> {
                             child: ListView.builder(
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return Container(
-                                  height: itemHeight,
-                                  child: cartProductItem(index),
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Container(
+                                    height: itemHeight,
+                                    child: cartProductItem(index),
+                                  ),
                                 );
                               },
                               itemCount: cartModel.carts.length,
@@ -219,7 +224,24 @@ class _CartBodyState extends State<CartBody> {
                                         ),
                                       ),
                                     )
-                                  : Container(),
+                                  : Container(
+                                      child: Center(
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "Add Address please",
+                                              style: TextStyle(
+                                                  color: Colors.orange[900],
+                                                  fontSize: 15),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward,
+                                              color: Colors.grey,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                               CardWidget(
                                   childWidget: InkWell(
                                 onTap: () {

@@ -17,7 +17,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemDetailsBody extends StatefulWidget {
   final datum;
-  ItemDetailsBody({Key key, this.datum}) : super(key: key);
+  final bool islogin;
+  ItemDetailsBody({Key key, this.datum, this.islogin}) : super(key: key);
 
   @override
   _ItemDetailsBodyState createState() => _ItemDetailsBodyState();
@@ -69,7 +70,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(40),
               ),
-              addToCart(size),
+              widget.islogin ? addToCart(size) : Container(),
               // HeaderTitle(
               //     ApplicationLocalizations.of(context).translate("comments"),
               //     ApplicationLocalizations.of(context).translate("view_all"),

@@ -46,3 +46,5 @@ class TaxiOrderEvent extends GetlocationEvent {
   final double long;
   TaxiOrderEvent(this.addressid, this.long, this.lat);
 }
+
+class GetIfLoginEvent extends GetlocationEvent {}

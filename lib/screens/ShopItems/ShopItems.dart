@@ -52,7 +52,6 @@ class _ShopItemsState extends State<ShopItems> {
             SizedBox(
               width: w(200),
             ),
-            CustomScrollView()
           ],
         ),
         backgroundColor:
@@ -137,6 +136,8 @@ class _ShopItemsState extends State<ShopItems> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(15)),
                                           child: Container(
+                                              height: h(100),
+                                              width: w(120),
                                               color: Colors.red,
                                               child: Image.network(
                                                 "${items[index].images}",

@@ -20,7 +20,10 @@ import 'package:toast/toast.dart';
 
 class DiscountItemDetails extends StatefulWidget {
   final ItemsWithDiscount itemsWithDiscount;
-  DiscountItemDetails({Key key, this.itemsWithDiscount}) : super(key: key);
+
+  final bool islogin;
+  DiscountItemDetails({Key key, this.itemsWithDiscount, this.islogin})
+      : super(key: key);
 
   @override
   _DiscountItemDetailsState createState() => _DiscountItemDetailsState();
@@ -84,7 +87,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                   return Center(child: text(text: "${state.error}"));
                 }
 
-                return addToCart(size);
+                return widget.islogin ? (size) : Container();
               }),
               // HeaderTitle(
               //     ApplicationLocalizations.of(context).translate("comments"),

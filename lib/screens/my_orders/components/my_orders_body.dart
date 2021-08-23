@@ -63,17 +63,26 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
           margin: EdgeInsets.all(10.0),
           child: ListView(children: [
             !taxiorders
-                ? Container(
-                    height: h(550),
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return buildProductItem(index);
-                      },
-                      itemCount: carthistory.length,
-                    ),
-                  )
+                ? carthistory.isNotEmpty
+                    ? Container(
+                        height: h(550),
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return buildProductItem(index);
+                          },
+                          itemCount: carthistory.length,
+                        ),
+                      )
+                    : Container(
+                        height: 1,
+                      )
                 : Container(
-                    height: 1,
+                    height: h(200),
+                    child: Center(
+                        child: Text(
+                      "No Orders For you",
+                      style: TextStyle(color: Colors.orange[900]),
+                    )),
                   ),
             SizedBox(
               height: h(40),
@@ -100,18 +109,27 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
               ),
             ),
             taxiorders
-                ? Container(
-                    height: h(500),
-                    width: w(200),
-                    child: ListView.builder(
-                      // scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return buildProductItemtaxi(index);
-                      },
-                      itemCount: carthistory.length,
-                    ),
-                  )
-                : Container(),
+                ? carttaxi.isNotEmpty
+                    ? Container(
+                        height: h(500),
+                        width: w(200),
+                        child: ListView.builder(
+                          // scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return buildProductItemtaxi(index);
+                          },
+                          itemCount: carttaxi.length,
+                        ),
+                      )
+                    : Container()
+                : Container(
+                    height: h(200),
+                    child: Center(
+                        child: Text(
+                      "No Taxi Orders For you",
+                      style: TextStyle(color: Colors.orange[900]),
+                    )),
+                  ),
           ]),
         );
       },

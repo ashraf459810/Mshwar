@@ -43,3 +43,9 @@ class PlaceOrderState extends CartState {
   final PlaceOrderModel placeOrderModel;
   PlaceOrderState(this.placeOrderModel);
 }
+
+class GetIsLoginState extends CartState {
+  final bool islogin;
+
+  GetIsLoginState(this.islogin);
+}

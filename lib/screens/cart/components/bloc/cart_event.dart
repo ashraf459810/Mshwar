@@ -28,3 +28,5 @@ class PlaceOrderEvent extends CartEvent {
   final bool iscash;
   PlaceOrderEvent(this.addressid, this.iscash);
 }
+
+class GetIsLoginEvent extends CartEvent {}

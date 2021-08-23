@@ -55,7 +55,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       backgroundColor: Colors.orange,
                       gravity: Toast.TOP);
 
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => CustomBottomNavigationBar(),
                   ));
                 }

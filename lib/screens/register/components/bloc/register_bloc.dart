@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dellyshop/Data/Repository/IRepository.dart';
@@ -40,11 +39,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         var response = await repo.iHttpHlper.getrequest(
             "/Register?name=${event.name}&email=${event.email}&password=${event.password}&phone=${event.phone}&cities_id=${event.cityid}");
         registerModel = registerModelFromJson(response);
-        yield RegisterS();
+
         repo.iprefsHelper.setislogin(true);
         repo.iprefsHelper.settoken(registerModel.apiToken);
-      } on SocketException {
-        yield Error("Check your connection");
+        yield RegisterS();
       } catch (e) {
         print(e.toString());
         yield Error(e.toString());

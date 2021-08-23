@@ -221,7 +221,7 @@ class _LoginBodyState extends State<LoginBody> {
                                           gravity: Toast.TOP,
                                           backgroundColor: Colors.orange[900]);
                                       Navigator.of(context)
-                                          .push(MaterialPageRoute(
+                                          .pushReplacement(MaterialPageRoute(
                                         builder: (context) =>
                                             CustomBottomNavigationBar(),
                                       ));

@@ -40,3 +40,9 @@ class GetAddressState extends GetlocationState {
 }
 
 class TaxiOrderState extends GetlocationState {}
+
+class GetIfLoginState extends GetlocationState {
+  final bool islogin;
+
+  GetIfLoginState(this.islogin);
+}

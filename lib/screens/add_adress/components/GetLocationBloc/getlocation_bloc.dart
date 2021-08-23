@@ -118,6 +118,13 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
         yield Error(error.toString());
       }
     }
+    if (event is GetIfLoginEvent) {
+      var token = await repo.iprefsHelper.gettoken();
+      if (token != null)
+        yield GetIfLoginState(true);
+      else
+        yield GetIfLoginState(false);
+    }
   }
 }
 
