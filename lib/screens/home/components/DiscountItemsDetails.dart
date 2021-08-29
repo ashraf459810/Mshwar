@@ -70,7 +70,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               SizedBox(
                 height: h(10),
               ),
-              colorAndAmount(size),
+              // colorAndAmount(size),
               SizedBox(
                 height: h(10),
               ),
@@ -101,7 +101,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
       builder: (context) {
         return ButtonCustom(
           txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
-          witdh: size.width,
+          witdh: size.width * 0.9,
           ontap: () {
             context.read<CartBloc>().add(AddItemToCartEvent(
                   count,
@@ -159,8 +159,8 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
     return Row(
       children: [
         SizedBox(
-          width: w(230),
-        ),
+            // width: w(230),
+            ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -236,7 +236,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          width: MediaQuery.of(context).size.width / 1.5,
+          width: MediaQuery.of(context).size.width / 1.6,
           child: NormalTextWidget(
               widget.itemsWithDiscount.titleEn,
               Utils.isDarkMode ? kDarkBlackTextColor : kLightBlackTextColor,

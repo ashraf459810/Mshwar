@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:dellyshop/Core/AppExcepition.dart';
 import 'package:dellyshop/Data/HTTP_Helper/Http_Helper.dart';
@@ -7,25 +9,31 @@ class IHttpHlper implements HttpHelper {
   final String _baseUrl = "http://meshwar.bitsblend.org/api";
   @override
   Future getrequest(String url) async {
-    var responseJson;
+    try {
+      var responseJson;
 
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    switch (connectivityResult) {
-      case ConnectivityResult.wifi:
-        break;
-      case ConnectivityResult.mobile:
-        break;
-      case ConnectivityResult.none:
-        throw NoInternet("");
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      switch (connectivityResult) {
+        case ConnectivityResult.wifi:
+          break;
+        case ConnectivityResult.mobile:
+          break;
+        case ConnectivityResult.none:
+          throw NoInternet("");
+      }
+
+      final response = await http.get(Uri.parse(_baseUrl + url));
+      print(response.statusCode);
+      print("here from http $url");
+
+      responseJson = returnResponse(response);
+
+      return responseJson;
+    } on SocketException {
+      throw InternalServerError();
+    } catch (e) {
+      print(e);
     }
-
-    final response = await http.get(Uri.parse(_baseUrl + url));
-    print(response.statusCode);
-    print("here from http $url");
-
-    responseJson = returnResponse(response);
-
-    return responseJson;
   }
 
   @override

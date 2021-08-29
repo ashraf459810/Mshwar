@@ -51,7 +51,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               ]),
           child: Column(
             children: [
-              rating(),
+              // rating(),
               SizedBox(
                 height: h(10),
               ),
@@ -62,7 +62,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(10),
               ),
-              colorAndAmount(size),
+              // colorAndAmount(size),
               SizedBox(
                 height: h(50),
               ),
@@ -86,7 +86,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
       builder: (context) {
         return ButtonCustom(
           txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
-          witdh: size.width,
+          witdh: size.width * 0.9,
           ontap: () {
             context.read<CartBloc>().add(AddItemToCartEvent(
                   count,
@@ -126,74 +126,74 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     );
   }
 
-  Row colorAndAmount(Size size) {
-    return Row(
-      children: <Widget>[
-        SizedBox(
-          width: w(196),
-        ),
+  // Row colorAndAmount(Size size) {
+  //   return Row(
+  //     children: <Widget>[
+  //       SizedBox(
+  //         width: w(196),
+  //       ),
 
-        /// Decrease of value item
-        InkWell(
-          onTap: () {
-            if (count != 1) {
-              count--;
-              setState(() {});
-            }
-          },
-          child: Container(
-            height: h(40),
-            width: h(40),
-            decoration: BoxDecoration(
-              color: kAppColor.withOpacity(0.7),
-              border: Border(
-                  right: BorderSide(
-                    color: Colors.black12.withOpacity(0.1),
-                  ),
-                  left: BorderSide(
-                    color: Colors.black12.withOpacity(0.1),
-                  )),
-            ),
-            child: Center(
-                child: Text(
-              "-",
-              style: TextStyle(color: kWhiteColor, fontSize: kLargeFontSize),
-            )),
-          ),
-        ),
-        Container(
-          width: w(40),
-          child: Center(
-            child: Text(
-              count.toString(),
-              style: TextStyle(color: Colors.black, fontSize: 15),
-            ),
-          ),
-        ),
+  //       /// Decrease of value item
+  //       InkWell(
+  //         onTap: () {
+  //           if (count != 1) {
+  //             count--;
+  //             setState(() {});
+  //           }
+  //         },
+  //         child: Container(
+  //           height: h(40),
+  //           width: h(40),
+  //           decoration: BoxDecoration(
+  //             color: kAppColor.withOpacity(0.7),
+  //             border: Border(
+  //                 right: BorderSide(
+  //                   color: Colors.black12.withOpacity(0.1),
+  //                 ),
+  //                 left: BorderSide(
+  //                   color: Colors.black12.withOpacity(0.1),
+  //                 )),
+  //           ),
+  //           child: Center(
+  //               child: Text(
+  //             "-",
+  //             style: TextStyle(color: kWhiteColor, fontSize: kLargeFontSize),
+  //           )),
+  //         ),
+  //       ),
+  //       Container(
+  //         width: w(40),
+  //         child: Center(
+  //           child: Text(
+  //             count.toString(),
+  //             style: TextStyle(color: Colors.black, fontSize: 15),
+  //           ),
+  //         ),
+  //       ),
 
-        /// Increasing value of items
-        InkWell(
-          onTap: () {
-            count++;
-            setState(() {});
-          },
-          child: Container(
-            height: h(40),
-            width: h(40.0),
-            decoration: BoxDecoration(
-                color: kAppColor.withOpacity(0.7),
-                border: Border(
-                    left: BorderSide(color: Colors.black12.withOpacity(0.1)))),
-            child: Center(
-                child: Text(
-              "+",
-              style: TextStyle(color: kWhiteColor, fontSize: kNormalFontSize),
-            )),
-          ),
-        ),
-      ],
-    );
-  }
+  //       /// Increasing value of items
+  //       InkWell(
+  //         onTap: () {
+  //           count++;
+  //           setState(() {});
+  //         },
+  //         child: Container(
+  //           height: h(40),
+  //           width: h(40.0),
+  //           decoration: BoxDecoration(
+  //               color: kAppColor.withOpacity(0.7),
+  //               border: Border(
+  //                   left: BorderSide(color: Colors.black12.withOpacity(0.1)))),
+  //           child: Center(
+  //               child: Text(
+  //             "+",
+  //             style: TextStyle(color: kWhiteColor, fontSize: kNormalFontSize),
+  //           )),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Row header(BuildContext context) {
     return Row(

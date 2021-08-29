@@ -1,5 +1,5 @@
 import 'package:dellyshop/app_localizations.dart';
-import 'package:dellyshop/models/ShopItem.dart';
+
 import 'package:dellyshop/screens/ItemDetails/ItemDetailsBody.dart';
 
 import 'package:dellyshop/screens/cart/components/cart_screen.dart';
@@ -12,7 +12,7 @@ import 'package:toast/toast.dart';
 import '../../constant.dart';
 
 class ItemDetails extends StatefulWidget {
-  final Datum datum;
+  final datum;
   final data;
   final islogin;
   ItemDetails({Key key, this.datum, this.data, this.islogin}) : super(key: key);

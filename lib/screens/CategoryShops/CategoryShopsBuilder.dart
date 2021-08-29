@@ -29,20 +29,17 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          // mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: h(80),
-              width: w(200),
-              child: (Image.network(
-                'https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg',
-                fit: BoxFit.fitWidth,
-              )),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(6)),
+                child: (Image.network(
+                  'https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg',
+                  fit: BoxFit.fitWidth,
+                )),
+              ),
             ),
             Container(
-              width: w(200),
               color: Colors.white,
               child: Center(
                 child: Text(

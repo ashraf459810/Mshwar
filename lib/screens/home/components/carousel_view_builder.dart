@@ -30,6 +30,7 @@ class _CarouselViewBuilderState extends State<CarouselViewBuilder> {
       height: h(182),
       child: images.isNotEmpty
           ? ListView.builder(
+              physics: ScrollPhysics(parent: NeverScrollableScrollPhysics()),
               itemCount: widget.sliders.slides.length,
               itemBuilder: (context, index) => Container(
                 height: h(182),

@@ -45,6 +45,7 @@ dependencies:
   get_it: ^3.0.1
   connectivity:
   flutter_google_places: ^0.2.8
+  scroll_to_index: ^1.0.6
 
   flutter_datetime_picker: ^1.5.1
   bubble: ^1.1.9+1
