@@ -10,7 +10,7 @@ class CartHistoryEvent extends ProfileEvent {}
 class EditProfileEvent extends ProfileEvent {
   final String name;
   final String email;
-  final int mobile;
+  final String mobile;
   EditProfileEvent(this.mobile, this.email, this.name);
 }
 

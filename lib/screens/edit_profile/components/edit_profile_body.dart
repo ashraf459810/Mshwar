@@ -62,27 +62,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                                 size: 100,
                                 color: kAppColor,
                               ),
-                              // decoration: BoxDecoration(
-                              //   borderRadius: BorderRadius.circular(10.0),
-                              //   image: DecorationImage(
-                              //       image: _image == null
-                              //           ? AssetImage(
-                              //               "assets/images/profilepic.jpg")
-                              //           : FileImage(_image),
-                              //       fit: BoxFit.cover),
-                              // ),
-                            ),
-                            // Container(
-                            //   alignment: Alignment.center,
-                            //   width: 150,
-                            //   height: 20,
-                            //   color: Colors.black.withOpacity(0.5),
-                            //   child: NormalTextWidget(
-                            //       ApplicationLocalizations.of(context)
-                            //           .translate("edit"),
-                            //       kWhiteColor,
-                            //       kMicroFontSize),
-                            // )
+                            )
                           ],
                         ),
                       ),
@@ -117,7 +97,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                 icon: Icons.mail,
                 ispassword: false,
                 placeHolder: "${widget.profileModel.email}",
-                inputType: TextInputType.text,
+                inputType: TextInputType.emailAddress,
                 onChanged: (value) {
                   email = value;
                 },
@@ -170,11 +150,11 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       txt: ApplicationLocalizations.of(context)
                           .translate("save"),
                       ontap: () {
-                        if (mobile != null || email != null || name != null)
-                          profileBloc.add(
-                              EditProfileEvent(int.parse(mobile), email, name));
+                        if (mobile != null && email != null && name != null)
+                          profileBloc
+                              .add(EditProfileEvent((mobile), email, name));
                         else
-                          Toast.show("Please update your info fitst", context);
+                          Toast.show("Please update your info first", context);
                       },
                       bacgroudColor: kAppColor,
                       textColor: kWhiteColor,
