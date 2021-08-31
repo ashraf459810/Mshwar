@@ -1,3 +1,5 @@
+import 'package:dellyshop/Widgets%20copy/Container.dart';
+import 'package:dellyshop/Widgets%20copy/TextForm.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CitiesModel/cities.dart';
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
@@ -34,6 +36,10 @@ class _DelieverLocationState extends State<DelieverLocation> {
   List<City> cities = [];
   City chosencity;
   int chosencityid;
+  TextEditingController buildingc = TextEditingController();
+  TextEditingController apartmentc = TextEditingController();
+  String building;
+  String apartment;
 
   c.RegisterBloc registerBloc = c.RegisterBloc();
   Set<Marker> markers = {};
@@ -282,21 +288,22 @@ class _DelieverLocationState extends State<DelieverLocation> {
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
+                      border: Border.all(color: Colors.orange),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
-                  height: size.height * 0.04,
+                  height: size.height * 0.07,
                   width: size.width * 0.7,
                   child: TextFormField(
                     controller: controller,
                     autofocus: false,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         isDense: true,
-                        hintStyle: TextStyle(color: Colors.grey),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                        hintStyle: TextStyle(color: Colors.black),
+                        // contentPadding:
+                        //     EdgeInsets.symmetric(horizontal: 3, vertical: 10),
                         // contentPadding: EdgeInsets.only(left: size.width *0.33),
-                        hintText: "Type your Address name"),
+                        hintText: "Type your Address info"),
                     onChanged: (value) {
                       addressname = value;
                     },
@@ -306,7 +313,45 @@ class _DelieverLocationState extends State<DelieverLocation> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.1,
+                  height: size.height * 0.02,
+                ),
+                container(
+                  hight: size.height * 0.07,
+                  width: size.width * 0.7,
+                  borderRadius: 10,
+                  bordercolor: Colors.orange,
+                  color: Colors.white,
+                  child: textform(
+                      // horizontalpadding: 100,
+                      controller: buildingc,
+                      hint: "building num",
+                      validation: "name",
+                      hintsize: 15,
+                      function: (value) {
+                        building = value;
+                      }),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                container(
+                  hight: size.height * 0.07,
+                  width: size.width * 0.7,
+                  borderRadius: 10,
+                  color: Colors.white,
+                  bordercolor: Colors.orange,
+                  child: textform(
+                      // horizontalpadding: 90,
+                      controller: apartmentc,
+                      hint: "apartment num",
+                      hintsize: 15,
+                      validation: "name",
+                      function: (value) {
+                        apartment = value;
+                      }),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
                 ),
                 Builder(
                   builder: (context) => GestureDetector(
@@ -318,7 +363,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
                           currentPostion != null &&
                           addressname != null) {
                         context.read<GetlocationBloc>().add(AddAddressEvent(
-                            addressname,
+                            building + apartment,
                             addressname,
                             chosencityid,
                             currentPostion.latitude,
