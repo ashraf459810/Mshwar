@@ -51,19 +51,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     if (event is GetCartItemsEvent) {
       yield Loading();
-      // try {
-      String token = await repo.iprefsHelper.gettoken();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
 
-      var response = await repo.iHttpHlper
-          .getrequest("/Cart/GetFinancials?api_token=$token");
+        var response = await repo.iHttpHlper
+            .getrequest("/Cart/GetFinancials?api_token=$token");
 
-      cartModel = cartModelFromJson(response);
-      yield GetCartItemsState(cartModel);
-      add(GetAddressEvent());
-      // } catch (error) {
-      //   print(" $error");
-      //   yield Error(error.toString());
-      // }
+        cartModel = cartModelFromJson(response);
+        yield GetCartItemsState(cartModel);
+        add(GetAddressEvent());
+      } catch (error) {
+        print(" $error");
+        yield Error("Error while getting items");
+      }
     }
     if (event is RemoveItemFromCartEvent) {
       yield Loading();
@@ -90,7 +90,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         addressModel = addressModelFromJson(response);
         yield GetAddressState(addressModel);
       } catch (error) {
-        yield Error(error.toString());
+        yield Error("Error while getting address");
       }
     }
     if (event is PlaceOrderEvent) {

@@ -12,6 +12,7 @@ class CartModel {
   CartModel({
     this.azsvr,
     this.carts,
+    this.customCarts,
     this.membershipDiscount,
     this.cartsTotal,
     this.deliveryFees,
@@ -19,13 +20,16 @@ class CartModel {
 
   String azsvr;
   List<Cart> carts;
+  List<CustomCart> customCarts;
   String membershipDiscount;
   double cartsTotal;
-  int deliveryFees;
+  dynamic deliveryFees;
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         azsvr: json["AZSVR"],
         carts: List<Cart>.from(json["Carts"].map((x) => Cart.fromJson(x))),
+        customCarts: List<CustomCart>.from(
+            json["CustomCarts"].map((x) => CustomCart.fromJson(x))),
         membershipDiscount: json["MembershipDiscount"],
         cartsTotal: json["CartsTotal"].toDouble(),
         deliveryFees: json["DeliveryFees"],
@@ -34,6 +38,7 @@ class CartModel {
   Map<String, dynamic> toJson() => {
         "AZSVR": azsvr,
         "Carts": List<dynamic>.from(carts.map((x) => x.toJson())),
+        "CustomCarts": List<dynamic>.from(customCarts.map((x) => x.toJson())),
         "MembershipDiscount": membershipDiscount,
         "CartsTotal": cartsTotal,
         "DeliveryFees": deliveryFees,
@@ -47,6 +52,8 @@ class Cart {
     this.itemsId,
     this.quantity,
     this.notes,
+    this.isCustom,
+    this.shopsId,
     this.createdAt,
     this.updatedAt,
     this.subTotal,
@@ -61,9 +68,11 @@ class Cart {
   int itemsId;
   int quantity;
   dynamic notes;
+  int isCustom;
+  dynamic shopsId;
   DateTime createdAt;
   DateTime updatedAt;
-  double subTotal;
+  dynamic subTotal;
   double membershipDiscount;
   double total;
   List<dynamic> customAttributesValues;
@@ -73,11 +82,13 @@ class Cart {
         id: json["id"],
         usersId: json["users_id"],
         itemsId: json["items_id"],
-        quantity: json["quantity"] == null ? null : json["quantity"],
+        quantity: json["quantity"],
         notes: json["notes"],
+        isCustom: json["isCustom"],
+        shopsId: json["shops_id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        // subTotal: json["sub_total"],
+        subTotal: json["sub_total"],
         membershipDiscount: json["MembershipDiscount"].toDouble(),
         total: json["total"].toDouble(),
         customAttributesValues:
@@ -89,8 +100,10 @@ class Cart {
         "id": id,
         "users_id": usersId,
         "items_id": itemsId,
-        "quantity": quantity == null ? null : quantity,
+        "quantity": quantity,
         "notes": notes,
+        "isCustom": isCustom,
+        "shops_id": shopsId,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "sub_total": subTotal,
@@ -134,7 +147,7 @@ class Items {
   String images;
   int quantity;
   int prepTime;
-  String price;
+  dynamic price;
   int active;
   int usersId;
   int discount;
@@ -187,5 +200,53 @@ class Items {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
+      };
+}
+
+class CustomCart {
+  CustomCart({
+    this.id,
+    this.usersId,
+    this.itemsId,
+    this.quantity,
+    this.notes,
+    this.isCustom,
+    this.shopsId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  int id;
+  int usersId;
+  dynamic itemsId;
+  dynamic quantity;
+  String notes;
+  int isCustom;
+  int shopsId;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory CustomCart.fromJson(Map<String, dynamic> json) => CustomCart(
+        id: json["id"],
+        usersId: json["users_id"],
+        itemsId: json["items_id"],
+        quantity: json["quantity"],
+        notes: json["notes"],
+        isCustom: json["isCustom"],
+        shopsId: json["shops_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "users_id": usersId,
+        "items_id": itemsId,
+        "quantity": quantity,
+        "notes": notes,
+        "isCustom": isCustom,
+        "shops_id": shopsId,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
       };
 }

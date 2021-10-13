@@ -363,13 +363,13 @@ class _DelieverLocationState extends State<DelieverLocation> {
                           currentPostion != null &&
                           addressname != null) {
                         context.read<GetlocationBloc>().add(AddAddressEvent(
-                            building + apartment,
+                            building + "," + apartment,
                             addressname,
                             chosencityid,
                             currentPostion.latitude,
                             currentPostion.longitude));
-
-                        Navigator.of(context).pop(widget.f());
+                        widget.f();
+                        Navigator.of(context).pop();
                       } else {
                         Toast.show("please fill all the fields", context,
                             duration: Toast.LENGTH_SHORT,

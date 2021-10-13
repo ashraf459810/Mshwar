@@ -108,9 +108,9 @@ class City {
   String countryIsoCode;
   dynamic parentId;
   int baseDeliveryPrice;
-  int extraDeliveryPrice;
+  double extraDeliveryPrice;
   dynamic createdAt;
-  dynamic updatedAt;
+  DateTime updatedAt;
   dynamic deletedAt;
 
   factory City.fromJson(Map<String, dynamic> json) => City(
@@ -119,9 +119,11 @@ class City {
         countryIsoCode: json["country_iso_code"],
         parentId: json["parent_id"],
         baseDeliveryPrice: json["base_delivery_price"],
-        extraDeliveryPrice: json["extra_delivery_price"],
+        extraDeliveryPrice: json["extra_delivery_price"].toDouble(),
         createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
       );
 
@@ -133,7 +135,7 @@ class City {
         "base_delivery_price": baseDeliveryPrice,
         "extra_delivery_price": extraDeliveryPrice,
         "created_at": createdAt,
-        "updated_at": updatedAt,
+        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
       };
 }

@@ -7,6 +7,8 @@
   "have_account": "Have Account? Sign In",
   "not_have_account": "Not Have Account? Sign Up",
   "or": "OR",
+  "select payment method":"select payment method",
+  "select address":"select address",
   "sold":"sold",
   "Price" : "Price",
   "Description":"Description",

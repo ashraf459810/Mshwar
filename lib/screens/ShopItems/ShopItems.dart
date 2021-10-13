@@ -2,7 +2,7 @@ import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/delegates/app_localizations_delegate.dart';
+
 import 'package:dellyshop/models/ShopCategories/ShopCategories.dart';
 import 'package:dellyshop/screens/ItemDetails/ItemDetails.dart';
 
@@ -184,7 +184,7 @@ class _ShopItemsState extends State<ShopItems> {
                                                 width: w(120),
                                                 color: Colors.grey,
                                                 child: Image.network(
-                                                  "${items[index].images}",
+                                                  "${items[index].images.toString().split(",").first}",
                                                   fit: BoxFit.cover,
                                                 )),
                                           ),
