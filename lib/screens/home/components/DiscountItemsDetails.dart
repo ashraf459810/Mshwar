@@ -1,6 +1,7 @@
 import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
@@ -122,12 +123,38 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            "Description :${widget.itemsWithDiscount.descriptionEn}",
-            style: TextStyle(
-                color: kAppColor,
-                fontWeight: FontWeight.w700,
-                fontSize: kTitleFontSize),
+          Row(
+            children: [
+              Text(
+                ApplicationLocalizations.of(context).translate("Description"),
+                style: TextStyle(
+                    color: kAppColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: kTitleFontSize),
+              ),
+              Text(
+                " : ",
+                style: TextStyle(
+                    color: Utils.isDarkMode
+                        ? kDarkBlackTextColor
+                        : Colors.orange[900],
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                ApplicationLocalizations.of(context).appLocale.languageCode ==
+                        "en"
+                    ? "${widget.itemsWithDiscount.descriptionEn}"
+                    : "${widget.itemsWithDiscount.description}" ??
+                        "${widget.itemsWithDiscount.descriptionEn}",
+                style: TextStyle(
+                    color: Utils.isDarkMode
+                        ? kDarkBlackTextColor
+                        : Colors.orange[900],
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
           ),
           SizedBox(
             height: h(10),
@@ -238,33 +265,83 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
         Container(
           width: MediaQuery.of(context).size.width / 1.6,
           child: NormalTextWidget(
-              widget.itemsWithDiscount.titleEn,
+              ApplicationLocalizations.of(context).appLocale.languageCode ==
+                      "en"
+                  ? widget.itemsWithDiscount.titleEn
+                  : widget.itemsWithDiscount.title,
               Utils.isDarkMode ? kDarkBlackTextColor : kLightBlackTextColor,
               kNormalFontSize),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "sold  : ${widget.itemsWithDiscount.discount}%",
-              style: TextStyle(
-                  color: Utils.isDarkMode
-                      ? kDarkBlackTextColor
-                      : Colors.orange[900],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Text(
+                  ApplicationLocalizations.of(context).translate("sold"),
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  " : ",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  ApplicationLocalizations.of(context).appLocale.languageCode ==
+                          "en"
+                      ? "${widget.itemsWithDiscount.discount}"
+                      : "${widget.itemsWithDiscount.discount}",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
             ),
             SizedBox(
               height: h(10),
             ),
-            Text(
-              "Price : ${widget.itemsWithDiscount.price} JOD",
-              style: TextStyle(
-                  color: Utils.isDarkMode
-                      ? kDarkBlackTextColor
-                      : Colors.orange[900],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Text(
+                  ApplicationLocalizations.of(context).translate("Price"),
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  ": ",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "${widget.itemsWithDiscount.price} JOD",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
             ),
             SizedBox(
               height: h(20),

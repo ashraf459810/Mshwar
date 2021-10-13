@@ -32,22 +32,22 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Mshwar",
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  color: kAppColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: kLargeFontSize),
-                            ),
+                            // Text(
+                            //   "Mshwar",
+                            //   textAlign: TextAlign.start,
+                            //   style: TextStyle(
+                            //       color: kAppColor,
+                            //       fontWeight: FontWeight.w600,
+                            //       fontSize: kLargeFontSize),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(top: 14),
                               child: Image.asset(
                                 "assets/images/MshwarLogo.png",
-                                height: h(40),
-                                width: w(100),
+                                height: h(50),
+                                width: w(110),
                                 fit: BoxFit.cover,
                               ),
                             )

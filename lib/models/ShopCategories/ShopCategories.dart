@@ -112,6 +112,7 @@ class Item {
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
+    this.attribs,
   });
 
   int id;
@@ -133,6 +134,7 @@ class Item {
   DateTime createdAt;
   DateTime updatedAt;
   dynamic deletedAt;
+  List<Attrib> attribs;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         id: json["id"],
@@ -154,6 +156,8 @@ class Item {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
+        attribs:
+            List<Attrib>.from(json["attribs"].map((x) => Attrib.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -173,6 +177,91 @@ class Item {
         "last_push_time": lastPushTime,
         "shops_id": shopsId,
         "shop_categories_id": shopCategoriesId,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "deleted_at": deletedAt,
+        "attribs": List<dynamic>.from(attribs.map((x) => x.toJson())),
+      };
+}
+
+class Attrib {
+  Attrib({
+    this.id,
+    this.itemsId,
+    this.name,
+    this.multi,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.values,
+  });
+
+  int id;
+  int itemsId;
+  String name;
+  int multi;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
+  List<Value> values;
+
+  factory Attrib.fromJson(Map<String, dynamic> json) => Attrib(
+        id: json["id"],
+        itemsId: json["items_id"],
+        name: json["name"],
+        multi: json["multi"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+        values: List<Value>.from(json["values"].map((x) => Value.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "items_id": itemsId,
+        "name": name,
+        "multi": multi,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "deleted_at": deletedAt,
+        "values": List<dynamic>.from(values.map((x) => x.toJson())),
+      };
+}
+
+class Value {
+  Value({
+    this.id,
+    this.customAttributesId,
+    this.name,
+    this.price,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+  });
+
+  int id;
+  int customAttributesId;
+  String name;
+  String price;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
+
+  factory Value.fromJson(Map<String, dynamic> json) => Value(
+        id: json["id"],
+        customAttributesId: json["custom_attributes_id"],
+        name: json["name"],
+        price: json["price"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "custom_attributes_id": customAttributesId,
+        "name": name,
+        "price": price,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,

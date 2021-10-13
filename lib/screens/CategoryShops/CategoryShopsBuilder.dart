@@ -1,3 +1,5 @@
+import 'package:dellyshop/app_localizations.dart';
+
 import 'package:dellyshop/models/CategoyShopsModel/CategoryShopsModel.dart'
     as s;
 
@@ -22,8 +24,7 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ShopItems(
                 shopid: widget.shop.id,
-                shopimage:
-                    "https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg",
+                shopimage: "${widget.shop.images}",
                 shopname: widget.shop.nameEn)));
       },
       child: Container(
@@ -31,11 +32,15 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              height: h(140),
+              width: w(200),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(6)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: (Image.network(
-                  'https://image.shutterstock.com/z/stock-photo-sunset-at-coast-of-the-lake-nature-landscape-nature-in-northern-europe-reflection-blue-sky-and-1960131820.jpg',
-                  fit: BoxFit.fitWidth,
+                  '${widget.shop.images}',
+                  fit: BoxFit.cover,
                 )),
               ),
             ),
@@ -43,7 +48,10 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
               color: Colors.white,
               child: Center(
                 child: Text(
-                  "${widget.shop.nameEn}",
+                  ApplicationLocalizations.of(context).appLocale.languageCode ==
+                          "en"
+                      ? "${widget.shop.nameEn}"
+                      : "${widget.shop.name}",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

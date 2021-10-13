@@ -49,4 +49,14 @@ class IprefsHelper implements PrefsHelper {
     count--;
     return (await getPrefs()).setInt(S.cartcount, count);
   }
+
+  @override
+  Future<bool> getIsEnglish() async {
+    return (await getPrefs()).getBool(S.isenglish) ?? true;
+  }
+
+  @override
+  Future<void> setIsEnglish(bool lang) async {
+    return (await getPrefs()).setBool(S.isenglish, lang);
+  }
 }

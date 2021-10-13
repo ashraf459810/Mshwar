@@ -1,3 +1,5 @@
+import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
+import 'package:dellyshop/Data/Prefs_Helper/Prefs_Helper.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/address_model.dart';
@@ -123,6 +125,11 @@ class _SettingsBodyState extends State<SettingsBody> {
                                             ApplicationLocalizations.of(context)
                                                 .translate("logout"),
                                         ontap: () {
+                                          IprefsHelper prefsHelper =
+                                              IprefsHelper();
+                                          prefsHelper.settoken(null);
+                                          prefsHelper.setislogin(false);
+
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
                                             builder: (context) => LoginScreen(),
@@ -189,7 +196,14 @@ class _SettingsBodyState extends State<SettingsBody> {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
+                        IprefsHelper iprefsHelper = IprefsHelper();
                         setState(() {
+                          if (languages[index].lanCode == "en") {
+                            iprefsHelper.setIsEnglish(true);
+                          } else {
+                            iprefsHelper.setIsEnglish(false);
+                          }
+
                           ApplicationLocalizations.of(context).appLocale =
                               new Locale(languages[index].lanCode,
                                   languages[index].lanCountry);

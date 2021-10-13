@@ -155,7 +155,7 @@ class _CategoryShopsState extends State<CategoryShops> {
                       maxCrossAxisExtent: 250.0,
                       mainAxisSpacing: 5.0,
                       crossAxisSpacing: 5.0,
-                      childAspectRatio: 5 / 4.1,
+                      childAspectRatio: 5 / 4.4,
                     ),
                   ),
                 ],

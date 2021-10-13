@@ -132,7 +132,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                 SizedBox(
                   height: 10.0,
                 ),
-                buildCard(("Remove Address"), Icons.delete, () {
+                buildCard(
+                    ApplicationLocalizations.of(context)
+                        .translate("Remove Address"),
+                    Icons.delete, () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RemoveAddress(),
                   ));
@@ -140,7 +143,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                 SizedBox(
                   height: 10.0,
                 ),
-                buildCard(("Update Address"), Icons.update, () {
+                buildCard(
+                    ApplicationLocalizations.of(context)
+                        .translate("Update Address"),
+                    Icons.update, () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => UpdateAddress(),
                   ));

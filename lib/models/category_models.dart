@@ -39,6 +39,7 @@ class Category {
         this.titleEn,
         this.parentId,
         this.image,
+        this.customOrders,
         this.active,
         this.icon,
         this.createdAt,
@@ -52,10 +53,11 @@ class Category {
     String titleEn;
     dynamic parentId;
     String image;
+    int customOrders;
     int active;
     dynamic icon;
-    DateTime createdAt;
-    DateTime updatedAt;
+    dynamic createdAt;
+    dynamic updatedAt;
     dynamic deletedAt;
     int shopsCount;
 
@@ -65,10 +67,11 @@ class Category {
         titleEn: json["title_en"],
         parentId: json["parent_id"],
         image: json["image"],
+        customOrders: json["custom_orders"],
         active: json["active"],
         icon: json["icon"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
         deletedAt: json["deleted_at"],
         shopsCount: json["shops_count"],
     );
@@ -79,10 +82,11 @@ class Category {
         "title_en": titleEn,
         "parent_id": parentId,
         "image": image,
+        "custom_orders": customOrders,
         "active": active,
         "icon": icon,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt,
+        "updated_at": updatedAt,
         "deleted_at": deletedAt,
         "shops_count": shopsCount,
     };

@@ -110,12 +110,38 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              "Description :   ${widget.datum.descriptionEn}",
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w700,
-                  fontSize: kTitleFontSize),
+            Row(
+              children: [
+                Text(
+                  ApplicationLocalizations.of(context).translate("Description"),
+                  style: TextStyle(
+                      color: kAppColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: kTitleFontSize),
+                ),
+                Text(
+                  " : ",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  ApplicationLocalizations.of(context).appLocale.languageCode ==
+                          "en"
+                      ? "${widget.datum.descriptionEn}"
+                      : "${widget.datum.description}" ??
+                          "${widget.datum.descriptionEn}",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
             ),
             SizedBox(
               height: h(10),
@@ -204,17 +230,43 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
         Container(
           width: MediaQuery.of(context).size.width / 2,
           child: NormalTextWidget(
-              widget.datum.titleEn,
+              ApplicationLocalizations.of(context).appLocale.languageCode ==
+                      "en"
+                  ? "${widget.datum.title_en}"
+                  : "${widget.datum.title}",
               Utils.isDarkMode ? kDarkBlackTextColor : kLightBlackTextColor,
               kNormalFontSize),
         ),
-        Text(
-          "Price  : ${widget.datum.price} JOD",
-          style: TextStyle(
-              color:
-                  Utils.isDarkMode ? kDarkBlackTextColor : Colors.orange[900],
-              fontSize: 18,
-              fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            Text(
+              ApplicationLocalizations.of(context).translate("Price"),
+              style: TextStyle(
+                  color: Utils.isDarkMode
+                      ? kDarkBlackTextColor
+                      : Colors.orange[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              ": ",
+              style: TextStyle(
+                  color: Utils.isDarkMode
+                      ? kDarkBlackTextColor
+                      : Colors.orange[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "${widget.datum.price} JOD",
+              style: TextStyle(
+                  color: Utils.isDarkMode
+                      ? kDarkBlackTextColor
+                      : Colors.orange[900],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            )
+          ],
         ),
         SizedBox(
           height: h(20),
@@ -274,7 +326,8 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           autoplay: false,
           boxFit: BoxFit.fitHeight,
           images: [
-            Image.network(widget.datum.images),
+            Image.network(widget.datum.images.toString().split(",").first),
+            Image.network(widget.datum.images.toString().split(",").last),
           ],
         ),
       ),

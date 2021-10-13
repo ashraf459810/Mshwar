@@ -1,3 +1,4 @@
+import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
 import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
@@ -29,6 +30,7 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  IprefsHelper iprefsHelper = IprefsHelper();
   bool islogin = false;
   Sliders sliders;
   CategoriesModel categories;
@@ -45,8 +47,10 @@ class _HomeBodyState extends State<HomeBody> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state is Loading) {
-            return CircularProgressIndicator(
-              color: Colors.orange,
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.orange,
+              ),
             );
           }
           if (state is Error) {
@@ -91,7 +95,7 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                       ),
                 HeaderTitle(
-                    'Discount',
+                    ApplicationLocalizations.of(context).translate("Discount"),
                     ApplicationLocalizations.of(context).translate("view_all"),
                     Utils.isDarkMode
                         ? kDarkBlackFontColor
@@ -155,8 +159,13 @@ class _HomeBodyState extends State<HomeBody> {
                                                         )),
                                                   ),
                                                   text(
-                                                      text:
-                                                          "${discountitems[index].titleEn}",
+                                                      text: ApplicationLocalizations
+                                                                      .of(context)
+                                                                  .appLocale
+                                                                  .languageCode ==
+                                                              "en"
+                                                          ? "${discountitems[index].titleEn}"
+                                                          : "${discountitems[index].title}",
                                                       color: Colors.grey[900]),
                                                   // Column(
                                                   //   children: [
@@ -170,11 +179,11 @@ class _HomeBodyState extends State<HomeBody> {
                                                   //     ),
                                                   //   ],
                                                   // ),
-                                                  text(
-                                                      text:
-                                                          "Discount ${discountitems[index].discount}%",
-                                                      color: Colors.orange[900],
-                                                      fontsize: 12),
+                                                  // text(
+                                                  //     text:
+                                                  //         "Discount ${discountitems[index].discount}%",
+                                                  //     color: Colors.orange[900],
+                                                  //     fontsize: 12),
                                                 ],
                                               ),
                                             ),
@@ -202,14 +211,14 @@ class _HomeBodyState extends State<HomeBody> {
                   height: h(20),
                 ),
                 Container(
-                  child: Text(
-                    "  Mshwar Taxi",
-                    style: TextStyle(
-                        color: kLightBlackTextColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                    child: HeaderTitle(
+                        ApplicationLocalizations.of(context)
+                            .translate("Mshwar Taxi"),
+                        "",
+                        Utils.isDarkMode
+                            ? kDarkBlackFontColor
+                            : kLightBlackTextColor,
+                        () {})),
                 InkWell(
                   onTap: () {
                     print(islogin);

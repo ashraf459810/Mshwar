@@ -19,6 +19,7 @@ class S {
   static const String islogin = "islogin";
   static const String token = "token";
   static const cartcount = "0";
+  static const isenglish = "true";
 }
 
 const MaterialColor black = const MaterialColor(

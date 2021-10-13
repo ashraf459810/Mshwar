@@ -27,7 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeEvent event,
   ) async* {
     if (event is GetCategoriesEvent) {
-      // yield Loading();
+      yield Loading();
       try {
         var response = await repo.iHttpHlper.getrequest("/Categories");
         categoriesModel = categoriesModelFromJson(response);
