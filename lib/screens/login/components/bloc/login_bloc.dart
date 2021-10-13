@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginS();
         }
       } catch (e) {
-        yield Error(e.toString());
+        yield Error("wrong email or password");
       }
     }
   }

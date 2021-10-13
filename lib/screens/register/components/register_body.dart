@@ -114,22 +114,39 @@ class _RegisterBodyState extends State<RegisterBody> {
                           width: w(250),
                           fit: BoxFit.cover,
                         ),
-                        reusableWidget.container(namec, name, "  Name", "name"),
+                        reusableWidget.container(
+                            namec,
+                            name,
+                            ApplicationLocalizations.of(context)
+                                .translate("Name"),
+                            "name"),
                         SizedBox(
                           height: h(14),
                         ),
                         reusableWidget.container(
-                            emailc, email, " Email", "email"),
+                            emailc,
+                            email,
+                            ApplicationLocalizations.of(context)
+                                .translate("Email"),
+                            "email"),
                         SizedBox(
                           height: h(14),
                         ),
                         reusableWidget.container(
-                            passwordc, password, " Password", "password"),
+                            passwordc,
+                            password,
+                            ApplicationLocalizations.of(context)
+                                .translate("password"),
+                            "password"),
                         SizedBox(
                           height: h(14),
                         ),
                         reusableWidget.container(
-                            mobilec, mobile, " Mobile", "number"),
+                            mobilec,
+                            mobile,
+                            ApplicationLocalizations.of(context)
+                                .translate("Mobile"),
+                            "number"),
                         SizedBox(
                           height: h(14),
                         ),
@@ -146,7 +163,10 @@ class _RegisterBodyState extends State<RegisterBody> {
                           child: DropdownButton<City>(
                             hint: Padding(
                               padding: EdgeInsets.only(left: 8.0),
-                              child: Text(cityhint),
+                              child: Text(cityhint == "select your city"
+                                  ? ApplicationLocalizations.of(context)
+                                      .translate(cityhint)
+                                  : cityhint),
                             ),
                             isExpanded: true,
                             underline: SizedBox(),

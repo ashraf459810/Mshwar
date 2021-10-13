@@ -1,4 +1,5 @@
 import 'package:dellyshop/Widgets%20copy/Container.dart';
+import 'package:dellyshop/app_localizations.dart';
 
 import 'package:dellyshop/models/DiscountItems/DiscountItems.dart';
 
@@ -8,6 +9,9 @@ import 'package:dellyshop/screens/home/components/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../constant.dart';
+import '../../../util.dart';
 
 class AllProductScreenBody extends StatefulWidget {
   @override
@@ -88,7 +92,12 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "${items[index].titleEn}",
+                                      ApplicationLocalizations.of(context)
+                                                  .appLocale
+                                                  .languageCode ==
+                                              "en"
+                                          ? "${items[index].titleEn}"
+                                          : "${items[index].title}",
                                       style: TextStyle(color: Colors.grey[900]),
                                     ),
                                     // Column(
@@ -114,15 +123,22 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         Text(
-                                          "Discount : ${items[index].discount}",
-                                          style:
-                                              TextStyle(color: Colors.black87),
-                                        ),
+                                            ApplicationLocalizations.of(context)
+                                                .translate("Discount"),
+                                            style: TextStyle(
+                                                color: Colors.grey[900])),
+                                        Text("${items[index].discount}",
+                                            style: TextStyle(
+                                                color: Colors.grey[900])),
                                         Text(
-                                          "Price : ${items[index].price}",
-                                          style:
-                                              TextStyle(color: Colors.black87),
+                                          ApplicationLocalizations.of(context)
+                                              .translate("Price"),
+                                          style: TextStyle(
+                                              color: Colors.grey[900]),
                                         ),
+                                        Text("${items[index].price},",
+                                            style: TextStyle(
+                                                color: Colors.grey[900]))
                                       ],
                                     ),
                                   ],

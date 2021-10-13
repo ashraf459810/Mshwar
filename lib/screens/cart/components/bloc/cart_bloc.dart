@@ -30,6 +30,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     if (event is CartCountEvent) {
       cartcount = await repo.iprefsHelper.getcartcount();
       yield CartCountState(cartcount);
+      add(GetIsLoginEvent());
     }
     if (event is AddItemToCartEvent) {
       print("${repo.iprefsHelper.gettoken()}");

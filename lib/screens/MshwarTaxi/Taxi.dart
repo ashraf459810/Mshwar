@@ -1,3 +1,4 @@
+import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/screens/App/App.dart';
@@ -251,7 +252,8 @@ class _TaxiState extends State<Taxi> {
                       ),
                       SizedBox(height: size.height * 0.03),
                       Text(
-                        "Pick up Location",
+                        ApplicationLocalizations.of(context)
+                            .translate("Pick up Location"),
                         style:
                             TextStyle(color: Colors.orange[900], fontSize: 18),
                       ),
@@ -378,7 +380,8 @@ class _TaxiState extends State<Taxi> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Order Taxi",
+                                        ApplicationLocalizations.of(context)
+                                            .translate("Order Taxi"),
                                         style: TextStyle(
                                             fontSize: 18,
                                             color: Colors.white,

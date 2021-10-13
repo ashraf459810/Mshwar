@@ -711,7 +711,8 @@ class Setting extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          "Language",
+                          ApplicationLocalizations.of(context)
+                              .translate("Language"),
                           style: TextStyle(
                             color: Utils.isDarkMode
                                 ? kDarkTextColorColor

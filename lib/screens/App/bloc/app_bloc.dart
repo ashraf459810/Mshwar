@@ -18,6 +18,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async* {
     if (event is IsLoginEvent) {
       bool islogin = await repo.iprefsHelper.getislogin();
+      print("${islogin} here is login from the bloc");
       yield IsLoginState(islogin);
     }
   }

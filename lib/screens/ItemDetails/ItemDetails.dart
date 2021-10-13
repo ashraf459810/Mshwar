@@ -28,7 +28,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   @override
   void initState() {
     context.read<CartBloc>().add(CartCountEvent());
-    context.read<CartBloc>().add(GetIsLoginEvent());
+
     super.initState();
   }
 

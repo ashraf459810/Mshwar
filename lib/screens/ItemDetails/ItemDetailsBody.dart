@@ -1,9 +1,9 @@
+import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/screens/App/components/Signup.dart';
 
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
-
-import 'package:dellyshop/screens/home/components/category_list_builder.dart';
 
 import 'package:dellyshop/util.dart';
 
@@ -34,6 +34,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.islogin} is login");
     var size = MediaQuery.of(context).size;
     return ListView(
       children: [
@@ -63,8 +64,8 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                 height: h(10),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 60.0),
-                child: colorAndAmount(size),
+                padding: const EdgeInsets.only(left: 60.0),
+                child: Container(width: w(400), child: colorAndAmount(size)),
               ),
               SizedBox(
                 height: h(50),
@@ -73,7 +74,24 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(40),
               ),
-              widget.islogin ? addToCart(size) : Container(),
+              widget.islogin
+                  ? addToCart(size)
+                  : InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Signup(),
+                        ));
+                      },
+                      child: container(
+                          hight: h(50),
+                          width: w(300),
+                          child: Text(
+                            "Register first to create your cart",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          color: Colors.orange[900],
+                          borderRadius: 30),
+                    ),
               SizedBox(
                 height: h(10),
               ),

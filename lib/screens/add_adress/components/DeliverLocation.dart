@@ -1,5 +1,6 @@
 import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/TextForm.dart';
+import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CitiesModel/cities.dart';
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
@@ -43,7 +44,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
 
   c.RegisterBloc registerBloc = c.RegisterBloc();
   Set<Marker> markers = {};
-  String selectcity = "select city";
+  String selectcity = "select your city";
   LatLng currentPostion;
   LatLng markerlocation;
   String addressname;
@@ -249,7 +250,11 @@ class _DelieverLocationState extends State<DelieverLocation> {
                       color: Colors.white,
                       child: Builder(
                         builder: (context) => DropdownButton<City>(
-                          hint: Center(child: Text(selectcity)),
+                          hint: Center(
+                              child: Text(selectcity == "select your city"
+                                  ? ApplicationLocalizations.of(context)
+                                      .translate(selectcity)
+                                  : selectcity)),
 
                           value: chosencity,
                           isExpanded: true,
@@ -299,11 +304,12 @@ class _DelieverLocationState extends State<DelieverLocation> {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         isDense: true,
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: TextStyle(color: Colors.grey[400]),
                         // contentPadding:
                         //     EdgeInsets.symmetric(horizontal: 3, vertical: 10),
                         // contentPadding: EdgeInsets.only(left: size.width *0.33),
-                        hintText: "Type your Address info"),
+                        hintText: ApplicationLocalizations.of(context)
+                            .translate("Type your Address info")),
                     onChanged: (value) {
                       addressname = value;
                     },
@@ -324,9 +330,11 @@ class _DelieverLocationState extends State<DelieverLocation> {
                   child: textform(
                       // horizontalpadding: 100,
                       controller: buildingc,
-                      hint: "building num",
+                      hint: ApplicationLocalizations.of(context)
+                          .translate("building number"),
                       validation: "name",
                       hintsize: 15,
+                      hintColor: Colors.grey[400],
                       function: (value) {
                         building = value;
                       }),
@@ -343,8 +351,10 @@ class _DelieverLocationState extends State<DelieverLocation> {
                   child: textform(
                       // horizontalpadding: 90,
                       controller: apartmentc,
-                      hint: "apartment num",
+                      hint: ApplicationLocalizations.of(context)
+                          .translate("apartment number"),
                       hintsize: 15,
+                      hintColor: Colors.grey[400],
                       validation: "name",
                       function: (value) {
                         apartment = value;
@@ -389,7 +399,8 @@ class _DelieverLocationState extends State<DelieverLocation> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Add Address",
+                              ApplicationLocalizations.of(context)
+                                  .translate("add_address"),
                               style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white,

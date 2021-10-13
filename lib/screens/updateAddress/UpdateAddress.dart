@@ -1,3 +1,4 @@
+import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart' as a;
 import 'package:dellyshop/models/CitiesModel/cities.dart';
@@ -39,7 +40,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
   String selectaddress = "select address";
   c.RegisterBloc registerBloc = c.RegisterBloc();
   Set<Marker> markers = {};
-  String selectcity = "select city";
+  String selectcity = "select your city";
   LatLng currentPostion;
   LatLng markerlocation;
   String addressname;
@@ -256,7 +257,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
                       color: Colors.white,
                       child: Builder(
                         builder: (context) => DropdownButton<City>(
-                          hint: Center(child: Text(selectcity)),
+                          hint: Center(
+                              child: Text(ApplicationLocalizations.of(context)
+                                  .translate(selectcity))),
 
                           value: chosencity,
                           isExpanded: true,
@@ -297,7 +300,9 @@ class _UpdateAddressState extends State<UpdateAddress> {
                 Container(
                   color: Colors.white,
                   child: DropdownButton<a.Address>(
-                    hint: Center(child: Text(selectaddress)),
+                    hint: Center(
+                        child: Text(ApplicationLocalizations.of(context)
+                            .translate(selectaddress))),
 
                     value: chosenaddress,
                     isExpanded: true,
@@ -347,7 +352,8 @@ class _UpdateAddressState extends State<UpdateAddress> {
                           isDense: true,
                           hintStyle: TextStyle(color: Colors.grey),
                           contentPadding: EdgeInsets.only(right: 20),
-                          hintText: "Type new Address name"),
+                          hintText: ApplicationLocalizations.of(context)
+                              .translate("Type new Address name")),
                       onChanged: (value) {
                         addressname = value;
                       },
@@ -363,7 +369,7 @@ class _UpdateAddressState extends State<UpdateAddress> {
                 Builder(
                   builder: (context) => GestureDetector(
                       onTap: () {
-                        if (selectcity != "select city" &&
+                        if (selectcity != "select your city" &&
                             currentPostion != null &&
                             addressname != null &&
                             selectaddress != null &&
@@ -395,7 +401,8 @@ class _UpdateAddressState extends State<UpdateAddress> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Update Address",
+                                ApplicationLocalizations.of(context)
+                                    .translate("Update Address"),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.white,
