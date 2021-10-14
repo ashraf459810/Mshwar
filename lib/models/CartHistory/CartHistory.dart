@@ -365,7 +365,7 @@ class Order {
   int paymentMethodsId;
   int orderType;
   dynamic driverId;
-  int deliveryFees;
+  dynamic deliveryFees;
   int statusesId;
   int addressesId;
   DateTime createdAt;
@@ -424,7 +424,7 @@ class Invoice {
   int ordersId;
   double total;
   int invoiceStatusesId;
-  int deliveryFees;
+  dynamic deliveryFees;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -512,7 +512,7 @@ class Status {
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
         id: json["id"],
-        name: "name",
+        name: json["name"],
         color: json["color"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],

@@ -366,8 +366,8 @@ class _CartBodyState extends State<CartBody> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  "assets/images/iphone11.jpeg",
+                child: Image.network(
+                  "${cartModel.carts[index].items.images.toString().split(",").first}",
                   fit: BoxFit.cover,
                 ),
                 //// replace with this when the images is working

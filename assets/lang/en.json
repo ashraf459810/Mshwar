@@ -30,6 +30,8 @@
   "electronics": "Electronics",
   "Pick up Location" :"Pick up Location",
   "Order Taxi" :"Order Taxi",
+  "open" : "open",
+  "closed" : "closed",
   "shoes": "Shoes",
   "Language":"Language",
   "gaming": "Gaming",

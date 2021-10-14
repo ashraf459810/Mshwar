@@ -50,11 +50,11 @@ class _CategoryShopsState extends State<CategoryShops> {
             body: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
               if (state is GetCategoryShopsState) {
                 if (state.categoryShopsModel.shops.length == 1) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => s.ShopItems(
-                            shopid: state.categoryShopsModel.shops[0].id,
-                            shopname: state.categoryShopsModel.shops[0].nameEn,
-                          )));
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (context) => s.ShopItems(
+                  //           shopid: state.categoryShopsModel.shops[0].id,
+                  //           shopname: state.categoryShopsModel.shops[0].nameEn,
+                  //         )));
                 }
               }
             }, builder: (context, state) {

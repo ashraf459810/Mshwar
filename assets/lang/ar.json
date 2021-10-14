@@ -66,6 +66,8 @@
   "Mobile" : "الجوال",
   "delete": "حذف",
   "Pick up Location" :"اختر موقع",
+  "open" : "مفتوح",
+  "closed" : "مغلق",
   "Description" :"الوصف",
   "Order Taxi" : "اطلب تكسي",
   "Language" : "اللغة",

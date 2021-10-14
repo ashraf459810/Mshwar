@@ -23,6 +23,7 @@ class _CategoryShopsBuilderState extends State<CategoryShopsBuilder> {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ShopItems(
+                shop: widget.shop,
                 shopid: widget.shop.id,
                 shopimage: "${widget.shop.images}",
                 shopname: widget.shop.nameEn)));

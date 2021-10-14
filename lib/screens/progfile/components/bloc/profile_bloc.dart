@@ -39,7 +39,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         cartHistory = cartHistoryFromJson(response);
         yield CartHistoryState(cartHistory);
       } catch (error) {
-        yield (Error(error.toString()));
+        yield (Error("Error while loading orders"));
       }
     }
     if (event is EditProfileEvent) {
