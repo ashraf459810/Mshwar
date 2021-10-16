@@ -1,3 +1,4 @@
+import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 
@@ -28,7 +29,10 @@ class _RemoveAddressState extends State<RemoveAddress> {
             listener: (context, state) {
           if (state is RemoveAddressState) {
             address = state.removeAddressRespnose.addresses;
-            Toast.show("Address Removed", context,
+            Toast.show(
+                ApplicationLocalizations.of(context)
+                    .translate("Address Removed"),
+                context,
                 backgroundColor: Colors.orange[900]);
             selectedaddreddname = null;
           }

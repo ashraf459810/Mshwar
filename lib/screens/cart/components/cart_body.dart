@@ -1,3 +1,4 @@
+import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
@@ -38,12 +39,14 @@ class _CartBodyState extends State<CartBody> {
   int index = 1;
   int value = 2;
   int pay = 200;
+  int defaultAddressId;
+  List<Cart> cartOrdinaryAndCustom = [];
 
   List<Address> address = [];
 
   @override
   void initState() {
-    context.read<CartBloc>().add(GetCartItemsEvent());
+    context.read<CartBloc>().add(GetAddressEvent());
 
     super.initState();
   }
@@ -56,18 +59,24 @@ class _CartBodyState extends State<CartBody> {
       listener: (context, state) {
         if (state is GetAddressState) {
           address = state.addressModel.addresses;
+
           if (state.addressModel.addresses.isEmpty) {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DelieverLocation(),
             ));
           }
+          defaultAddressId = state.addressModel.addresses[0].id;
         }
       },
       builder: (context, state) {
         if (state is GetAddressState) {
           address = state.addressModel.addresses;
+          context
+              .read<CartBloc>()
+              .add(GetCartItemsEventWithDefaultAddress(defaultAddressId));
 
           print(address.length);
+          return CircularProgressIndicator();
         }
         if (state is Loading) {
           return Center(
@@ -78,6 +87,16 @@ class _CartBodyState extends State<CartBody> {
         }
         if (state is GetCartItemsState) {
           cartModel = state.cartModel;
+          cartOrdinaryAndCustom = cartModel.carts;
+          Cart customCart;
+          for (var i = 0; i < cartModel.customCarts.length; i++) {
+            customCart = Cart(
+                id: cartModel.customCarts[i].id,
+                notes: cartModel.customCarts[i].notes,
+                quantity: 1,
+                total: 0);
+            cartOrdinaryAndCustom.add(customCart);
+          }
         }
         if (state is RemoveFromCartState) {
           print(cartModel.carts.length);
@@ -91,7 +110,7 @@ class _CartBodyState extends State<CartBody> {
             style: TextStyle(color: Colors.black),
           );
         }
-        return cartModel != null
+        return cartOrdinaryAndCustom.isNotEmpty
             ? Container(
                 margin: EdgeInsets.all(10.0),
                 child: cartModel.carts.isNotEmpty
@@ -266,7 +285,14 @@ class _CartBodyState extends State<CartBody> {
                                                 ),
                                               ),
                                             )
-                                          : Container(),
+                                          : Center(
+                                              child: Container(
+                                                color: Colors.black,
+                                                child: text(
+                                                    text: "You cart is empty",
+                                                    color: Colors.orange[900]),
+                                              ),
+                                            ),
                               CardWidget(
                                   childWidget: InkWell(
                                 onTap: () {
@@ -324,7 +350,10 @@ class _CartBodyState extends State<CartBody> {
                                           builder: (context) =>
                                               PaymentBody(addressid)))
                                   : Toast.show(
-                                      "Please Select Address first", context,
+                                      ApplicationLocalizations.of(context)
+                                          .translate(
+                                              "Please Select Address first"),
+                                      context,
                                       duration: 2,
                                       gravity: 2,
                                       backgroundColor: Colors.orange[900]);
@@ -334,17 +363,17 @@ class _CartBodyState extends State<CartBody> {
                           )
                         ],
                       )
-                    : Container(
-                        child: Center(
-                          child: Text(
-                            "No Items In your cart",
-                            style: TextStyle(
-                                color: Colors.orange[900], fontSize: 18),
-                          ),
-                        ),
-                      ),
+                    : Container(),
               )
-            : Container();
+            : Container(
+                child: Center(
+                  child: Text(
+                    ApplicationLocalizations.of(context)
+                        .translate("No Items In your cart"),
+                    style: TextStyle(color: Colors.orange[900], fontSize: 18),
+                  ),
+                ),
+              );
       },
     );
   }
@@ -365,29 +394,27 @@ class _CartBodyState extends State<CartBody> {
           childWidget: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.network(
-                  "${cartModel.carts[index].items.images.toString().split(",").first}",
-                  fit: BoxFit.cover,
-                ),
-                //// replace with this when the images is working
-                // Image.network(
-                //         "${cartModel.carts[index].items.images.toString().split(",").first}",
-                //         fit: BoxFit.cover,
-                //       ),
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: cartOrdinaryAndCustom[index].isCustom == 0
+                      ? Image.network(
+                          "${cartOrdinaryAndCustom[index].items.images.split(",").first}",
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset("assets/images/customorder.png")),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                        ApplicationLocalizations.of(context)
-                                    .appLocale
-                                    .languageCode ==
-                                "en"
-                            ? "${cartModel.carts[index].items.titleEn.toString()}"
-                            : "${cartModel.carts[index].items.title.toString()}",
+                        cartOrdinaryAndCustom[index].isCustom == 0
+                            ? ApplicationLocalizations.of(context)
+                                        .appLocale
+                                        .languageCode ==
+                                    "en"
+                                ? "${cartModel.carts[index].items.titleEn.toString()}"
+                                : "${cartModel.carts[index].items.title.toString()}"
+                            : cartOrdinaryAndCustom[index].notes,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: Utils.isDarkMode
@@ -395,12 +422,14 @@ class _CartBodyState extends State<CartBody> {
                                 : kLightBlackTextColor,
                             fontSize: kTitleFontSize)),
                     Text(
-                        ApplicationLocalizations.of(context)
-                                    .appLocale
-                                    .languageCode ==
-                                "en"
-                            ? "${cartModel.carts[index].items.descriptionEn}"
-                            : "${cartModel.carts[index].items.description.toString()}",
+                        cartOrdinaryAndCustom[index].isCustom == 0
+                            ? ApplicationLocalizations.of(context)
+                                        .appLocale
+                                        .languageCode ==
+                                    "en"
+                                ? "${cartModel.carts[index].items.descriptionEn}"
+                                : "${cartModel.carts[index].items.description.toString()}"
+                            : "",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: Utils.isDarkMode
@@ -414,7 +443,9 @@ class _CartBodyState extends State<CartBody> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${cartModel.carts[index].items.price}",
+                          cartOrdinaryAndCustom[index].isCustom == 0
+                              ? "${cartModel.carts[index].items.price}"
+                              : "",
                           style: TextStyle(
                               color: kAppColor, fontSize: kPriceFontSize),
                         ),

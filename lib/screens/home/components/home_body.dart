@@ -21,6 +21,7 @@ import 'package:dellyshop/widgets/shimmer_widger.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'header_title.dart';
 
@@ -100,8 +101,11 @@ class _HomeBodyState extends State<HomeBody> {
                     Utils.isDarkMode
                         ? kDarkBlackFontColor
                         : kLightBlackTextColor, () {
-                  Navigator.of(context)
-                      .pushNamed(AllProductItemScreen.routeName);
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AllProductItemScreen(
+                      islogin: islogin,
+                    ),
+                  ));
                 }),
                 state is GetDiscountItemsState
                     ? discountitems.isNotEmpty
@@ -245,4 +249,12 @@ class _HomeBodyState extends State<HomeBody> {
       ),
     );
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }

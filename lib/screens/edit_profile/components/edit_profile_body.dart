@@ -122,7 +122,10 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                   bloc: profileBloc,
                   listener: (context, state) {
                     if (state is EditProfileState) {
-                      Toast.show("Updated Successfully", context,
+                      Toast.show(
+                          ApplicationLocalizations.of(context)
+                              .translate("Updated Successfully"),
+                          context,
                           duration: Toast.LENGTH_SHORT,
                           backgroundColor: Colors.orange,
                           gravity: Toast.TOP);
@@ -154,7 +157,10 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                           profileBloc
                               .add(EditProfileEvent((mobile), email, name));
                         else
-                          Toast.show("Please update your info first", context);
+                          Toast.show(
+                              ApplicationLocalizations.of(context)
+                                  .translate("Please update your info first"),
+                              context);
                       },
                       bacgroudColor: kAppColor,
                       textColor: kWhiteColor,

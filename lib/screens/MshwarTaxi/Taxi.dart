@@ -16,6 +16,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -94,7 +95,10 @@ class _TaxiState extends State<Taxi> {
                         child: BlocConsumer<GetlocationBloc, GetlocationState>(
                           listener: (context, state) {
                             if (state is TaxiOrderState) {
-                              Toast.show("Order Placed Successfully", context,
+                              Toast.show(
+                                  ApplicationLocalizations.of(context)
+                                      .translate("Order Placed Successfully"),
+                                  context,
                                   duration: 3,
                                   gravity: 0,
                                   backgroundColor: Colors.orange[900]);
@@ -357,7 +361,11 @@ class _TaxiState extends State<Taxi> {
                                         selectedAddress,
                                         currentPostion.longitude,
                                         currentPostion.latitude))
-                                : Toast.show("please select address", context,
+                                : Toast.show(
+                                    ApplicationLocalizations.of(context)
+                                        .translate(
+                                            "Please Select Address first"),
+                                    context,
                                     backgroundColor: Colors.orange[900]);
                           },
                           child: BlocBuilder<GetlocationBloc, GetlocationState>(
@@ -421,4 +429,12 @@ class _TaxiState extends State<Taxi> {
         await placemarkFromCoordinates(latitude, longitude);
     return placemarks;
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }

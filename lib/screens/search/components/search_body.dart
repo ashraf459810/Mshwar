@@ -163,7 +163,7 @@ class _SearchBodyState extends State<SearchBody> {
                                             child: Container(
                                                 color: Colors.red,
                                                 child: Image.network(
-                                                  "${data[index].images}",
+                                                  "${data[index].images.split(",").first}",
                                                   fit: BoxFit.cover,
                                                 )),
                                           ),

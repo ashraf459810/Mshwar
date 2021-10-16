@@ -4,9 +4,10 @@ import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/screens/search/search_screen.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../util.dart';
-import 'components/category_item_builder.dart';
+
 import 'components/home_body.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -110,4 +111,12 @@ class HomeScreen extends StatelessWidget {
         ),
         body: HomeBody());
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }

@@ -64,6 +64,7 @@ dependencies:
   sqflite:
   path_provider:
   intl: ^0.17.0
+  multi_select_flutter: ^3.1.8
   geolocator: ^7.2.0
   sms_autofill: ^1.3.1
   country_picker: ^1.0.0
@@ -71,6 +72,7 @@ dependencies:
   google_maps_flutter:
   cloud_firestore:
   firebase_messaging: ^10.0.1
+  direct_select: ^1.1.0
   image_picker: ^0.8.1+1
   email_validator: '^1.0.6'
   rating_dialog: ^1.0.0

@@ -59,4 +59,9 @@ class IprefsHelper implements PrefsHelper {
   Future<void> setIsEnglish(bool lang) async {
     return (await getPrefs()).setBool(S.isenglish, lang);
   }
+
+  @override
+  Future<void> resetcartcount() async {
+    return (await getPrefs()).setInt(S.cartcount, 0);
+  }
 }

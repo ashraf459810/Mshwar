@@ -1,6 +1,7 @@
 import 'package:dellyshop/Core/Consts.dart';
 import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Text.dart';
+import 'package:dellyshop/Widgets%20copy/TextForm.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/CategoyShopsModel/CategoryShopsModel.dart'
@@ -10,19 +11,28 @@ import 'package:dellyshop/models/ShopCategories/ShopCategories.dart';
 import 'package:dellyshop/screens/ItemDetails/ItemDetails.dart';
 
 import 'package:dellyshop/screens/ShopItems/bloc/shopitems_bloc.dart';
+import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart' as c;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:toast/toast.dart';
 import '../../util.dart';
 
 class ShopItems extends StatefulWidget {
-  final s.Shop shop;
+  final bool isCustomorder;
+  final shop;
   final int shopid;
   final String shopimage;
   final shopname;
 
-  ShopItems({Key key, this.shopid, this.shopimage, this.shopname, this.shop})
+  ShopItems(
+      {Key key,
+      this.shopid,
+      this.shopimage,
+      this.shopname,
+      this.shop,
+      this.isCustomorder})
       : super(key: key);
 
   @override
@@ -30,12 +40,16 @@ class ShopItems extends StatefulWidget {
 }
 
 class _ShopItemsState extends State<ShopItems> {
+  c.CartBloc cartBloc = c.CartBloc();
+  String note;
+  TextEditingController textEditingController = TextEditingController();
   List<int> indexs = [];
   AutoScrollController controller;
   int pages = 0;
   int ssize = 12;
   List<Item> items = [];
   List<ShopCategory> shopcategoreies = [];
+  bool isCustomOrdersAvialable = false;
 
   /// Custom text for bottomSheet
   @override
@@ -81,7 +95,7 @@ class _ShopItemsState extends State<ShopItems> {
             child: Column(
               children: [
                 Container(
-                  height: size.height * 0.3,
+                  height: size.height * 0.36,
                   width: size.width,
                   child: Stack(
                     children: [
@@ -96,15 +110,15 @@ class _ShopItemsState extends State<ShopItems> {
                           hight: h(30),
                           width: w(40),
                           child: Center(
-                            child: Text(
-                              widget.shop.active.toString() == "1"
-                                  ? ApplicationLocalizations.of(context)
-                                      .translate("open")
-                                  : ApplicationLocalizations.of(context)
-                                      .translate("closed"),
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                            child: Icon(
+                              Icons.call, color: Colors.white,
+                              // widget.shop.active.toString() == "1"
+                              //     ? ApplicationLocalizations.of(context)
+                              //         .translate("open")
+                              //     : ApplicationLocalizations.of(context)
+                              //         .translate("closed"),
+                              // style: TextStyle(
+                              //   color: Colors.white,
                             ),
                           ),
                         ),
@@ -113,23 +127,20 @@ class _ShopItemsState extends State<ShopItems> {
                         left: 10,
                         top: 55,
                         child: Text(
-                          widget.shop.workingTime
-                              .split(widget.shop.workingTime.split("-").first)
-                              .last
-                              .substring(1),
+                          widget.shop.phone ?? "",
                           style: TextStyle(color: Colors.orange[900]),
                         ),
                       )
                     ],
                   ),
                 ),
-                Container(
-                  height: h(40),
-                  child: Text(
-                    "from ${widget.shop.workingTime.toString().split(",").first} to ${widget.shop.workingTime.toString().split(",").first} ",
-                    style: TextStyle(color: Colors.orange[900]),
-                  ),
-                ),
+                // Container(
+                //   height: h(40),
+                //   child: Text(
+                //     "working days : ${widget.shop.workingTime.toString().split(",").first} to ${widget.shop.workingTime.toString().split(",").first} ",
+                //     style: TextStyle(color: Colors.orange[900]),
+                //   ),
+                // ),
                 BlocBuilder<ShopitemsBloc, ShopitemsState>(
                     builder: (context, state) {
                   if (state is Loading) {
@@ -209,120 +220,143 @@ class _ShopItemsState extends State<ShopItems> {
                                     parent: AlwaysScrollableScrollPhysics()),
                                 scrollDirection: Axis.vertical,
                                 controller: controller,
-                                itemCount: items.length,
+                                itemCount: widget.isCustomorder
+                                    ? items.length + 1
+                                    : items.length,
                                 // ignore: missing_return
                                 itemBuilder: (BuildContext ctx, index) {
-                                  return AutoScrollTag(
-                                      key: ValueKey(index),
-                                      controller: controller,
-                                      index: index,
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) => ItemDetails(
-                                              datum: items[index],
-                                            ),
-                                          ));
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 12),
-                                          child: container(
-                                            borderRadius: 16,
-                                            hight: h(120),
-                                            width: w(180),
-                                            bordercolor: kAppColor,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(15)),
-                                                  child: Container(
-                                                      height: h(100),
-                                                      width: w(120),
-                                                      color: Colors.grey,
-                                                      child: Image.network(
-                                                        "${items[index].images.toString().split(",").first}",
-                                                        fit: BoxFit.cover,
-                                                      )),
-                                                ),
-                                                SizedBox(
-                                                  width: w(40),
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    // SizedBox(
-                                                    //   height: h(10),
-                                                    // ),
-                                                    text(
-                                                        text: ApplicationLocalizations.of(
-                                                                        context)
-                                                                    .appLocale
-                                                                    .languageCode ==
-                                                                "en"
-                                                            ? "${items[index].titleEn},"
-                                                            : "${items[index].title},",
-                                                        color:
-                                                            Colors.grey[900]),
-                                                    Container(
-                                                        constraints:
-                                                            BoxConstraints(
-                                                                maxWidth:
-                                                                    w(150),
-                                                                minHeight:
-                                                                    h(10),
-                                                                maxHeight:
-                                                                    h(30)),
-                                                        child: text(
-                                                            text: ApplicationLocalizations.of(
-                                                                            context)
-                                                                        .appLocale
-                                                                        .languageCode ==
-                                                                    "en"
-                                                                ? "${items[index].descriptionEn},"
-                                                                : "${items[index].description},",
+                                  if (index + 1 <= items.length) {
+                                    return AutoScrollTag(
+                                        key: ValueKey(index),
+                                        controller: controller,
+                                        index: index,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) => ItemDetails(
+                                                datum: items[index],
+                                              ),
+                                            ));
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 12),
+                                            child: container(
+                                              borderRadius: 16,
+                                              hight: h(120),
+                                              width: w(180),
+                                              bordercolor: kAppColor,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                    child: Container(
+                                                        height: h(100),
+                                                        width: w(120),
+                                                        color: Colors.grey,
+                                                        child: Image.network(
+                                                          "${items[index].images.toString().split(",").first}",
+                                                          fit: BoxFit.cover,
+                                                        )),
+                                                  ),
+                                                  SizedBox(
+                                                    width: w(40),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      // SizedBox(
+                                                      //   height: h(10),
+                                                      // ),
+                                                      text(
+                                                          text: ApplicationLocalizations.of(
+                                                                          context)
+                                                                      .appLocale
+                                                                      .languageCode ==
+                                                                  "en"
+                                                              ? "${items[index].titleEn},"
+                                                              : "${items[index].title},",
+                                                          color:
+                                                              Colors.grey[900]),
+                                                      Container(
+                                                          constraints:
+                                                              BoxConstraints(
+                                                                  maxWidth:
+                                                                      w(150),
+                                                                  minHeight:
+                                                                      h(10),
+                                                                  maxHeight:
+                                                                      h(30)),
+                                                          child: text(
+                                                              text: ApplicationLocalizations.of(
+                                                                              context)
+                                                                          .appLocale
+                                                                          .languageCode ==
+                                                                      "en"
+                                                                  ? "${items[index].descriptionEn},"
+                                                                  : "${items[index].description},",
+                                                              color: Colors
+                                                                  .grey[900])),
+                                                      Row(
+                                                        children: [
+                                                          text(
+                                                            text: ApplicationLocalizations
+                                                                    .of(context)
+                                                                .translate(
+                                                                    "Price"),
                                                             color: Colors
-                                                                .grey[900])),
-                                                    Row(
-                                                      children: [
-                                                        text(
-                                                          text: ApplicationLocalizations
-                                                                  .of(context)
-                                                              .translate(
-                                                                  "Price"),
-                                                          color: Colors
-                                                              .orange[900],
-                                                        ),
-                                                        Text(" : "),
-                                                        Text(
-                                                          "${items[index].price}",
-                                                          style: TextStyle(
-                                                              color: kAppColor,
-                                                              fontSize: 17.0,
-                                                              fontFamily:
-                                                                  "Popins",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
+                                                                .orange[900],
+                                                          ),
+                                                          Text(" : "),
+                                                          Text(
+                                                            "${items[index].price}",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    kAppColor,
+                                                                fontSize: 17.0,
+                                                                fontFamily:
+                                                                    "Popins",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ));
+                                        ));
+                                  } else {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        showbuttomsheet();
+                                      },
+                                      child: container(
+                                        borderRadius: 30,
+                                        bordercolor: Colors.orange[900],
+                                        hight: h(40),
+                                        child: text(
+                                            text: ApplicationLocalizations.of(
+                                                    context)
+                                                .translate("custom order"),
+                                            color: Colors.orange[900]),
+                                      ),
+                                    );
+                                  }
                                 }),
                           )
                         ]))
@@ -368,6 +402,65 @@ class _ShopItemsState extends State<ShopItems> {
     await controller.scrollToIndex(index,
         preferPosition: AutoScrollPosition.begin);
     controller.highlight(10);
+  }
+
+  void showbuttomsheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            height: h(400),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: h(70),
+                ),
+                container(
+                  width: w(300),
+                  borderRadius: 30,
+                  bordercolor: Colors.orange[900],
+                  hight: h(60),
+                  child: textform(
+                    controller: textEditingController,
+                    function: (val) {
+                      note = val;
+                    },
+                    hint: ApplicationLocalizations.of(context)
+                        .translate("type your order"),
+                  ),
+                ),
+                SizedBox(
+                  height: h(50),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (note != null)
+                      cartBloc.add(c.AddCustomOrderEvent(
+                          shopId: widget.shopid, note: note));
+                    Toast.show(
+                        ApplicationLocalizations.of(context)
+                            .translate("Added to cart Successfully"),
+                        context,
+                        backgroundColor: Colors.orange[900]);
+                    Navigator.of(context).pop();
+                  },
+                  child: container(
+                    hight: h(60),
+                    width: w(250),
+                    borderRadius: 25,
+                    color: Colors.orange[900],
+                    child: text(
+                        text: ApplicationLocalizations.of(context)
+                            .translate("add_to_cart"),
+                        color: Colors.white,
+                        fontsize: 16),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 }
 

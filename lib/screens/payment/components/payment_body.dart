@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 import 'package:dellyshop/util.dart';
@@ -21,6 +22,7 @@ class PaymentBody extends StatefulWidget {
 }
 
 class _PaymentBodyState extends State<PaymentBody> {
+  IprefsHelper iprefsHelper = IprefsHelper();
   var select1 = true;
   var select2 = false;
 
@@ -164,14 +166,18 @@ class _PaymentBodyState extends State<PaymentBody> {
                         );
                       }
                       if (state is PlaceOrderState) {
-                        Toast.show('Order Places Successfully', context,
+                        iprefsHelper.resetcartcount();
+                        Toast.show(
+                            ApplicationLocalizations.of(context)
+                                .translate('Order Placed Successfully'),
+                            context,
                             duration: Toast.LENGTH_LONG,
                             backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CustomBottomNavigationBar(),
+                        ));
                       }
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CustomBottomNavigationBar(),
-                      ));
                     },
                     child: Builder(
                       builder: (context) => ButtonCustom(

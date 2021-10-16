@@ -11,4 +11,5 @@ abstract class PrefsHelper {
   Future<int> getcartcount();
   Future<void> setIsEnglish(bool lang);
   Future<bool> getIsEnglish();
+  Future<void> resetcartcount();
 }

@@ -32,13 +32,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       yield CartCountState(cartcount);
       add(GetIsLoginEvent());
     }
+    if (event is AddCustomOrderEvent) {
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+
+        var response = await repo.iHttpHlper.getrequest(
+            "/Cart/Add?shops_id=${event.shopId}&isCustom=1&notes=${event.note}&api_token=$token");
+      } catch (error) {
+        print(error);
+        yield Error(error.toString());
+      }
+    }
     if (event is AddItemToCartEvent) {
       print("${repo.iprefsHelper.gettoken()}");
       try {
         String token = await repo.iprefsHelper.gettoken();
 
         var response = await repo.iHttpHlper.getrequest(
-            "/Cart/Add?api_token=$token&items_id=${event.itemid}&quantity=${event.count}&notes=");
+            "/Cart/Add?api_token=$token&items_id=${event.itemid}&quantity=${event.count}&notes=&attributes=${event.attr}");
 
         AddResponse addOrDelete = addOrDeleteFromJson(response);
         await repo.iprefsHelper.increasecartcount();
@@ -60,9 +71,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         cartModel = cartModelFromJson(response);
         yield GetCartItemsState(cartModel);
-        add(GetAddressEvent());
+        // add(GetAddressEvent());
       } catch (error) {
         print(" $error");
+        yield Error("Error while getting items");
+      }
+    }
+    if (event is GetCartItemsEventWithDefaultAddress) {
+      yield Loading();
+      try {
+        String token = await repo.iprefsHelper.gettoken();
+
+        var response = await repo.iHttpHlper.getrequest(
+            "/Cart/GetFinancials?api_token=$token&address_id=${event.addressId}");
+
+        cartModel = cartModelFromJson(response);
+        yield GetCartItemsState(cartModel);
+      } catch (error) {
         yield Error("Error while getting items");
       }
     }
@@ -85,10 +110,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     if (event is GetAddressEvent) {
       try {
+        yield Loading();
         String token = await repo.iprefsHelper.gettoken();
         var response =
             await repo.iHttpHlper.getrequest("/Addresses?api_token=$token");
         addressModel = addressModelFromJson(response);
+
         yield GetAddressState(addressModel);
       } catch (error) {
         yield Error("Error while getting address");
@@ -106,7 +133,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         placeOrderModel = placeOrderModelFromJson(response);
         yield PlaceOrderState(placeOrderModel);
       } catch (error) {
-        yield Error(error);
+        yield Error(error.toString());
       }
     }
     if (event is GetIsLoginEvent) {

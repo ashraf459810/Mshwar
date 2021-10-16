@@ -1,10 +1,12 @@
 import 'package:dellyshop/constant.dart';
+
 import 'package:dellyshop/models/Sliders.dart/Sliders.dart';
-import 'package:dellyshop/screens/ShopItems/ShopItems.dart';
+import 'package:dellyshop/screens/ShopItems/ShopItems.dart' as c;
 
 import 'package:dellyshop/widgets/carousel_pro.dart';
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarouselViewBuilder extends StatefulWidget {
   final Sliders sliders;
@@ -37,10 +39,16 @@ class _CarouselViewBuilderState extends State<CarouselViewBuilder> {
                 child: new Carousel(
                     onImageTap: (index) {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ShopItems(
-                                shopid: int.parse(
-                                    widget.sliders.slides[index].shopsId),
-                              )));
+                          builder: (context) => c.ShopItems(
+                              shopid: int.parse(
+                                  widget.sliders.slides[index].shopsId),
+                              shopimage: widget
+                                  .sliders.slides[index].shop.images
+                                  .toString()
+                                  .split(",")
+                                  .first,
+                              isCustomorder: false,
+                              shop: widget.sliders.slides[index].shop)));
                     },
                     borderRadius: true,
                     boxFit: BoxFit.cover,
@@ -81,4 +89,12 @@ List<NetworkImage> getimages(Sliders sliders) {
     print("here null");
     return images;
   }
+}
+
+double h(double h) {
+  return ScreenUtil().setHeight(h);
+}
+
+double w(double w) {
+  return ScreenUtil().setWidth(w);
 }

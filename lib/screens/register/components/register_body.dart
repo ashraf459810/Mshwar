@@ -50,7 +50,10 @@ class _RegisterBodyState extends State<RegisterBody> {
             child: BlocConsumer<RegisterBloc, RegisterState>(
               listener: (context, state) {
                 if (state is RegisterS) {
-                  Toast.show("Registered Successfully", context,
+                  Toast.show(
+                      ApplicationLocalizations.of(context)
+                          .translate("Registered Successfully"),
+                      context,
                       duration: Toast.LENGTH_SHORT,
                       backgroundColor: Colors.orange,
                       gravity: Toast.TOP);
@@ -198,7 +201,11 @@ class _RegisterBodyState extends State<RegisterBody> {
                                       emailc.text,
                                       int.parse(mobilec.text)));
                                 } else {
-                                  Toast.show("Please fill the fields", context,
+                                  Toast.show(
+                                      ApplicationLocalizations.of(context)
+                                          .translate(
+                                              "Please fill all the fields"),
+                                      context,
                                       duration: Toast.LENGTH_SHORT,
                                       backgroundColor: Colors.orange,
                                       gravity: Toast.TOP);

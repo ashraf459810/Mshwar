@@ -84,7 +84,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                               }
                               if (state is AddItemToCartState) {
                                 Toast.show(
-                                    "Added to cart Successfully", context,
+                                    ApplicationLocalizations.of(context)
+                                        .translate(
+                                            "Added to cart Successfully"),
+                                    context,
                                     duration: Toast.LENGTH_SHORT,
                                     gravity: Toast.TOP,
                                     backgroundColor: Colors.orange[900]);

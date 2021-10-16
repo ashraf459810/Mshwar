@@ -17,7 +17,7 @@ Widget container({
       borderRadius: BorderRadius.all(
         Radius.circular(borderRadius ?? 0),
       ),
-      border: Border.all(color: bordercolor ?? Colors.white),
+      border: Border.all(color: bordercolor ?? Colors.transparent),
       boxShadow: [
         shadow ?? false
             ? BoxShadow(
@@ -26,7 +26,7 @@ Widget container({
                 blurRadius: 6,
                 offset: Offset(0, 1), // changes position of shadow
               )
-            : BoxShadow()
+            : BoxShadow(color: Colors.transparent)
       ],
       color: color ?? Colors.white,
     ),

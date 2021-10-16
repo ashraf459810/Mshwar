@@ -9,6 +9,7 @@ Widget text(
   return Text(
     text,
     style: TextStyle(
+        decoration: TextDecoration.none,
         fontFamily: "font",
         color: color,
         fontSize: fontsize,

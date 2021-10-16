@@ -60,7 +60,6 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              rating(),
               SizedBox(
                 height: h(10),
               ),
@@ -81,8 +80,12 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
               ),
               BlocConsumer<CartBloc, CartState>(listener: (context, state) {
                 if (state is AddItemToCartState) {
-                  Toast.show("Added Successfully ", context,
-                      backgroundColor: Colors.orange[900], gravity: 2);
+                  Toast.show(
+                      ApplicationLocalizations.of(context)
+                          .translate("Added to cart Successfully"),
+                      context,
+                      backgroundColor: Colors.orange[900],
+                      gravity: 2);
                 }
               }, builder: (context, state) {
                 if (state is Error) {
@@ -104,10 +107,8 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
           witdh: size.width * 0.9,
           ontap: () {
-            context.read<CartBloc>().add(AddItemToCartEvent(
-                  count,
-                  widget.itemsWithDiscount.id,
-                ));
+            context.read<CartBloc>().add(
+                AddItemToCartEvent(count, widget.itemsWithDiscount.id, ""));
             setState(() {});
           },
           bacgroudColor: kAppColor,
@@ -349,52 +350,6 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
           ],
         ),
       ],
-    );
-  }
-
-  rating() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                height: h(30),
-                width: w(75.0),
-                decoration: BoxDecoration(
-                  color: kAppColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      widget.itemsWithDiscount.ratesAvg.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 8.0)),
-                    Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 19.0,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          // Text(
-          //   "optoinal",
-          //   style: TextStyle(
-          //       color: Utils.isDarkMode ? kDarkTextColorColor : kTextColorColor,
-          //       fontSize: kTitleFontSize,
-          //       fontWeight: FontWeight.w500),
-          // ),
-        ],
-      ),
     );
   }
 

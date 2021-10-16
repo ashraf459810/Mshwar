@@ -94,7 +94,9 @@ class _DelieverLocationState extends State<DelieverLocation> {
                     listener: (context, state) {
                       if (state is AddAddressState) {
                         Toast.show(
-                            "Added Successfiully to your Addresses", context,
+                            ApplicationLocalizations.of(context).translate(
+                                "Added Successfiully to your Addresses"),
+                            context,
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
@@ -381,7 +383,10 @@ class _DelieverLocationState extends State<DelieverLocation> {
                         widget.f();
                         Navigator.of(context).pop();
                       } else {
-                        Toast.show("please fill all the fields", context,
+                        Toast.show(
+                            ApplicationLocalizations.of(context)
+                                .translate("please fill all the fields"),
+                            context,
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);

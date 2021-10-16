@@ -1,11 +1,13 @@
 import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
+import 'package:dellyshop/Widgets%20copy/Nav.dart';
 
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/delegates/app_localizations_delegate.dart';
 import 'package:dellyshop/models/address_model.dart';
 import 'package:dellyshop/models/language.dart';
 import 'package:dellyshop/screens/add_adress/components/DeliverLocation.dart';
-import 'package:dellyshop/screens/edit_address/edit_address_screen.dart';
+
 import 'package:dellyshop/screens/login/login_screen.dart';
 
 import 'package:dellyshop/widgets/app_builder.dart';
@@ -129,11 +131,8 @@ class _SettingsBodyState extends State<SettingsBody> {
                                               IprefsHelper();
                                           prefsHelper.settoken(null);
                                           prefsHelper.setislogin(false);
-
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) => LoginScreen(),
-                                          ));
+                                          navWithReplaceAll(
+                                              context, LoginScreen());
                                         },
                                         witdh: 100,
                                         height: 40,
@@ -241,74 +240,74 @@ class _SettingsBodyState extends State<SettingsBody> {
         });
   }
 
-  void addressBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return Container(
-            height: 300,
-            child: Column(
-              children: [
-                Container(
-                  height: 240,
-                  child: ListView.builder(
-                    itemBuilder: (ctx, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CardWidget(
-                          childWidget: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              NormalTextWidget(
-                                  addressList[index].addressName,
-                                  Utils.isDarkMode
-                                      ? kDarkTextColorColor
-                                      : kLightBlackTextColor,
-                                  kTitleFontSize),
-                              ButtonCustom(
-                                txt: ApplicationLocalizations.of(context)
-                                    .translate("edit"),
-                                ontap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditAddressScreen(
-                                                  addressList[index])));
-                                },
-                                witdh: 100,
-                                height: 40,
-                                borderColor: kAppColor,
-                                bacgroudColor: kAppColor,
-                                textColor: kWhiteColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: addressList.length,
-                  ),
-                ),
-                ButtonCustom(
-                  txt: ApplicationLocalizations.of(context)
-                      .translate("add_address"),
-                  ontap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DelieverLocation(),
-                    ));
-                  },
-                  witdh: 100,
-                  height: 40,
-                  borderColor: kAppColor,
-                  bacgroudColor: kAppColor,
-                  textColor: kWhiteColor,
-                ),
-              ],
-            ),
-          );
-        });
-  }
+  // void addressBottomSheet() {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return Container(
+  //           height: 300,
+  //           child: Column(
+  //             children: [
+  //               Container(
+  //                 height: 240,
+  //                 child: ListView.builder(
+  //                   itemBuilder: (ctx, index) {
+  //                     return Padding(
+  //                       padding: const EdgeInsets.all(8.0),
+  //                       child: CardWidget(
+  //                         childWidget: Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           children: [
+  //                             NormalTextWidget(
+  //                                 addressList[index].addressName,
+  //                                 Utils.isDarkMode
+  //                                     ? kDarkTextColorColor
+  //                                     : kLightBlackTextColor,
+  //                                 kTitleFontSize),
+  //                             ButtonCustom(
+  //                               txt: ApplicationLocalizations.of(context)
+  //                                   .translate("edit"),
+  //                               ontap: () {
+  //                                 Navigator.push(
+  //                                     context,
+  //                                     MaterialPageRoute(
+  //                                         builder: (context) =>
+  //                                             EditAddressScreen(
+  //                                                 addressList[index])));
+  //                               },
+  //                               witdh: 100,
+  //                               height: 40,
+  //                               borderColor: kAppColor,
+  //                               bacgroudColor: kAppColor,
+  //                               textColor: kWhiteColor,
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                     );
+  //                   },
+  //                   itemCount: addressList.length,
+  //                 ),
+  //               ),
+  //               ButtonCustom(
+  //                 txt: ApplicationLocalizations.of(context)
+  //                     .translate("add_address"),
+  //                 ontap: () {
+  //                   Navigator.of(context).push(MaterialPageRoute(
+  //                     builder: (context) => DelieverLocation(),
+  //                   ));
+  //                 },
+  //                 witdh: 100,
+  //                 height: 40,
+  //                 borderColor: kAppColor,
+  //                 bacgroudColor: kAppColor,
+  //                 textColor: kWhiteColor,
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  // }
 
   void telephoneBottomSheet() {
     showModalBottomSheet(

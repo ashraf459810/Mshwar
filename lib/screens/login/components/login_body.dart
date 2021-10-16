@@ -244,7 +244,10 @@ class _LoginBodyState extends State<LoginBody> {
                                               LoginE(userormobile, password));
                                         } else {
                                           Toast.show(
-                                              "Please fill all the fields",
+                                              ApplicationLocalizations.of(
+                                                      context)
+                                                  .translate(
+                                                      "Please fill all the fields"),
                                               context,
                                               duration: Toast.LENGTH_SHORT,
                                               gravity: Toast.TOP,

@@ -3,7 +3,7 @@ import 'package:dellyshop/screens/App/App.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
 
 import 'package:dellyshop/theme.dart';
-import 'package:dellyshop/util.dart';
+
 import 'package:dellyshop/widgets/app_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +41,7 @@ class _MainAppState extends State<MainApp> {
                       Locale('en', 'US'),
                       Locale('ar', ''),
                     ],
-                    locale: Utils.appLocale,
+                    // locale: Utils.appLocale,
                     localizationsDelegates: [
                       const AppLocalizationsDelegate(),
                       GlobalMaterialLocalizations.delegate,
@@ -52,9 +52,7 @@ class _MainAppState extends State<MainApp> {
                       for (var supportedLocaleLanguage in supportedLocales) {
                         print(supportedLocaleLanguage.languageCode);
                         if (supportedLocaleLanguage.languageCode ==
-                                locale.languageCode &&
-                            supportedLocaleLanguage.countryCode ==
-                                locale.countryCode) {
+                            locale.languageCode) {
                           return supportedLocaleLanguage;
                         }
                       }

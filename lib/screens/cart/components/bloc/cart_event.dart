@@ -8,10 +8,21 @@ class CartCountEvent extends CartEvent {}
 class AddItemToCartEvent extends CartEvent {
   final int itemid;
   final int count;
-  AddItemToCartEvent(
-    this.count,
-    this.itemid,
-  );
+  final String attr;
+  AddItemToCartEvent(this.count, this.itemid, this.attr);
+}
+
+class AddCustomOrderEvent extends CartEvent {
+  final int shopId;
+  final String note;
+
+  AddCustomOrderEvent({this.shopId, this.note});
+}
+
+class GetCartItemsEventWithDefaultAddress extends CartEvent {
+  final int addressId;
+
+  GetCartItemsEventWithDefaultAddress(this.addressId);
 }
 
 class GetCartItemsEvent extends CartEvent {}

@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
+  IprefsHelper iprefsHelper = IprefsHelper();
+
   static double totalPrice;
 
   static double gridHeight() {

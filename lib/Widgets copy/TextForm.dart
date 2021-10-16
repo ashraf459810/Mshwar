@@ -7,11 +7,8 @@ Widget textform(
     String hint,
     Color hintColor,
     double hintsize,
-    String validation,
-    double verticalpadding,
-    double horizontalpadding}) {
+    String validation}) {
   return TextFormField(
-    textAlign: TextAlign.start,
     obscureText: validation == "password" ? true : false,
     keyboardType: validation == "number"
         ? TextInputType.phone
@@ -21,9 +18,7 @@ Widget textform(
                 ? TextInputType.emailAddress
                 : TextInputType.text,
     decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-            vertical: verticalpadding ?? 10,
-            horizontal: horizontalpadding ?? 10),
+        contentPadding: EdgeInsets.all(15),
         border: InputBorder.none,
         hintText: hint,
         isDense: true,
@@ -38,11 +33,9 @@ Widget textform(
             ? emailvalidator
             : validation == "number"
                 ? numbervalidator
-                : (value) {
-                    return value;
-                  },
-    expands: true,
-    maxLines: null,
+                : defaultvalidation,
+    // expands: true,
+    maxLines: 1,
     minLines: null,
     onChanged: (value) {
       function(value);
@@ -79,5 +72,9 @@ String emailvalidator(String value) {
 }
 
 String numbervalidator(String value) {
+  return value;
+}
+
+String defaultvalidation(String value) {
   return value;
 }

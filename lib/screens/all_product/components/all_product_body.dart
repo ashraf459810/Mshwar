@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constant.dart';
-import '../../../util.dart';
-
 class AllProductScreenBody extends StatefulWidget {
+  final bool islogin;
+
+  const AllProductScreenBody({Key key, this.islogin}) : super(key: key);
   @override
   _AllProductScreenBody createState() => _AllProductScreenBody();
 }
@@ -64,6 +64,7 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => DiscountItemDetails(
                             itemsWithDiscount: items[index],
+                            islogin: widget.islogin,
                           ),
                         ));
                       },

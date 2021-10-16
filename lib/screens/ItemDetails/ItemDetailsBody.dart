@@ -1,6 +1,9 @@
 import 'package:dellyshop/Widgets%20copy/Container.dart';
+import 'package:dellyshop/Widgets%20copy/Dropdown.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/models/ShopCategories/ShopCategories.dart' as item;
+
 import 'package:dellyshop/screens/App/components/Signup.dart';
 
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
@@ -14,9 +17,12 @@ import 'package:dellyshop/widgets/normal_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tags/flutter_tags.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class ItemDetailsBody extends StatefulWidget {
-  final datum;
+  final item.Item datum;
   final bool islogin;
   ItemDetailsBody({Key key, this.datum, this.islogin}) : super(key: key);
 
@@ -25,16 +31,24 @@ class ItemDetailsBody extends StatefulWidget {
 }
 
 class _ItemDetailsBodyState extends State<ItemDetailsBody> {
+  List<int> oneSelectMatrix = [];
+  List<int> multiSelectMatrix = [];
+  List<int> attributesValues = [];
+
+  ScrollController scrollController = ScrollController();
+  ScrollController scrollController2 = ScrollController();
+  List<dynamic> attributsValus = [];
+
   int count = 1;
   @override
   void initState() {
+    initilizeMatrixs();
     context.read<CartBloc>().add(CartCountEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("${widget.islogin} is login");
     var size = MediaQuery.of(context).size;
     return ListView(
       children: [
@@ -60,13 +74,11 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(2),
               ),
+              listOfAttributes(),
               SizedBox(
-                height: h(10),
+                height: h(30),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 60.0),
-                child: Container(width: w(400), child: colorAndAmount(size)),
-              ),
+              Container(width: w(300), child: colorAndAmount(size)),
               SizedBox(
                 height: h(50),
               ),
@@ -109,12 +121,20 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
           witdh: size.width * 0.9,
           ontap: () {
-            context.read<CartBloc>().add(AddItemToCartEvent(
-                  count,
-                  widget.datum.id,
-                ));
+            String attr = "";
+            print(attributesValues);
+            attributesValues.addAll(multiSelectMatrix);
+            attributesValues.remove(-1);
+            for (var i = 0; i < attributesValues.length; i++) {
+              attr = attr + "${attributesValues[i]},";
+            }
+            print("${attr} here the attr");
+
+            context
+                .read<CartBloc>()
+                .add(AddItemToCartEvent(count, widget.datum.id, ""));
             setState(() {
-              print(count);
+              // print(count);
             });
           },
           bacgroudColor: kAppColor,
@@ -177,10 +197,11 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
 
   Row colorAndAmount(Size size) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        SizedBox(
-          width: w(196),
-        ),
+        // SizedBox(
+        //   width: w(100),
+        // ),
 
         /// Decrease of value item
         InkWell(
@@ -301,41 +322,77 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     );
   }
 
-  rating() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                height: h(30),
-                width: w(75.0),
-                decoration: BoxDecoration(
-                  color: kAppColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      widget.datum.ratesAvg.toString(),
-                      style: TextStyle(color: Colors.white),
+  Widget multiselectattributesValus(List<dynamic> valus, int i) {
+    return Container(
+      width: w(50),
+      height: h(200),
+      child: MultiSelectDialogField(
+        buttonIcon: Icon(Icons.arrow_circle_down, color: Colors.orange[900]),
+        items: valus,
+        selectedColor: Colors.orange,
+        buttonText: Text(
+          "Select attributes please",
+          style: TextStyle(
+            color: Colors.orange[800],
+            fontSize: 16,
+          ),
+        ),
+        onConfirm: (results) {
+          multiSelectMatrix = [];
+          for (int loop = 0; loop < results.length; loop++) {
+            multiSelectMatrix.add(results[loop].id);
+          }
+          print(multiSelectMatrix);
+          // result = results;
+        },
+      ),
+    );
+  }
+
+  Widget listOfAttributes() {
+    return Container(
+      height: h(50),
+      child: ListView.builder(
+        physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.datum.attribs.length,
+        itemBuilder: (
+          context,
+          index,
+        ) {
+          if (widget.datum.attribs[index].multi == 1) {
+            print("${attributesValues} gabs main ");
+          }
+          return InkWell(
+            onTap: () {
+              widget.datum.attribs[index].multi == 1
+                  ? showbuttomsheetmulti(
+                      widget.datum.attribs[index].values
+                          .map((value) =>
+                              MultiSelectItem<item.Value>(value, value.name))
+                          .toList(),
+                      index)
+                  : showbuttomsheetoneselect(widget.datum.attribs[index], index,
+                      oneSelectMatrix, attributesValues);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: container(
+                  borderRadius: 30,
+                  width: w(100),
+                  color: Colors.orange[700],
+                  child: Center(
+                    child: Text(
+                      "${widget.datum.attribs[index].name}",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 8.0)),
-                    Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 19.0,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -358,5 +415,68 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
         ),
       ),
     );
+  }
+
+  void showbuttomsheetmulti(List<dynamic> values, int i) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return multiselectattributesValus(values, i);
+        });
+  }
+
+  void showbuttomsheetoneselect(
+      item.Attrib list, int index, List<int> selectionmatrix, List<int> gabs) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return oneSelect(list, index, selectionmatrix, gabs);
+        });
+  }
+
+  Widget oneSelect(
+      item.Attrib list, int index, List<int> selecction, List<int> gabs) {
+    return container(
+        hight: h(300),
+        width: w(300),
+        child: ListView.builder(
+          controller: scrollController,
+          itemCount: 1,
+          itemBuilder: (context, indexx) {
+            return Column(
+              children: [
+                container(
+                  width: w(100),
+                  child: Text(
+                    "${list.name}",
+                    style: TextStyle(color: Colors.orange[900], fontSize: 16),
+                  ),
+                ),
+                SizedBox(
+                  height: h(20),
+                ),
+                DropDown(
+                  list: list.values,
+                  hint: "",
+                  getindex: (val) {},
+                  onchanged: (val) {
+                    gabs[index] = val.id;
+                    print("${gabs} here the gabs");
+                  },
+                )
+              ],
+            );
+          },
+        ));
+  }
+
+  void initilizeMatrixs() {
+    for (var i = 0; i < widget.datum.attribs.length; i++) {
+      if (widget.datum.attribs[i].multi == 1) {
+        attributesValues.add(-1);
+      } else {
+        attributesValues.add(0);
+      }
+    }
   }
 }

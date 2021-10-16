@@ -26,6 +26,14 @@ class _CategoryShopsState extends State<CategoryShops> {
   List<Shop> shops = [];
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  bool isCustomOrder = false;
+  @override
+  void initState() {
+    widget.category.customOrders == 1
+        ? isCustomOrder = true
+        : isCustomOrder = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +58,19 @@ class _CategoryShopsState extends State<CategoryShops> {
             body: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
               if (state is GetCategoryShopsState) {
                 if (state.categoryShopsModel.shops.length == 1) {
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (context) => s.ShopItems(
-                  //           shopid: state.categoryShopsModel.shops[0].id,
-                  //           shopname: state.categoryShopsModel.shops[0].nameEn,
-                  //         )));
+                  if (state.categoryShopsModel.shops.first.active == 1)
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => s.ShopItems(
+                              shopid: state.categoryShopsModel.shops[0].id,
+                              shopname:
+                                  state.categoryShopsModel.shops[0].nameEn,
+                              shop: state.categoryShopsModel.shops.first,
+                              shopimage:
+                                  state.categoryShopsModel.shops.first.images,
+                              isCustomorder: widget.category.customOrders == 1
+                                  ? true
+                                  : false,
+                            )));
                 }
               }
             }, builder: (context, state) {
@@ -141,6 +157,7 @@ class _CategoryShopsState extends State<CategoryShops> {
                                     ? Center(
                                         child: CategoryShopsBuilder(
                                           shop: shops[index],
+                                          isCustomorder: isCustomOrder,
                                         ),
                                       )
                                     : Container(),

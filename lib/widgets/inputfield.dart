@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:regexpattern/regexpattern.dart';
 
 class ReusableWidget {
   Widget container(TextEditingController editingController, String inputtext,
@@ -36,12 +35,12 @@ class ReusableWidget {
           child: TextFormField(
             obscureText: type == "password" ? true : false,
             validator: type == "name"
-                ? (value) => value.isEmpty
-                    ? 'Enter Your Name'
-                    : !RegexValidation.hasMatch(
-                            value, RegexPattern.alphabetOnly)
-                        ? "Enter a valid name"
-                        : null
+                ? (value) {
+                    if (value.isNotEmpty) {
+                      return null;
+                    }
+                    return "please enter your name";
+                  }
                 : type == "email"
                     ? (value) {
                         if (value.isEmpty) {
@@ -59,17 +58,9 @@ class ReusableWidget {
                     : type == "password"
                         ? (value) {
                             if (value.isEmpty) {
-                              return "enter your password";
+                              return "enter password";
                             }
-                            String pattern =
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
-                            RegExp regExp = new RegExp(pattern);
-                            bool validpassword = regExp.hasMatch(value);
-                            if (validpassword == true) {
-                              return null;
-                            } else {
-                              return "passwrod lenght 8 contains numbers capital and small letters";
-                            }
+                            return null;
                           }
                         : null,
             keyboardType: type == "name"

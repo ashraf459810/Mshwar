@@ -104,7 +104,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
                             gravity: Toast.TOP);
                       }
                       if (state is UpdateAddressState) {
-                        Toast.show("Address Updated Successfully", context,
+                        Toast.show(
+                            ApplicationLocalizations.of(context)
+                                .translate("Address Updated Successfully"),
+                            context,
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange,
                             gravity: Toast.TOP);
@@ -258,8 +261,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
                       child: Builder(
                         builder: (context) => DropdownButton<City>(
                           hint: Center(
-                              child: Text(ApplicationLocalizations.of(context)
-                                  .translate(selectcity))),
+                              child: selectcity == "select your city"
+                                  ? Text(ApplicationLocalizations.of(context)
+                                      .translate(selectcity))
+                                  : Text(selectcity)),
 
                           value: chosencity,
                           isExpanded: true,
@@ -301,8 +306,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
                   color: Colors.white,
                   child: DropdownButton<a.Address>(
                     hint: Center(
-                        child: Text(ApplicationLocalizations.of(context)
-                            .translate(selectaddress))),
+                        child: selectaddress == "select address"
+                            ? Text(ApplicationLocalizations.of(context)
+                                .translate(selectaddress))
+                            : Text(selectaddress)),
 
                     value: chosenaddress,
                     isExpanded: true,
@@ -383,7 +390,10 @@ class _UpdateAddressState extends State<UpdateAddress> {
                                   name: addressname,
                                   long: currentPostion.longitude));
                         } else {
-                          Toast.show("please fill all the fields", context,
+                          Toast.show(
+                              ApplicationLocalizations.of(context)
+                                  .translate("please fill all the fields"),
+                              context,
                               duration: Toast.LENGTH_SHORT,
                               backgroundColor: Colors.orange,
                               gravity: Toast.TOP);
