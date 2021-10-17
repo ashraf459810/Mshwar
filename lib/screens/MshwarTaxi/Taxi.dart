@@ -2,7 +2,6 @@ import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
 import 'package:dellyshop/screens/App/App.dart';
-import 'package:dellyshop/screens/App/components/Signup.dart';
 
 import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
 import 'package:dellyshop/screens/home/home_screen.dart';
@@ -10,10 +9,11 @@ import 'package:dellyshop/screens/login/login_screen.dart';
 
 import 'package:dellyshop/screens/register/components/bloc/register_bloc.dart'
     as c;
+import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 
 import 'package:dellyshop/widgets/shimmer_widger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +33,7 @@ class Taxi extends StatefulWidget {
 class _TaxiState extends State<Taxi> {
   String selectedaddreddname;
   TextEditingController controller = TextEditingController();
+  Address chosenaddress;
   String street;
   String country;
   String city;
@@ -40,6 +41,7 @@ class _TaxiState extends State<Taxi> {
   String country2;
   String city2;
   String dropdownvalue;
+  String selectaddress = "select address";
 
   c.RegisterBloc registerBloc = c.RegisterBloc();
   Set<Marker> markers = {};
@@ -59,198 +61,67 @@ class _TaxiState extends State<Taxi> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => GetlocationBloc()..add(GetIfLoginEvent()),
+      create: (context) =>
+          GetlocationBloc()..add(GetIfLoginEvent())..add(GetAddressEvent()),
       child: Scaffold(
         body: widget.islogin
             ? SafeArea(
                 child: SingleChildScrollView(
-                  child: Column(
+                    child: BlocConsumer<GetlocationBloc, GetlocationState>(
+                        listener: (context, state) {
+                  if (state is TaxiOrderState) {
+                    Toast.show(
+                        ApplicationLocalizations.of(context)
+                            .translate("Order Placed Successfully"),
+                        context,
+                        duration: 3,
+                        gravity: 0,
+                        backgroundColor: Colors.orange[900]);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CustomBottomNavigationBar(),
+                    ));
+                  }
+                  if (state is Error) {
+                    Toast.show(state.error, context,
+                        duration: Toast.LENGTH_SHORT,
+                        backgroundColor: Colors.orange,
+                        gravity: Toast.TOP);
+                  }
+                }, builder: (context, state) {
+                  if (state is GetIfLoginState) {
+                    islogin = state.islogin;
+                    print(islogin);
+                    if (state.islogin == false) return Container();
+                  }
+
+                  return Column(
                     children: [
-                      Opacity(
-                        opacity: 0.6,
-                        child: Container(
-                          color: Colors.black,
-                          height: size.height * 0.06,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(
-                                  Icons.info_sharp,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  "make a long press to mark your delivery location",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: BlocConsumer<GetlocationBloc, GetlocationState>(
-                          listener: (context, state) {
-                            if (state is TaxiOrderState) {
-                              Toast.show(
-                                  ApplicationLocalizations.of(context)
-                                      .translate("Order Placed Successfully"),
-                                  context,
-                                  duration: 3,
-                                  gravity: 0,
-                                  backgroundColor: Colors.orange[900]);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
-                              ));
-                            }
-                            if (state is Error) {
-                              Toast.show(state.error, context,
-                                  duration: Toast.LENGTH_SHORT,
-                                  backgroundColor: Colors.orange,
-                                  gravity: Toast.TOP);
-                            }
-                          },
-                          builder: (context, state) {
-                            if (state is GetIfLoginState) {
-                              islogin = state.islogin;
-                              print(islogin);
-                              if (state.islogin == false)
-                                return Container();
-                              else
-                                context
-                                    .read<GetlocationBloc>()
-                                    .add(LocationEvent());
-                            }
-                            if (state is LocationState) {
-                              currentPostion = LatLng(state.position.latitude,
-                                  state.position.longitude);
+                      // Opacity(
+                      //   opacity: 0.6,
+                      //   child: Container(
+                      //     color: Colors.black,
+                      //     height: size.height * 0.06,
+                      //     child: Center(
+                      //       child: Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //         children: [
+                      //           Icon(
+                      //             Icons.info_sharp,
+                      //             color: Colors.white,
+                      //           ),
+                      //           Text(
+                      //             "make a long press to mark your delivery location",
+                      //             style: TextStyle(
+                      //                 color: Colors.white,
+                      //                 fontSize: 15,
+                      //                 fontWeight: FontWeight.bold),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
 
-                              city = state.city;
-                              country = state.country;
-                              street = state.street;
-                              context
-                                  .read<GetlocationBloc>()
-                                  .add(GetAddressEvent());
-                            }
-
-                            return currentPostion != null
-                                ? Stack(
-                                    children: [
-                                      Center(
-                                        child: Container(
-                                            height: size.height * 0.4,
-                                            width: size.width,
-                                            child: GoogleMap(
-                                              myLocationButtonEnabled: false,
-
-                                              myLocationEnabled: true,
-                                              zoomControlsEnabled: false,
-                                              //there is a lot more options you can add here
-
-                                              onMapCreated: (controller) {},
-                                              gestureRecognizers: <
-                                                  Factory<
-                                                      OneSequenceGestureRecognizer>>[
-                                                new Factory<
-                                                    OneSequenceGestureRecognizer>(
-                                                  () =>
-                                                      new EagerGestureRecognizer(),
-                                                ),
-                                              ].toSet(),
-                                              onLongPress: (argument) async {
-                                                markers = {};
-                                                markers.add(Marker(
-                                                    markerId: (MarkerId(
-                                                      "IDs",
-                                                    )),
-                                                    position: argument));
-                                                print(markers.length);
-
-                                                var info =
-                                                    await getLocationAddress(
-                                                        argument.latitude,
-                                                        argument.longitude);
-
-                                                country2 = info[0].country;
-
-                                                city2 =
-                                                    info[0].administrativeArea;
-
-                                                street2 = info[0].street;
-                                                print(street);
-                                                setState(() {});
-                                              },
-
-                                              markers: markers,
-
-                                              // onMapCreated: _onMapCreated,
-                                              initialCameraPosition:
-                                                  CameraPosition(
-                                                target: currentPostion,
-                                                zoom: 17,
-                                              ),
-                                            )),
-                                      ),
-                                      markers.isNotEmpty
-                                          ? Positioned(
-                                              bottom: 1,
-                                              // left: size.width * 0.15,
-                                              child: Container(
-                                                  height: size.height * 0.08,
-                                                  width: size.width,
-                                                  child: Center(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          " Country : $country2",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        Text(
-                                                          " city:         $city2",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        Text(
-                                                          " street :    $street2",
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: kAppColor,
-                                                    // borderRadius: BorderRadius.all(
-                                                    //   Radius.circular(30),
-                                                    // ),
-                                                  )))
-                                          : Container(),
-                                    ],
-                                  )
-                                : ShimmerWidget(
-                                    child: Container(
-                                      height: size.height * 0.4,
-                                      color: Colors.grey[300],
-                                    ),
-                                  );
-                          },
-                        ),
-                      ),
                       SizedBox(
                         height: size.height * 0.02,
                       ),
@@ -286,7 +157,12 @@ class _TaxiState extends State<Taxi> {
                                           isExpanded: true,
                                           underline: SizedBox(),
                                           hint: selectedaddreddname == null
-                                              ? Text("    select address")
+                                              ? Text(selectaddress ==
+                                                      "select address"
+                                                  ? ApplicationLocalizations.of(
+                                                          context)
+                                                      .translate(selectaddress)
+                                                  : selectaddress)
                                               : Text(
                                                   "    $selectedaddreddname"),
                                           items: address.map((Address value) {
@@ -297,6 +173,7 @@ class _TaxiState extends State<Taxi> {
                                           }).toList(),
                                           onChanged: (value) {
                                             print(selectedAddress);
+                                            chosenaddress = value;
                                             selectedaddreddname = value.name;
                                             selectedAddress = value.id;
                                             setState(() {});
@@ -318,7 +195,10 @@ class _TaxiState extends State<Taxi> {
                                           children: [
                                             Container(
                                               child: Text(
-                                                "No addresses added for you  ",
+                                                ApplicationLocalizations.of(
+                                                        context)
+                                                    .translate(
+                                                        "No addresses added for you"),
                                                 style:
                                                     TextStyle(color: kAppColor),
                                               ),
@@ -333,7 +213,10 @@ class _TaxiState extends State<Taxi> {
                                               },
                                               child: Container(
                                                 child: Text(
-                                                    "register or login first",
+                                                    ApplicationLocalizations.of(
+                                                            context)
+                                                        .translate(
+                                                            "register or login first"),
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                     )),
@@ -359,8 +242,9 @@ class _TaxiState extends State<Taxi> {
                                 ? context.read<GetlocationBloc>().add(
                                     TaxiOrderEvent(
                                         selectedAddress,
-                                        currentPostion.longitude,
-                                        currentPostion.latitude))
+                                        double.parse(chosenaddress.locationLng),
+                                        double.parse(
+                                            chosenaddress.locationLat)))
                                 : Toast.show(
                                     ApplicationLocalizations.of(context)
                                         .translate(
@@ -404,8 +288,8 @@ class _TaxiState extends State<Taxi> {
                         ),
                       ),
                     ],
-                  ),
-                ),
+                  );
+                })),
               )
             : InkWell(
                 onTap: () {
@@ -415,19 +299,14 @@ class _TaxiState extends State<Taxi> {
                 },
                 child: Container(
                     child: Center(
-                        child: Text("Please Register or sign in first",
+                        child: Text(
+                            ApplicationLocalizations.of(context)
+                                .translate("register or login first"),
                             style: TextStyle(
                                 color: Colors.orange[900], fontSize: 20)))),
               ),
       ),
     );
-  }
-
-  Future<List<Placemark>> getLocationAddress(
-      double latitude, double longitude) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(latitude, longitude);
-    return placemarks;
   }
 }
 

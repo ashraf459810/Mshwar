@@ -42,8 +42,8 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   int count = 1;
   @override
   void initState() {
-    initilizeMatrixs();
     context.read<CartBloc>().add(CartCountEvent());
+    initilizeMatrixs();
     super.initState();
   }
 
@@ -70,7 +70,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
               SizedBox(
                 height: h(10),
               ),
-              header(context),
+              Container(child: header(context)),
               SizedBox(
                 height: h(2),
               ),
@@ -272,7 +272,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           width: w(10),
         ),
         Container(
-          width: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width / 2.3,
           child: NormalTextWidget(
               ApplicationLocalizations.of(context).appLocale.languageCode ==
                       "en"
@@ -304,14 +304,28 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
             ),
-            Text(
-              "${widget.datum.price} JOD",
-              style: TextStyle(
-                  color: Utils.isDarkMode
-                      ? kDarkBlackTextColor
-                      : Colors.orange[900],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                Text(
+                  "${widget.datum.price}",
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(" :"),
+                Text(
+                  ApplicationLocalizations.of(context).translate("JOD"),
+                  style: TextStyle(
+                      color: Utils.isDarkMode
+                          ? kDarkBlackTextColor
+                          : Colors.orange[900],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             )
           ],
         ),

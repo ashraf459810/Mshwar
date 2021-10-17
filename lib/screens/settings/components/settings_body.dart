@@ -202,13 +202,15 @@ class _SettingsBodyState extends State<SettingsBody> {
                           } else {
                             iprefsHelper.setIsEnglish(false);
                           }
-
+                          Utils.appLocale = new Locale(languages[index].lanCode,
+                              languages[index].lanCountry);
+                          print(Utils.appLocale.countryCode);
+                          print(Utils.appLocale.languageCode);
                           ApplicationLocalizations.of(context).appLocale =
                               new Locale(languages[index].lanCode,
                                   languages[index].lanCountry);
                           ApplicationLocalizations.of(context).load();
-                          Utils.appLocale = new Locale(languages[index].lanCode,
-                              languages[index].lanCountry);
+
                           AppBuilder.of(context).rebuild();
                           Navigator.pop(context);
                         });

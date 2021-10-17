@@ -237,6 +237,9 @@ class _CartBodyState extends State<CartBody> {
                                             setState(() {
                                               selectaddress = newValue.name;
                                               addressid = newValue.id;
+                                              context.read<CartBloc>().add(
+                                                  GetCartItemsEventWithDefaultAddress(
+                                                      addressid));
                                             });
                                           },
 
@@ -299,6 +302,7 @@ class _CartBodyState extends State<CartBody> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => DelieverLocation(
                                             f: () {
+                                              Navigator.of(context).pop();
                                               print("here from the fun");
                                               context
                                                   .read<CartBloc>()

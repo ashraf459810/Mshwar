@@ -34,6 +34,7 @@ class _PaymentBodyState extends State<PaymentBody> {
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.addressid} here the address id ");
     return BlocProvider(
       create: (context) => CartBloc(),
       child: Scaffold(
@@ -167,6 +168,7 @@ class _PaymentBodyState extends State<PaymentBody> {
                       }
                       if (state is PlaceOrderState) {
                         iprefsHelper.resetcartcount();
+                        print("here from the state ");
                         Toast.show(
                             ApplicationLocalizations.of(context)
                                 .translate('Order Placed Successfully'),

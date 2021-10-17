@@ -62,6 +62,10 @@ class _RegisterBodyState extends State<RegisterBody> {
                     builder: (context) => CustomBottomNavigationBar(),
                   ));
                 }
+                if (state is Error) {
+                  print("here from error ");
+                  Toast.show(state.error, context);
+                }
               },
               builder: (context, state) {
                 if (state is Loading) {
@@ -75,17 +79,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                     ),
                   );
                 }
-                if (state is Error) {
-                  print("here from error ");
-                  return Container(
-                      height: (300),
-                      width: w(400),
-                      child: Center(
-                          child: Text(
-                        state.error,
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      )));
-                }
+
                 if (state is CitiesState) {
                   cityfromstate = state.cities;
                 }

@@ -161,6 +161,7 @@ class _SearchBodyState extends State<SearchBody> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),
                                             child: Container(
+                                                width: w(150),
                                                 color: Colors.red,
                                                 child: Image.network(
                                                   "${data[index].images.split(",").first}",
@@ -213,7 +214,8 @@ class _SearchBodyState extends State<SearchBody> {
                           ? Container(
                               child: Center(
                                 child: Text(
-                                  "No results found",
+                                  ApplicationLocalizations.of(context)
+                                      .translate("No results found"),
                                   style: TextStyle(
                                       color: Colors.orange[900], fontSize: 20),
                                 ),

@@ -57,7 +57,7 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                   physics:
                       ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 4 / 4),
+                      crossAxisCount: 2, childAspectRatio: 4 / 3.7),
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: () {
@@ -116,32 +116,32 @@ class _AllProductScreenBody extends State<AllProductScreenBody> {
                                     //     ),
                                     //   ],
                                     // ),
-                                    SizedBox(
-                                      height: h(3),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                            ApplicationLocalizations.of(context)
-                                                .translate("Discount"),
-                                            style: TextStyle(
-                                                color: Colors.grey[900])),
-                                        Text("${items[index].discount}",
-                                            style: TextStyle(
-                                                color: Colors.grey[900])),
-                                        Text(
-                                          ApplicationLocalizations.of(context)
-                                              .translate("Price"),
-                                          style: TextStyle(
-                                              color: Colors.grey[900]),
-                                        ),
-                                        Text("${items[index].price},",
-                                            style: TextStyle(
-                                                color: Colors.grey[900]))
-                                      ],
-                                    ),
+                                    // SizedBox(
+                                    //   height: h(3),
+                                    // ),
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceAround,
+                                    //   children: [
+                                    //     Text(
+                                    //         ApplicationLocalizations.of(context)
+                                    //             .translate("Discount"),
+                                    //         style: TextStyle(
+                                    //             color: Colors.grey[900])),
+                                    //     Text("${items[index].discount}",
+                                    //         style: TextStyle(
+                                    //             color: Colors.grey[900])),
+                                    //     Text(
+                                    //       ApplicationLocalizations.of(context)
+                                    //           .translate("Price"),
+                                    //       style: TextStyle(
+                                    //           color: Colors.grey[900]),
+                                    //     ),
+                                    //     Text("${items[index].price},",
+                                    //         style: TextStyle(
+                                    //             color: Colors.grey[900]))
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               )

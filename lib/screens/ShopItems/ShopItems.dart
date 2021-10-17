@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../util.dart';
 
 class ShopItems extends StatefulWidget {
@@ -78,7 +79,7 @@ class _ShopItemsState extends State<ShopItems> {
             Row(
               children: [
                 Text(
-                  "Products",
+                  ApplicationLocalizations.of(context).translate("Products"),
                   style: TextStyle(fontSize: 30, color: Colors.orange[900]),
                 ),
               ],
@@ -104,21 +105,26 @@ class _ShopItemsState extends State<ShopItems> {
                       Positioned(
                         left: 10,
                         top: 20,
-                        child: container(
-                          color: AppColor.gradient3,
-                          borderRadius: 30,
-                          hight: h(30),
-                          width: w(40),
-                          child: Center(
-                            child: Icon(
-                              Icons.call, color: Colors.white,
-                              // widget.shop.active.toString() == "1"
-                              //     ? ApplicationLocalizations.of(context)
-                              //         .translate("open")
-                              //     : ApplicationLocalizations.of(context)
-                              //         .translate("closed"),
-                              // style: TextStyle(
-                              //   color: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            launch("tel://${widget.shop.phone ?? ""}");
+                          },
+                          child: container(
+                            color: AppColor.gradient3,
+                            borderRadius: 30,
+                            hight: h(30),
+                            width: w(40),
+                            child: Center(
+                              child: Icon(
+                                Icons.call, color: Colors.white,
+                                // widget.shop.active.toString() == "1"
+                                //     ? ApplicationLocalizations.of(context)
+                                //         .translate("open")
+                                //     : ApplicationLocalizations.of(context)
+                                //         .translate("closed"),
+                                // style: TextStyle(
+                                //   color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -364,8 +370,12 @@ class _ShopItemsState extends State<ShopItems> {
                           height: h(400),
                           child: Center(
                             child: Text(
-                              "No products found in this store",
-                              style: TextStyle(color: Colors.orange[900]),
+                              ApplicationLocalizations.of(context)
+                                  .translate("No products found in this store"),
+                              style: TextStyle(
+                                  color: Colors.orange[900],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         );

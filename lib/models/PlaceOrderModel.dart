@@ -24,7 +24,7 @@ class PlaceOrderModel {
   int deliveryFees;
   List<Item> items;
   String membershipDiscount;
-  int ordersTotal;
+  dynamic ordersTotal;
   int invoiceId;
 
   factory PlaceOrderModel.fromJson(Map<String, dynamic> json) =>

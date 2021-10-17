@@ -17,6 +17,7 @@ class RemoveAddress extends StatefulWidget {
 }
 
 class _RemoveAddressState extends State<RemoveAddress> {
+  String selectaddress = "select address";
   String selectedaddreddname;
   int selectedAddress;
   List<Address> address = [];
@@ -65,7 +66,8 @@ class _RemoveAddressState extends State<RemoveAddress> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Select Addrress To Delete",
+                            ApplicationLocalizations.of(context)
+                                .translate("Select Addrress To Delete"),
                             style: TextStyle(color: kAppColor, fontSize: 16),
                           ),
                           SizedBox(
@@ -81,7 +83,10 @@ class _RemoveAddressState extends State<RemoveAddress> {
                               isExpanded: true,
                               underline: SizedBox(),
                               hint: selectedaddreddname == null
-                                  ? Text("    select address")
+                                  ? Text(selectaddress == "select address"
+                                      ? ApplicationLocalizations.of(context)
+                                          .translate(selectaddress)
+                                      : selectaddress)
                                   : Text("     $selectedaddreddname"),
                               items: address.map((Address value) {
                                 return DropdownMenuItem<Address>(
@@ -114,7 +119,10 @@ class _RemoveAddressState extends State<RemoveAddress> {
                                     border: Border.all(color: Colors.orange),
                                     borderRadius: BorderRadius.circular(30),
                                     color: kAppColor),
-                                child: Center(child: Text("Remove")),
+                                child: Center(
+                                    child: Text(
+                                        ApplicationLocalizations.of(context)
+                                            .translate("remove"))),
                               ),
                             ),
                           )
@@ -124,8 +132,12 @@ class _RemoveAddressState extends State<RemoveAddress> {
                   : Container(
                       child: Center(
                           child: Text(
-                        "No addresses added for you",
-                        style: TextStyle(color: kAppColor),
+                        ApplicationLocalizations.of(context)
+                            .translate("No addresses added for you"),
+                        style: TextStyle(
+                            color: kAppColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       )),
                     ));
         }));

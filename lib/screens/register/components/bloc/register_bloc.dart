@@ -39,13 +39,15 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         var response = await repo.iHttpHlper.getrequest(
             "/Register?name=${event.name}&email=${event.email}&password=${event.password}&phone=${event.phone}&cities_id=${event.cityid}");
         registerModel = registerModelFromJson(response);
-
-        repo.iprefsHelper.setislogin(true);
-        repo.iprefsHelper.settoken(registerModel.apiToken);
-        yield RegisterS();
+        if (registerModel.azsvr == "FAILED") {
+          yield Error("EMAIL_OR_PHONE_ALREADY_EXISTS");
+        } else {
+          repo.iprefsHelper.setislogin(true);
+          repo.iprefsHelper.settoken(registerModel.apiToken);
+          yield RegisterS();
+        }
       } catch (e) {
         print(e.toString());
-        yield Error(e.toString());
       }
     }
   }

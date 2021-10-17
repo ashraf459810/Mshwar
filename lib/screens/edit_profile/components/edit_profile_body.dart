@@ -153,9 +153,11 @@ class _EditProfileBodyState extends State<EditProfileBody> {
                       txt: ApplicationLocalizations.of(context)
                           .translate("save"),
                       ontap: () {
-                        if (mobile != null && email != null && name != null)
-                          profileBloc
-                              .add(EditProfileEvent((mobile), email, name));
+                        if (mobile != null || email != null || name != null)
+                          profileBloc.add(EditProfileEvent(
+                              mobile ?? widget.profileModel.phone,
+                              email ?? widget.profileModel.email,
+                              name ?? widget.profileModel.name));
                         else
                           Toast.show(
                               ApplicationLocalizations.of(context)
@@ -174,61 +176,6 @@ class _EditProfileBodyState extends State<EditProfileBody> {
       ),
     );
   }
-
-  // _imgFromGallery() async {
-  //   var image = await picker.getImage(source: ImageSource.gallery);
-
-  //   setState(() {
-  //     if (image != null) {
-  //       _image = File(image.path);
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-
-  // _imgFromCamera() async {
-  //   var image = await picker.getImage(source: ImageSource.camera);
-
-  //   setState(() {
-  //     if (image != null) {
-  //       _image = File(image.path);
-  //     } else {
-  //       print('No image selected.');
-  //     }
-  //   });
-  // }
-
-//   void showPicker(context) {
-//     showModalBottomSheet(
-//         context: context,
-//         builder: (BuildContext bc) {
-//           return SafeArea(
-//             child: Container(
-//               child: new Wrap(
-//                 children: <Widget>[
-//                   new ListTile(
-//                       leading: new Icon(Icons.photo_library),
-//                       title: new Text('Photo Library'),
-//                       onTap: () {
-//                         _imgFromGallery();
-//                         Navigator.of(context).pop();
-//                       }),
-//                   new ListTile(
-//                     leading: new Icon(Icons.photo_camera),
-//                     title: new Text('Camera'),
-//                     onTap: () {
-//                       _imgFromCamera();
-//                       Navigator.of(context).pop();
-//                     },
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           );
-//         });
-//   }
-// }
 
   double h(double h) {
     return ScreenUtil().setHeight(h);

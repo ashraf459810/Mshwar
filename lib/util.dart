@@ -4,8 +4,6 @@ import 'package:dellyshop/Data/Prefs_Helper/IPrefs_Helper.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
-  IprefsHelper iprefsHelper = IprefsHelper();
-
   static double totalPrice;
 
   static double gridHeight() {
@@ -16,7 +14,7 @@ class Utils {
   }
 
   static bool isDarkMode = false;
-  static Locale appLocale = new Locale("en", "US");
+  static Locale appLocale = Locale("en", "US");
   static bool textisRTL(BuildContext context) {
     final TextDirection currentDirection = Directionality.of(context);
     return currentDirection == TextDirection.rtl;

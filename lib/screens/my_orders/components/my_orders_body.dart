@@ -37,8 +37,13 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
     return BlocConsumer(
       listener: (context, state) {
         if (state is SupportState) {
-          Toast.show("Thanks we will contact you ASAP", context,
-              duration: 2, backgroundColor: Colors.orange[900], gravity: 1);
+          Toast.show(
+              ApplicationLocalizations.of(context)
+                  .translate("Thanks we will contact you ASAP"),
+              context,
+              duration: 2,
+              backgroundColor: Colors.orange[900],
+              gravity: 1);
         }
       },
       bloc: profileBloc,
@@ -99,7 +104,11 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
               },
               child: Container(
                 child: Text(
-                  !taxiorders ? "Show Taxi Orders" : "Show previous orders",
+                  !taxiorders
+                      ? ApplicationLocalizations.of(context)
+                          .translate("Show Taxi Orders")
+                      : ApplicationLocalizations.of(context)
+                          .translate("show previous orders"),
                   style: TextStyle(
                     color: Colors.orange[900],
                     fontSize: 16,
@@ -197,7 +206,8 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                           },
                           child: Container(
                             child: Text(
-                              "click for Support",
+                              ApplicationLocalizations.of(context)
+                                  .translate("click for Support"),
                               style: TextStyle(
                                   color: kAppColor,
                                   fontSize: 14,
@@ -298,7 +308,8 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                           },
                           child: Container(
                             child: Text(
-                              "click for Support",
+                              ApplicationLocalizations.of(context)
+                                  .translate("click for Support"),
                               style: TextStyle(
                                   color: kAppColor,
                                   fontSize: 14,

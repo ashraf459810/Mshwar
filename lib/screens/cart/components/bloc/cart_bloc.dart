@@ -28,9 +28,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     CartEvent event,
   ) async* {
     if (event is CartCountEvent) {
+      print("here from cart count event");
       cartcount = await repo.iprefsHelper.getcartcount();
       yield CartCountState(cartcount);
-      add(GetIsLoginEvent());
+      // add(GetIsLoginEvent());
     }
     if (event is AddCustomOrderEvent) {
       try {
@@ -123,23 +124,26 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     if (event is PlaceOrderEvent) {
       try {
-        if (event.iscash == true)
+        if (event.iscash == true) {
           payid = 1;
-        else
+        } else {
           payid = 2;
+        }
         String token = await repo.iprefsHelper.gettoken();
         var response = await repo.iHttpHlper.getrequest(
             "/Orders/PlaceOrder?addresses_id=${event.addressid}&api_token=$token&payment_methods_id=$payid&promoCode=");
         placeOrderModel = placeOrderModelFromJson(response);
+        if (placeOrderModel.azsvr == "SUCCESS") print("success");
         yield PlaceOrderState(placeOrderModel);
+        print("yielded");
       } catch (error) {
-        yield Error(error.toString());
+        yield Error("Error");
       }
     }
-    if (event is GetIsLoginEvent) {
-      var islogin = await repo.iprefsHelper.getislogin();
-      print("$islogin here from the bloc");
-      yield GetIsLoginState(islogin);
-    }
+    // if (event is GetIsLoginEvent) {
+    //   var islogin = await repo.iprefsHelper.getislogin();
+    //   print("$islogin here from the bloc");
+    //   yield GetIsLoginState(islogin);
+    // }
   }
 }

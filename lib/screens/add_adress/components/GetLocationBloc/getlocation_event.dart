@@ -11,8 +11,9 @@ class AddAddressEvent extends GetlocationEvent {
   final int cityid;
   final double lat;
   final double lng;
-  AddAddressEvent(
-      this.address1, this.addressname, this.cityid, this.lat, this.lng);
+  final String address2;
+  AddAddressEvent(this.address1, this.addressname, this.cityid, this.lat,
+      this.lng, this.address2);
 }
 
 class RemoveAddressEvent extends GetlocationEvent {

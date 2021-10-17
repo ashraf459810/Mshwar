@@ -58,7 +58,7 @@ class GetlocationBloc extends Bloc<GetlocationEvent, GetlocationState> {
       try {
         String token = await repo.iprefsHelper.gettoken();
         var response = await repo.iHttpHlper.getrequest(
-            "/Addresses/Add?name=${event.addressname}&location_lat=${event.lat}&location_lng=${event.lng}&cities_id=${event.cityid}&address_1=${event.address1}&api_token=$token");
+            "/Addresses/Add?name=${event.addressname}&location_lat=${event.lat}&location_lng=${event.lng}&cities_id=${event.cityid}&address_1=${event.address1}&api_token=$token&address_2=${event.address2}");
         addAddressResponse = addAddressResponseFromJson(response);
         yield AddAddressState(addAddressResponse);
       } catch (error) {

@@ -1,4 +1,6 @@
 import 'package:dellyshop/screens/App/components/Signup.dart';
+import 'package:dellyshop/util.dart';
+import 'package:dellyshop/widgets/app_builder.dart';
 
 import 'package:dellyshop/widgets/bottom_navigation_bar.dart';
 
@@ -17,6 +19,10 @@ class App extends StatelessWidget {
         listener: (context, state) {
           if (state is IsLoginState) {
             if (state.islogin == true) {
+              if (state.isenglish == false) {
+                Utils.appLocale = Locale("ar", " ");
+                AppBuilder.of(context).rebuild();
+              }
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => CustomBottomNavigationBar(),
               ));

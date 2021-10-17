@@ -26,6 +26,8 @@ class DelieverLocation extends StatefulWidget {
 }
 
 class _DelieverLocationState extends State<DelieverLocation> {
+  String secnodaddress;
+  TextEditingController secondaddressc = TextEditingController();
   TextEditingController controller = TextEditingController();
   String street;
   String country;
@@ -100,6 +102,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
+                        Navigator.of(context).pop();
                       }
                       if (state is Error) {
                         Toast.show(state.error, context,
@@ -127,7 +130,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
                               children: [
                                 Center(
                                   child: Container(
-                                      height: size.height * 0.4,
+                                      height: size.height * 0.3,
                                       width: size.width,
                                       child: GoogleMap(
                                         myLocationButtonEnabled: false,
@@ -365,13 +368,34 @@ class _DelieverLocationState extends State<DelieverLocation> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
+                container(
+                  hight: size.height * 0.07,
+                  width: size.width * 0.7,
+                  borderRadius: 10,
+                  color: Colors.white,
+                  bordercolor: Colors.orange,
+                  child: textform(
+                      // horizontalpadding: 90,
+                      controller: secondaddressc,
+                      hint: ApplicationLocalizations.of(context)
+                          .translate("second address (optional)"),
+                      hintsize: 15,
+                      hintColor: Colors.grey[400],
+                      validation: "name",
+                      function: (value) {
+                        secnodaddress = value;
+                      }),
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 Builder(
                   builder: (context) => GestureDetector(
                     onTap: () {
                       print(chosencity);
                       print(currentPostion.latitude);
                       print(addressname);
-                      if (selectcity != "select city" &&
+                      if (selectcity != "select your city" &&
                           currentPostion != null &&
                           addressname != null) {
                         context.read<GetlocationBloc>().add(AddAddressEvent(
@@ -379,9 +403,9 @@ class _DelieverLocationState extends State<DelieverLocation> {
                             addressname,
                             chosencityid,
                             currentPostion.latitude,
-                            currentPostion.longitude));
+                            currentPostion.longitude,
+                            secnodaddress ?? ""));
                         widget.f();
-                        Navigator.of(context).pop();
                       } else {
                         Toast.show(
                             ApplicationLocalizations.of(context)
