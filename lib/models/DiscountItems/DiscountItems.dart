@@ -163,7 +163,7 @@ class ItemsWithDiscount {
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
         ratesAvg: json["RatesAvg"],
-        comments: List<dynamic>.from(json["comments"].map((x) => x)),
+        // comments: List<dynamic>.from(json["comments"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {

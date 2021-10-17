@@ -1,6 +1,7 @@
 import 'package:dellyshop/app_localizations.dart';
 
 import 'package:dellyshop/screens/ItemDetails/ItemDetailsBody.dart';
+import 'package:dellyshop/screens/ItemDetails/ItemDetailsFromSearch.dart';
 
 import 'package:dellyshop/screens/cart/components/cart_screen.dart';
 import 'package:dellyshop/screens/cart/components/bloc/cart_bloc.dart';
@@ -15,7 +16,15 @@ class ItemDetails extends StatefulWidget {
   final datum;
   final data;
   final islogin;
-  ItemDetails({Key key, this.datum, this.data, this.islogin}) : super(key: key);
+  final issearch;
+
+  ItemDetails({
+    Key key,
+    this.datum,
+    this.data,
+    this.islogin,
+    this.issearch,
+  }) : super(key: key);
 
   @override
   _ItemDetailsState createState() => _ItemDetailsState();
@@ -27,6 +36,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   void initState() {
+    print(widget.issearch);
     context.read<CartBloc>().add(CartCountEvent());
 
     super.initState();
@@ -115,15 +125,20 @@ class _ItemDetailsState extends State<ItemDetails> {
                     ]
                   : <Widget>[],
             ),
-            body: widget.data == null
-                ? ItemDetailsBody(
-                    datum: widget.datum,
-                    islogin: islogin,
-                  )
-                : ItemDetailsBody(
+            body: widget.issearch != null
+                ? ItemDetailsFromSearch(
                     datum: widget.data,
-                    islogin: islogin,
-                  ));
+                    islogin: widget.islogin,
+                  )
+                : widget.data == null
+                    ? ItemDetailsBody(
+                        datum: widget.datum,
+                        islogin: islogin,
+                      )
+                    : ItemDetailsBody(
+                        datum: widget.data,
+                        islogin: islogin,
+                      ));
       },
     );
   }

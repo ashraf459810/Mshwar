@@ -2,7 +2,7 @@ import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Dropdown.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
-import 'package:dellyshop/models/ShopCategories/ShopCategories.dart' as item;
+import 'package:dellyshop/models/SearchResponse/Search.dart';
 
 import 'package:dellyshop/screens/App/components/Signup.dart';
 
@@ -21,16 +21,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-class ItemDetailsBody extends StatefulWidget {
-  final item.Item datum;
+class ItemDetailsFromSearch extends StatefulWidget {
+  final Datum datum;
   final bool islogin;
-  ItemDetailsBody({Key key, this.datum, this.islogin}) : super(key: key);
+  ItemDetailsFromSearch({Key key, this.datum, this.islogin}) : super(key: key);
 
   @override
-  _ItemDetailsBodyState createState() => _ItemDetailsBodyState();
+  _ItemDetailsFromSearchState createState() => _ItemDetailsFromSearchState();
 }
 
-class _ItemDetailsBodyState extends State<ItemDetailsBody> {
+class _ItemDetailsFromSearchState extends State<ItemDetailsFromSearch> {
   List<int> oneSelectMatrix = [];
   List<int> multiSelectMatrix = [];
   List<int> attributesValues = [];
@@ -42,13 +42,15 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   int count = 1;
   @override
   void initState() {
+    print("here from the search details");
     context.read<CartBloc>().add(CartCountEvent());
-    initilizeMatrixs();
+    // initilizeMatrixs();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("here from the search details");
     var size = MediaQuery.of(context).size;
     return ListView(
       children: [
@@ -386,7 +388,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                   ? showbuttomsheetmulti(
                       widget.datum.attribs[index].values
                           .map((value) =>
-                              MultiSelectItem<item.Value>(value, value.name))
+                              MultiSelectItem<Value>(value, value.name))
                           .toList(),
                       index)
                   : showbuttomsheetoneselect(widget.datum.attribs[index], index,
@@ -395,22 +397,13 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Center(
-                child: Row(
-                  children: [
-                    Text(
-                      "${widget.datum.attribs[index].name}",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Colors.orange[900],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Icon(
-                      Icons.arrow_circle_down_rounded,
+                child: Text(
+                  "${widget.datum.attribs[index].name}",
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
                       color: Colors.orange[900],
-                      size: 20,
-                    )
-                  ],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -449,7 +442,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   }
 
   void showbuttomsheetoneselect(
-      item.Attrib list, int index, List<int> selectionmatrix, List<int> gabs) {
+      Attrib list, int index, List<int> selectionmatrix, List<int> gabs) {
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -458,7 +451,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   }
 
   Widget oneSelect(
-      item.Attrib list, int index, List<int> selecction, List<int> gabs) {
+      Attrib list, int index, List<int> selecction, List<int> gabs) {
     return container(
         hight: h(300),
         width: w(300),

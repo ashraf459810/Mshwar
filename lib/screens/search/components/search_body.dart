@@ -2,6 +2,7 @@ import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Text.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+
 import 'package:dellyshop/models/SearchResponse/Search.dart';
 
 import 'package:dellyshop/screens/App/components/Signup.dart';
@@ -15,6 +16,9 @@ import '../../../util.dart';
 import 'bloc/search_bloc.dart';
 
 class SearchBody extends StatefulWidget {
+  final bool islogin;
+
+  const SearchBody({Key key, this.islogin}) : super(key: key);
   @override
   _SearchBodyState createState() => _SearchBodyState();
 }
@@ -22,7 +26,7 @@ class SearchBody extends StatefulWidget {
 class _SearchBodyState extends State<SearchBody> {
   String search;
   bool isenglish;
-  List<Data> data = [];
+  List<Datum> data = [];
   bool noresult = false;
   @override
   Widget build(BuildContext context) {
@@ -143,6 +147,8 @@ class _SearchBodyState extends State<SearchBody> {
                                         .push(MaterialPageRoute(
                                       builder: (context) => ItemDetails(
                                         data: data[index],
+                                        issearch: true,
+                                        islogin: widget.islogin,
                                       ),
                                     ));
                                   },

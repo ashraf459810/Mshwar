@@ -102,10 +102,18 @@ class _ShopItemsState extends State<ShopItems> {
                     children: [
                       Image.network(widget.shopimage,
                           fit: BoxFit.fitWidth, width: size.width),
-                      Positioned(
-                        left: 10,
-                        top: 20,
-                        child: GestureDetector(
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: h(20),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        GestureDetector(
                           onTap: () {
                             launch("tel://${widget.shop.phone ?? ""}");
                           },
@@ -128,17 +136,18 @@ class _ShopItemsState extends State<ShopItems> {
                             ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 10,
-                        top: 55,
-                        child: Text(
-                          widget.shop.phone ?? "",
-                          style: TextStyle(color: Colors.orange[900]),
-                        ),
-                      )
-                    ],
-                  ),
+                        // Text(
+                        //   widget.shop.phone ?? "",
+                        //   style: TextStyle(color: Colors.orange[900]),
+                        // ),
+                      ],
+                    ),
+                    Text(widget.shop.address,
+                        style: TextStyle(color: Colors.orange[900]))
+                  ],
+                ),
+                SizedBox(
+                  height: h(20),
                 ),
                 // Container(
                 //   height: h(40),

@@ -73,7 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         }
         yield GetDiscountItemsState(discountitemslist);
       } catch (error) {
-        yield (Error(error.toString()));
+        yield (Error("Error while getting discounted items"));
       }
     }
   }

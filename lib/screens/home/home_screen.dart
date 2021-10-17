@@ -1,9 +1,12 @@
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
+import 'package:dellyshop/screens/App/bloc/app_bloc.dart';
+import 'package:dellyshop/screens/add_adress/components/GetLocationBloc/getlocation_bloc.dart';
 
 import 'package:dellyshop/screens/search/search_screen.dart';
 import 'package:dellyshop/widgets/normal_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../util.dart';
@@ -11,9 +14,12 @@ import '../../util.dart';
 import 'components/home_body.dart';
 
 class HomeScreen extends StatelessWidget {
+  bool islogin = false;
   static const routeName = "/home_screen";
+  AppBloc appBloc = AppBloc();
   @override
   Widget build(BuildContext context) {
+    appBloc.add(IsLoginEvent());
     return Scaffold(
         backgroundColor:
             Utils.isDarkMode ? kDarkDefaultBgColor : kDefaultBgColor,
@@ -75,33 +81,45 @@ class HomeScreen extends StatelessWidget {
                 preferredSize: Size.fromHeight(30),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pushNamed(SearchScreen.routeName);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SearchScreen(
+                        islogin: islogin,
+                      ),
+                    ));
                   },
-                  child: Container(
-                    height: 40,
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.3),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        shape: BoxShape.rectangle),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.black38,
+                  child: BlocListener(
+                    bloc: appBloc,
+                    listener: (context, state) {
+                      if (state is IsLoginState) {
+                        islogin = state.islogin;
+                      }
+                    },
+                    child: Container(
+                      height: 40,
+                      margin: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          shape: BoxShape.rectangle),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.black38,
+                            ),
                           ),
-                        ),
-                        NormalTextWidget(
-                            ApplicationLocalizations.of(context)
-                                .translate("search"),
-                            Utils.isDarkMode
-                                ? kDarkTextColorColor
-                                : kLightBlackTextColor,
-                            kSmallFontSize),
-                      ],
+                          NormalTextWidget(
+                              ApplicationLocalizations.of(context)
+                                  .translate("search"),
+                              Utils.isDarkMode
+                                  ? kDarkTextColorColor
+                                  : kLightBlackTextColor,
+                              kSmallFontSize),
+                        ],
+                      ),
                     ),
                   ),
                 ),
