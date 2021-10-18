@@ -17,7 +17,7 @@
   "apartment number" : "apartment number" ,
   "select payment method":"select payment method",
   "select address":"select address",
-  "sold":"sold",
+
   "Price" : "Price",
   "Description":"Description",
   "Mshwar Taxi":"Mshwar Taxi",
@@ -62,6 +62,7 @@
   "iphonex": "iPhoneX",
   "iphone11": "iPhone 11",
   "books": "Books",
+  "please select" :"please select",
   "macbooks": "Macbooks",
   "apple": "Apple",
   "samsung": "Samsung",

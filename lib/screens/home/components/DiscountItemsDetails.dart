@@ -279,7 +279,7 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
             Row(
               children: [
                 Text(
-                  ApplicationLocalizations.of(context).translate("sold"),
+                  ApplicationLocalizations.of(context).translate("sale"),
                   style: TextStyle(
                       color: Utils.isDarkMode
                           ? kDarkBlackTextColor
@@ -299,8 +299,8 @@ class _DiscountItemDetailsState extends State<DiscountItemDetails> {
                 Text(
                   ApplicationLocalizations.of(context).appLocale.languageCode ==
                           "en"
-                      ? "${widget.itemsWithDiscount.discount}"
-                      : "${widget.itemsWithDiscount.discount}",
+                      ? "${widget.itemsWithDiscount.discount}%"
+                      : "${widget.itemsWithDiscount.discount}%",
                   style: TextStyle(
                       color: Utils.isDarkMode
                           ? kDarkBlackTextColor

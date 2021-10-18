@@ -102,6 +102,7 @@ class _DelieverLocationState extends State<DelieverLocation> {
                             duration: Toast.LENGTH_SHORT,
                             backgroundColor: Colors.orange[900],
                             gravity: Toast.TOP);
+                        widget.f();
                         Navigator.of(context).pop();
                       }
                       if (state is Error) {

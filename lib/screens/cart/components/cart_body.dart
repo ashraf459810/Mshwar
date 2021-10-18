@@ -29,13 +29,14 @@ class CartBody extends StatefulWidget {
 }
 
 class _CartBodyState extends State<CartBody> {
+  ScrollController scrollController = ScrollController();
   String selectaddress = 'select address';
   Address chosenaddress;
   int addressid;
   var selectedUser;
   CartModel cartModel;
   double totalListHeight;
-  double itemHeight = 120;
+  double itemHeight = h(120);
   int index = 1;
   int value = 2;
   int pay = 200;
@@ -53,6 +54,7 @@ class _CartBodyState extends State<CartBody> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
     totalListHeight = ((index * itemHeight)).toDouble();
 
     return BlocConsumer<CartBloc, CartState>(
@@ -126,7 +128,8 @@ class _CartBodyState extends State<CartBody> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 10),
                                   child: Container(
-                                    height: itemHeight,
+                                    // color: Colors.black,
+                                    height: itemHeight * 1.3,
                                     child: cartProductItem(index),
                                   ),
                                 );
@@ -394,7 +397,7 @@ class _CartBodyState extends State<CartBody> {
         secondaryBackground: slideLeftBackground(),
         key: UniqueKey(),
         child: CardWidget(
-          height: itemHeight,
+          height: h(200),
           childWidget: Row(
             children: [
               Padding(
@@ -520,18 +523,6 @@ class _CartBodyState extends State<CartBody> {
                                   ),
                                 ),
 
-                                /// Increasing value of item
-                                // Builder(
-                                //   builder: (context) => InkWell(
-                                //     onTap: () {
-                                //       context.read<CartBloc>().add(
-                                //           AddItemToCartEvent(1,
-                                //               cartModel.carts[index].items.id));
-                                //       // context
-                                //       //     .read<CartBloc>()
-                                //       //     .add(GetCartItemsEvent());
-                                //     },
-                                //     child:
                                 Container(
                                   height: h(30),
                                   width: w(28.0),
@@ -548,6 +539,10 @@ class _CartBodyState extends State<CartBody> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: h(4),
+                    ),
+                    attributes(index)
                   ],
                 ),
               ),
@@ -618,6 +613,31 @@ class _CartBodyState extends State<CartBody> {
           ],
         ),
         alignment: Alignment.centerRight,
+      ),
+    );
+  }
+
+  scrollToBottom() {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  }
+
+  Widget attributes(int index) {
+    return Container(
+      height: h(30),
+      child: ListView.builder(
+        controller: scrollController,
+        scrollDirection: Axis.horizontal,
+        itemCount: cartModel.carts[index].customAttributesValues.length,
+        itemBuilder: (context, index2) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              cartModel.carts[index].customAttributesValues[index2].name
+                  .toString(),
+              style: TextStyle(color: Colors.orange[900], fontSize: 15),
+            ),
+          );
+        },
       ),
     );
   }

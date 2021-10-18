@@ -20,16 +20,15 @@ class CartModel {
 
   String azsvr;
   List<Cart> carts;
-  List<CustomCart> customCarts;
+  List<dynamic> customCarts;
   String membershipDiscount;
   double cartsTotal;
-  dynamic deliveryFees;
+  int deliveryFees;
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
         azsvr: json["AZSVR"],
         carts: List<Cart>.from(json["Carts"].map((x) => Cart.fromJson(x))),
-        customCarts: List<CustomCart>.from(
-            json["CustomCarts"].map((x) => CustomCart.fromJson(x))),
+        customCarts: List<dynamic>.from(json["CustomCarts"].map((x) => x)),
         membershipDiscount: json["MembershipDiscount"],
         cartsTotal: json["CartsTotal"].toDouble(),
         deliveryFees: json["DeliveryFees"],
@@ -38,7 +37,7 @@ class CartModel {
   Map<String, dynamic> toJson() => {
         "AZSVR": azsvr,
         "Carts": List<dynamic>.from(carts.map((x) => x.toJson())),
-        "CustomCarts": List<dynamic>.from(customCarts.map((x) => x.toJson())),
+        "CustomCarts": List<dynamic>.from(customCarts.map((x) => x)),
         "MembershipDiscount": membershipDiscount,
         "CartsTotal": cartsTotal,
         "DeliveryFees": deliveryFees,
@@ -72,10 +71,10 @@ class Cart {
   dynamic shopsId;
   DateTime createdAt;
   DateTime updatedAt;
-  dynamic subTotal;
+  int subTotal;
   double membershipDiscount;
   double total;
-  List<dynamic> customAttributesValues;
+  List<CustomAttributesValue> customAttributesValues;
   Items items;
 
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
@@ -91,8 +90,9 @@ class Cart {
         subTotal: json["sub_total"],
         membershipDiscount: json["MembershipDiscount"].toDouble(),
         total: json["total"].toDouble(),
-        customAttributesValues:
-            List<dynamic>.from(json["custom_attributes_values"].map((x) => x)),
+        customAttributesValues: List<CustomAttributesValue>.from(
+            json["custom_attributes_values"]
+                .map((x) => CustomAttributesValue.fromJson(x))),
         items: Items.fromJson(json["items"]),
       );
 
@@ -110,8 +110,73 @@ class Cart {
         "MembershipDiscount": membershipDiscount,
         "total": total,
         "custom_attributes_values":
-            List<dynamic>.from(customAttributesValues.map((x) => x)),
+            List<dynamic>.from(customAttributesValues.map((x) => x.toJson())),
         "items": items.toJson(),
+      };
+}
+
+class CustomAttributesValue {
+  CustomAttributesValue({
+    this.id,
+    this.customAttributesId,
+    this.name,
+    this.price,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.pivot,
+  });
+
+  int id;
+  int customAttributesId;
+  String name;
+  String price;
+  DateTime createdAt;
+  DateTime updatedAt;
+  dynamic deletedAt;
+  Pivot pivot;
+
+  factory CustomAttributesValue.fromJson(Map<String, dynamic> json) =>
+      CustomAttributesValue(
+        id: json["id"],
+        customAttributesId: json["custom_attributes_id"],
+        name: json["name"],
+        price: json["price"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        deletedAt: json["deleted_at"],
+        pivot: Pivot.fromJson(json["pivot"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "custom_attributes_id": customAttributesId,
+        "name": name,
+        "price": price,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "deleted_at": deletedAt,
+        "pivot": pivot.toJson(),
+      };
+}
+
+class Pivot {
+  Pivot({
+    this.cartsId,
+    this.customAttributesValuesId,
+  });
+
+  int cartsId;
+  int customAttributesValuesId;
+
+  factory Pivot.fromJson(Map<String, dynamic> json) => Pivot(
+        cartsId: json["carts_id"],
+        customAttributesValuesId: json["custom_attributes_values_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "carts_id": cartsId,
+        "custom_attributes_values_id": customAttributesValuesId,
       };
 }
 
@@ -147,7 +212,7 @@ class Items {
   String images;
   int quantity;
   int prepTime;
-  dynamic price;
+  String price;
   int active;
   int usersId;
   int discount;
@@ -200,53 +265,5 @@ class Items {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
-      };
-}
-
-class CustomCart {
-  CustomCart({
-    this.id,
-    this.usersId,
-    this.itemsId,
-    this.quantity,
-    this.notes,
-    this.isCustom,
-    this.shopsId,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  int id;
-  int usersId;
-  dynamic itemsId;
-  dynamic quantity;
-  String notes;
-  int isCustom;
-  int shopsId;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory CustomCart.fromJson(Map<String, dynamic> json) => CustomCart(
-        id: json["id"],
-        usersId: json["users_id"],
-        itemsId: json["items_id"],
-        quantity: json["quantity"],
-        notes: json["notes"],
-        isCustom: json["isCustom"],
-        shopsId: json["shops_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "users_id": usersId,
-        "items_id": itemsId,
-        "quantity": quantity,
-        "notes": notes,
-        "isCustom": isCustom,
-        "shops_id": shopsId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }

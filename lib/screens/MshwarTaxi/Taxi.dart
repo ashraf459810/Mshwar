@@ -1,3 +1,4 @@
+import 'package:dellyshop/Widgets%20copy/Nav.dart';
 import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/constant.dart';
 import 'package:dellyshop/models/AddressModel/AddressModel.dart';
@@ -77,9 +78,7 @@ class _TaxiState extends State<Taxi> {
                         duration: 3,
                         gravity: 0,
                         backgroundColor: Colors.orange[900]);
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CustomBottomNavigationBar(),
-                    ));
+                    Navigator.of(context).pop();
                   }
                   if (state is Error) {
                     Toast.show(state.error, context,

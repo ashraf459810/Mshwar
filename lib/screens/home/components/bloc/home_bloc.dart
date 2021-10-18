@@ -62,19 +62,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     }
     if (event is GetDicountItemsEvent) {
-      try {
-        var response = await repo.iHttpHlper.getrequest(
-            "/Items?hasDiscount=true&title=&description=&quantity=&shops_id=&orderBy=&orderDir=&results_num=${event.size}");
-        discountItems = discountItemsFromJson(response);
-        if (discountItems.items.data.isNotEmpty) {
-          for (var i = 0; i < discountItems.items.data.length; i++) {
-            discountitemslist.add(discountItems.items.data[i]);
-          }
+      // try {
+      var response = await repo.iHttpHlper.getrequest(
+          "/Items?hasDiscount=true&title=&description=&quantity=&shops_id=&orderBy=&orderDir=&results_num=${event.size}");
+      discountItems = discountItemsFromJson(response);
+      if (discountItems.items.data.isNotEmpty) {
+        for (var i = 0; i < discountItems.items.data.length; i++) {
+          discountitemslist.add(discountItems.items.data[i]);
         }
-        yield GetDiscountItemsState(discountitemslist);
-      } catch (error) {
-        yield (Error("Error while getting discounted items"));
       }
+      yield GetDiscountItemsState(discountitemslist);
+      // } catch (error) {
+      //   yield (Error("Error while getting discounted items"));
+      // }
     }
   }
 }

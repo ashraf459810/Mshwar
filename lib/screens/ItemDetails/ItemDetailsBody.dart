@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:dellyshop/Widgets%20copy/Container.dart';
 import 'package:dellyshop/Widgets%20copy/Dropdown.dart';
 import 'package:dellyshop/app_localizations.dart';
@@ -17,8 +19,8 @@ import 'package:dellyshop/widgets/normal_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class ItemDetailsBody extends StatefulWidget {
@@ -31,9 +33,9 @@ class ItemDetailsBody extends StatefulWidget {
 }
 
 class _ItemDetailsBodyState extends State<ItemDetailsBody> {
-  List<int> oneSelectMatrix = [];
   List<int> multiSelectMatrix = [];
-  List<int> attributesValues = [];
+  List<int> attributesNumber = [];
+  String attributesvalues;
 
   ScrollController scrollController = ScrollController();
   ScrollController scrollController2 = ScrollController();
@@ -43,7 +45,7 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
   @override
   void initState() {
     context.read<CartBloc>().add(CartCountEvent());
-    initilizeMatrixs();
+    initilizeAttributesNumberMatrix();
     super.initState();
   }
 
@@ -121,23 +123,29 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           txt: ApplicationLocalizations.of(context).translate("add_to_cart"),
           witdh: size.width * 0.9,
           ontap: () {
-            String attr = "";
-            print(attributesValues);
-            attributesValues.addAll(multiSelectMatrix);
-            attributesValues.remove(-1);
-            for (var i = 0; i < attributesValues.length; i++) {
-              if (i == attributesValues.length - 1) {
-                attr = attr + "${attributesValues[i]}";
-              } else
-                attr = attr + "${attributesValues[i]},";
-            }
-            print("${attr} here the attr");
+            attributesvalues = "";
+            print(attributesNumber);
+            attributesNumber.addAll(multiSelectMatrix);
 
-            context
-                .read<CartBloc>()
-                .add(AddItemToCartEvent(count, widget.datum.id, attr ?? ""));
+            attributesNumber =
+                LinkedHashSet<int>.from(attributesNumber).toList();
+            attributesNumber.remove(-1);
+            for (var i = 0; i < attributesNumber.length; i++) {
+              // for the reapated numbers
+
+              // this condition for delete the last ,
+              if (i == attributesNumber.length - 1) {
+                attributesvalues = attributesvalues + "${attributesNumber[i]}";
+              } else
+                attributesvalues = attributesvalues + "${attributesNumber[i]},";
+            }
+
+            print("${attributesvalues} here the attr");
+
+            context.read<CartBloc>().add(AddItemToCartEvent(
+                count, widget.datum.id, attributesvalues ?? ""));
             setState(() {
-              // print(count);
+              initilizeAttributesNumberMatrix();
             });
           },
           bacgroudColor: kAppColor,
@@ -343,24 +351,18 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     return Container(
       width: w(50),
       height: h(200),
-      child: MultiSelectDialogField(
-        buttonIcon: Icon(Icons.arrow_circle_down, color: Colors.orange[900]),
+      child: MultiSelectChipField(
+        chipWidth: w(50),
+        textStyle: TextStyle(color: Colors.black, fontSize: 15),
+        chipColor: Colors.white,
+        selectedChipColor: Colors.orange,
         items: valus,
-        selectedColor: Colors.orange,
-        buttonText: Text(
-          "",
-          style: TextStyle(
-            color: Colors.orange[800],
-            fontSize: 16,
-          ),
-        ),
-        onConfirm: (results) {
+        onTap: (results) {
           multiSelectMatrix = [];
           for (int loop = 0; loop < results.length; loop++) {
             multiSelectMatrix.add(results[loop].id);
           }
           print(multiSelectMatrix);
-          // result = results;
         },
       ),
     );
@@ -378,40 +380,42 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
           index,
         ) {
           if (widget.datum.attribs[index].multi == 1) {
-            print("${attributesValues} gabs main ");
+            print("${attributesNumber} gabs main ");
           }
           return InkWell(
             onTap: () {
-              widget.datum.attribs[index].multi == 1
-                  ? showbuttomsheetmulti(
-                      widget.datum.attribs[index].values
-                          .map((value) =>
-                              MultiSelectItem<item.Value>(value, value.name))
-                          .toList(),
-                      index)
-                  : showbuttomsheetoneselect(widget.datum.attribs[index], index,
-                      oneSelectMatrix, attributesValues);
+              if (widget.datum.attribs[index].multi == 1)
+                showButtomSheetForMultiSelect(
+                    widget.datum.attribs[index].values
+                        .map((value) =>
+                            MultiSelectItem<item.Value>(value, value.name))
+                        .toList(),
+                    index);
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
-                child: Row(
-                  children: [
-                    Text(
-                      "${widget.datum.attribs[index].name}",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Colors.orange[900],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Icon(
-                      Icons.arrow_circle_down_rounded,
-                      color: Colors.orange[900],
-                      size: 20,
-                    )
-                  ],
-                ),
+                child: widget.datum.attribs[index].multi == 1
+                    ? Text(
+                        "${widget.datum.attribs[index].name}",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.orange[900],
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )
+                    : Container(
+                        height: h(50),
+                        width: w(100),
+                        child: DropDown(
+                          list: widget.datum.attribs[index].values,
+                          hint: widget.datum.attribs[index].name,
+                          getindex: (val) {},
+                          onchanged: (val) {
+                            attributesNumber[index] = val.id;
+                          },
+                        ),
+                      ),
               ),
             ),
           );
@@ -440,23 +444,6 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
     );
   }
 
-  void showbuttomsheetmulti(List<dynamic> values, int i) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return multiselectattributesValus(values, i);
-        });
-  }
-
-  void showbuttomsheetoneselect(
-      item.Attrib list, int index, List<int> selectionmatrix, List<int> gabs) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return oneSelect(list, index, selectionmatrix, gabs);
-        });
-  }
-
   Widget oneSelect(
       item.Attrib list, int index, List<int> selecction, List<int> gabs) {
     return container(
@@ -480,11 +467,13 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
                 ),
                 DropDown(
                   list: list.values,
-                  hint: "",
+                  hint: ApplicationLocalizations.of(context)
+                      .translate("please select"),
                   getindex: (val) {},
                   onchanged: (val) {
                     gabs[index] = val.id;
                     print("${gabs} here the gabs");
+                    Navigator.of(context).pop();
                   },
                 )
               ],
@@ -493,13 +482,22 @@ class _ItemDetailsBodyState extends State<ItemDetailsBody> {
         ));
   }
 
-  void initilizeMatrixs() {
+  void initilizeAttributesNumberMatrix() {
+    attributesNumber = [];
     for (var i = 0; i < widget.datum.attribs.length; i++) {
-      if (widget.datum.attribs[i].multi == 1) {
-        attributesValues.add(-1);
+      if (widget.datum.attribs[i].multi == 0) {
+        attributesNumber.add(-1);
       } else {
-        attributesValues.add(0);
+        attributesNumber.add(-1);
       }
     }
+  }
+
+  void showButtomSheetForMultiSelect(List<dynamic> values, int i) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return multiselectattributesValus(values, i);
+        });
   }
 }
