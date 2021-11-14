@@ -5,6 +5,8 @@ import 'package:dellyshop/models/category_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../app_localizations.dart';
+
 // ignore: must_be_immutable
 class CategoryListItemBuilder extends StatefulWidget {
   final Category category;
@@ -43,7 +45,10 @@ class _CategoryListItemBuilderState extends State<CategoryListItemBuilder> {
             ),
             Center(
               child: Text(
-                widget.category.titleEn,
+                ApplicationLocalizations.of(context).appLocale.languageCode ==
+                        "en"
+                    ? widget.category.titleEn
+                    : widget.category.title,
                 style: TextStyle(
                     color: kWhiteColor,
                     fontSize: kTitleFontSize,

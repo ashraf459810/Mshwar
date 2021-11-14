@@ -1,3 +1,4 @@
+import 'package:dellyshop/app_localizations.dart';
 import 'package:dellyshop/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      title: "Search",
+      title: ApplicationLocalizations.of(context).translate("Search"),
       body: SearchBody(
         islogin: islogin,
       ),

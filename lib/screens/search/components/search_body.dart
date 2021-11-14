@@ -203,10 +203,27 @@ class _SearchBodyState extends State<SearchBody> {
                                                     fontsize: 11,
                                                     color: Colors.grey),
                                               ),
-                                              text(
-                                                  text:
-                                                      "Price ${data[index].price}",
-                                                  color: Colors.orange[900]),
+                                              Row(
+                                                children: [
+                                                  text(
+                                                      text:
+                                                          ApplicationLocalizations
+                                                                  .of(context)
+                                                              .translate(
+                                                                  "Price"),
+                                                      color:
+                                                          Colors.orange[900]),
+                                                  text(
+                                                      text: " :",
+                                                      color:
+                                                          Colors.orange[900]),
+                                                  text(
+                                                      text:
+                                                          "${data[index].price}",
+                                                      color:
+                                                          Colors.orange[900]),
+                                                ],
+                                              ),
                                             ],
                                           )
                                         ],

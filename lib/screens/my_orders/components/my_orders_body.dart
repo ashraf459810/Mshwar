@@ -294,10 +294,25 @@ class _MyOrdersBodyState extends State<MyOrdersBody>
                         SizedBox(
                           height: 2,
                         ),
-                        Text(
-                          "Fee ${carttaxi[index].total}\$",
-                          style: TextStyle(
-                              color: kAppColor, fontSize: kPriceFontSize),
+                        Row(
+                          children: [
+                            Text(
+                              "${carttaxi[index].total}",
+                              style: TextStyle(
+                                  color: kAppColor, fontSize: kPriceFontSize),
+                            ),
+                            Text(
+                              " :",
+                              style: TextStyle(
+                                  color: kAppColor, fontSize: kPriceFontSize),
+                            ),
+                            Text(
+                              ApplicationLocalizations.of(context)
+                                  .translate("JOD"),
+                              style: TextStyle(
+                                  color: kAppColor, fontSize: kPriceFontSize),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: h(10),

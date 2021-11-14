@@ -54,8 +54,8 @@ class _CartBodyState extends State<CartBody> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
     totalListHeight = ((index * itemHeight)).toDouble();
+    // WidgetsBinding.instance.addPostFrameCallback((_) => scrollToBottom());
 
     return BlocConsumer<CartBloc, CartState>(
       listener: (context, state) {
@@ -617,15 +617,12 @@ class _CartBodyState extends State<CartBody> {
     );
   }
 
-  scrollToBottom() {
-    scrollController.jumpTo(scrollController.position.maxScrollExtent);
-  }
-
   Widget attributes(int index) {
     return Container(
       height: h(30),
       child: ListView.builder(
         controller: scrollController,
+        physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         scrollDirection: Axis.horizontal,
         itemCount: cartModel.carts[index].customAttributesValues.length,
         itemBuilder: (context, index2) {
